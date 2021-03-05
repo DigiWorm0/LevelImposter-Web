@@ -1,0 +1,46 @@
+﻿@{
+	Layout = "_BlankLayout";
+	ViewData["Title"] = "Editor - LevelImposter";
+}
+
+<!--    Headers    -->
+<div class="header-1">
+	<a href="/"><img src="~/img/favicon.png" /></a>
+	<a href="#" class="text-dark ml-2">Untitled Map</a>
+</div>
+<div class="header-2 gborder">
+
+</div>
+
+<!--    Left Panel    -->
+<div class="panel float-left panel-transition" id="left-panel">
+
+</div>
+<button class="close-btn left-btn panel-transition" id="left-btn">
+	<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16">
+		<path d="M3.86 8.753l5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z" />
+	</svg>
+</button>
+
+<!--    Right Panel    -->
+<div class="panel float-right panel-transition" id="right-panel">
+	<select class="custom-select item-select" id="item-dropdown">
+	</select>
+	<div class="item-list">
+		<div class="list-group" id="item-list">
+		</div>
+	</div>
+</div>
+<button class="close-btn right-btn panel-transition" id="right-btn">
+	<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">
+		<path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
+	</svg>
+</button>
+
+<!--    Canvas    -->
+<canvas id="licanvas" class="canvas"></canvas>
+
+<!--    Javascript    -->
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script type="module" src="~/js/LevelImposter.js" asp-append-version="true"></script>
