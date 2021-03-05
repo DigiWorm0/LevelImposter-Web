@@ -1,9 +1,11 @@
 import { InputHandler } from "../input/InputHandler.js";
 import { UnityScale, ZoomDelta } from "./Constants.js";
 export class Camera {
-    constructor() {
-        this.x = 0;
-        this.y = 0;
+    constructor(_w, _h) {
+        this.x = _w / -2;
+        this.y = _h / -2;
+        this.w = _w;
+        this.h = _h;
         this.isDragging = false;
         this.zoom = 1;
         // Scrolling (Zoom)
@@ -12,9 +14,13 @@ export class Camera {
     _updateZoom(e) {
         if (e.deltaY > 0) {
             this.zoom *= ZoomDelta;
+            this.x = ((this.x + (this.w / 2)) * ZoomDelta) - (this.w / 2);
+            this.y = ((this.y + (this.h / 2)) * ZoomDelta) - (this.h / 2);
         }
         else if (e.deltaY < 0) {
             this.zoom /= ZoomDelta;
+            this.x = ((this.x + (this.w / 2)) / ZoomDelta) - (this.w / 2);
+            this.y = ((this.y + (this.h / 2)) / ZoomDelta) - (this.h / 2);
         }
     }
     updatePosition() {
@@ -37,9 +43,10 @@ export class Camera {
         }
     }
     getMouse() {
+        document.getElementById("debug").innerText = (((InputHandler.mouse.x + this.x) * UnityScale) / this.zoom).toString();
         return {
-            x: (InputHandler.mouse.x + this.x) * UnityScale,
-            y: (InputHandler.mouse.y + this.y) * UnityScale
+            x: ((InputHandler.mouse.x + this.x) * UnityScale) / this.zoom,
+            y: ((InputHandler.mouse.y + this.y) * UnityScale) / this.zoom
         };
     }
     getUnscaledMouse() {

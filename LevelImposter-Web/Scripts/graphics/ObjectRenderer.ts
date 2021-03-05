@@ -11,9 +11,7 @@ export class ObjectRenderer {
 	cam: Camera;
 
 	constructor(_ctx: CanvasRenderingContext2D, w: number, h: number) {
-		this.cam = new Camera();
-		this.cam.x = (w / -2);
-		this.cam.y = (h / -2);
+		this.cam = new Camera(w, h);
 
 		this.ctx = _ctx;
 		this.canvasWidth = w;

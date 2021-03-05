@@ -2,9 +2,7 @@ import { Camera } from '../models/Camera.js';
 import { UnityScale } from '../models/Constants.js';
 export class ObjectRenderer {
     constructor(_ctx, w, h) {
-        this.cam = new Camera();
-        this.cam.x = (w / -2);
-        this.cam.y = (h / -2);
+        this.cam = new Camera(w, h);
         this.ctx = _ctx;
         this.canvasWidth = w;
         this.canvasHeight = h;
