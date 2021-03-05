@@ -14,8 +14,8 @@ export class MapHandler {
 		return this.map.objs.length - 1;
 	}
 
-	static addExisting(type: string): number {
-		this.map.objs.push(new Object("New Object", 0, 0, "existing", type, new Sprite("/Sprites/" + type + ".png")));
+	static addExisting(name: string, type: string): number {
+		this.map.objs.push(new Object(name, 0, 0, "existing", type, new Sprite("/Sprites/" + type + ".png")));
 		return this.map.objs.length - 1;
 	}
 }

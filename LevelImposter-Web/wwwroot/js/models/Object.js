@@ -4,8 +4,10 @@ export class Object {
         this.name = _name;
         this.x = _x;
         this.y = _y;
+        this.z = 0;
         this.xScale = 1;
         this.yScale = 1;
+        this.rotation = 0;
         this.type = _type;
         this.data = _data;
         this.sprite = _sprite;

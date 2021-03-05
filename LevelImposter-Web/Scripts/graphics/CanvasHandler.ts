@@ -45,7 +45,6 @@ export class CanvasHandler {
 		this.canvas.height = window.innerHeight - 120;
 		this.canvas.width = window.innerWidth;
 		if (this.objRender) {
-			console.log("dd");
 			this.objRender.canvasWidth = this.canvas.width;
 			this.objRender.canvasHeight = this.canvas.height;
 		}

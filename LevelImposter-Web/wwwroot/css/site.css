@@ -56,6 +56,12 @@ footer {
     .header-1 img {
         height: 60px;
     }
+    .header-1 input {
+        width:300px;
+        display: inline;
+        font-size:14px;
+        display: none;
+    }
 .header-2 {
     background-color: #e9e9e9;
     height: 60px;
@@ -65,6 +71,11 @@ footer {
     border-width: 0px;
     border-bottom-width: 1px;
 }
+    .header-2 button {
+        margin-top: 10px;
+        margin-right: 10px;
+    }
+
 .no-overflow {
     overflow: hidden;
 }
@@ -72,7 +83,7 @@ footer {
 /*    Panels    */
 .panel {
     background-color: #e9e9e9;
-    width: 250px;
+    width: 350px;
     height: calc(100vh - 120px);
     text-align: center;
     padding: 10px;
@@ -112,7 +123,7 @@ footer {
 
 /*    Left Button    */
 .left-btn {
-    left: 240px;
+    left: 340px;
 }
 .close-left {
     transform: translate(-100%);
@@ -124,7 +135,7 @@ footer {
 
 /*    Right Button    */
 .right-btn {
-    right: 240px;
+    right: 340px;
 }
 .close-right {
     transform: translate(100%);
@@ -148,7 +159,7 @@ footer {
 
 /*    Inner Panel    */
 .inner-panel {
-    overflow-y: scroll;
+    overflow-y: auto;
     margin-top: 10px;
     height: 100%;
 }
@@ -157,7 +168,39 @@ footer {
 .bigger {
     font-size: 20px;
 }
-    #bigger img {
-        max-width: 35px;
-        max-height: 35px;
+    .bigger img {
+        min-height:30px;
+        max-width:50px;
     }
+
+/*    Properties    */
+.prop-side {
+    width: 100%;
+    font-size:14px;
+    text-align:left;
+}
+    .prop-side input {
+        width:20%;
+        margin:2px;
+        margin-right:8px;
+    }
+    .prop-side p {
+        width: 60px;
+        display:inline-block;
+        margin:0;
+    }
+
+br {
+    display: block;
+    margin: 1px 0;
+}
+
+/*    Disable Number Arrows    */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type=number] {
+    -moz-appearance: textfield;
+}

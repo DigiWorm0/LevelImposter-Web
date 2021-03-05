@@ -6,8 +6,10 @@ export class Object {
 	name: string;
 	x: number;
 	y: number;
+	z: number;
 	xScale: number;
 	yScale: number;
+	rotation: number;
 	type: string;
 	data: string;
 	sprite: Sprite;
@@ -16,8 +18,10 @@ export class Object {
 		this.name = _name;
 		this.x = _x;
 		this.y = _y;
+		this.z = 0;
 		this.xScale = 1;
 		this.yScale = 1;
+		this.rotation = 0;
 		this.type = _type;
 		this.data = _data;
 		this.sprite = _sprite;
