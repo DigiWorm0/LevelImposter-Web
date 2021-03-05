@@ -52,7 +52,6 @@ export class MouseHandler {
         });
     }
     setCursor(type) {
-        console.log(type);
         $("body").css("cursor", type);
     }
 }

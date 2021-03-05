@@ -1,11 +1,13 @@
-﻿import { MapRenderer } from './MapRenderer.js';
+﻿import { GridRenderer } from './GridRenderer.js';
+import { MapRenderer } from './MapRenderer.js';
 import { ObjectRenderer } from './ObjectRenderer.js'
 import { SelectRenderer } from './SelectRenderer.js';
 
 export class CanvasHandler {
-	objRender: ObjectRenderer;
-	mapRender: MapRenderer;
+	objRender:  ObjectRenderer;
+	mapRender:  MapRenderer;
 	selRender: SelectRenderer;
+	gridRender: GridRenderer;
 
 	canvas: HTMLCanvasElement;
 	ctx: CanvasRenderingContext2D;
@@ -30,6 +32,10 @@ export class CanvasHandler {
 		);
 
 		this.selRender = new SelectRenderer(
+			this.objRender
+		);
+
+		this.gridRender = new GridRenderer(
 			this.objRender
 		);
 	}

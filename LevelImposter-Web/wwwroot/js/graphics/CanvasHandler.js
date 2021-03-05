@@ -1,3 +1,4 @@
+import { GridRenderer } from './GridRenderer.js';
 import { MapRenderer } from './MapRenderer.js';
 import { ObjectRenderer } from './ObjectRenderer.js';
 import { SelectRenderer } from './SelectRenderer.js';
@@ -13,6 +14,7 @@ export class CanvasHandler {
         // Init Map Renderer
         this.mapRender = new MapRenderer(this.objRender);
         this.selRender = new SelectRenderer(this.objRender);
+        this.gridRender = new GridRenderer(this.objRender);
     }
     resize() {
         this.canvas = document.getElementById('licanvas');

@@ -4,7 +4,7 @@ import { ObjectRenderer } from "./ObjectRenderer.js";
 
 export class SelectRenderer {
 	renderer: ObjectRenderer;
-		selection: SelectHandler;
+	selection: SelectHandler;
 	dragger: DragHandler;
 
 	constructor(_renderer: ObjectRenderer) {

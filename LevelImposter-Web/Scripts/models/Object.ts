@@ -1,5 +1,6 @@
 ﻿import { Sprite } from 'Sprite.js'
 import { Rect } from 'Rect.js'
+import { UnityScale } from './Constants.js';
 
 export class Object {
 	x: number;
@@ -24,8 +25,8 @@ export class Object {
 		return {
 			x: this.x,
 			y: this.y,
-			w: this.xScale * this.sprite.w,
-			h: this.yScale * this.sprite.h
+			w: this.xScale * this.sprite.w * UnityScale,
+			h: this.yScale * this.sprite.h * UnityScale
 		};
 	}
 };

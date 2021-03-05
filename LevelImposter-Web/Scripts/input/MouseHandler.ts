@@ -66,7 +66,6 @@
 	}
 
 	setCursor(type: string) {
-		console.log(type);
 		$("body").css("cursor", type);
 	}
 }

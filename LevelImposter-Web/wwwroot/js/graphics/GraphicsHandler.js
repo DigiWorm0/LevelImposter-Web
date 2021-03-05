@@ -9,6 +9,7 @@ export class Graphics {
     draw() {
         this.canvas.objRender.cam.updatePosition(); // Update Camera
         this.canvas.clear(); // Clear
+        this.canvas.gridRender.drawGrid(); // Draw Grid
         this.canvas.mapRender.drawMap(); // Draw Map
         this.canvas.selRender.drawSelection(); // Draw Selection
     }
