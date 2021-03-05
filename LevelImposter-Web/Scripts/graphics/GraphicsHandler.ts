@@ -1,6 +1,5 @@
 ﻿import { CanvasHandler } from './CanvasHandler.js'
 import { LoopHandler } from './LoopHandler.js';
-import { MapRenderer } from './MapRenderer.js';
 
 export class Graphics {
 	canvas: CanvasHandler;

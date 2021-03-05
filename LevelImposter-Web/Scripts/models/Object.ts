@@ -3,6 +3,7 @@ import { Rect } from 'Rect.js'
 import { UnityScale } from './Constants.js';
 
 export class Object {
+	name: string;
 	x: number;
 	y: number;
 	xScale: number;
@@ -11,7 +12,8 @@ export class Object {
 	data: string;
 	sprite: Sprite;
 
-	constructor(_x:number, _y:number, _type: string, _data:string, _sprite: Sprite) {
+	constructor(_name:string, _x: number, _y: number, _type: string, _data: string, _sprite: Sprite) {
+		this.name = _name;
 		this.x = _x;
 		this.y = _y;
 		this.xScale = 1;

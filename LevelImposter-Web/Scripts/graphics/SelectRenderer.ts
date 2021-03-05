@@ -20,12 +20,18 @@ export class SelectRenderer {
 		let select = this.selection.getSelection();
 		let hover  = this.selection.getHover();
 
-		if (this.selection.isSelected) {
+		if (this.selection.isSelected && this.selection.hoverIndex != this.selection.selectIndex) {
 			this.renderer.drawRect(
 				select.getRect(),
-				"#1a73e8"
+				"#1772e8"
+			);
+		} else if (this.selection.isSelected) {
+			this.renderer.drawRect(
+				select.getRect(),
+				"#74aaf1"
 			);
 		}
+
 		if (this.selection.isHover && this.selection.hoverIndex != this.selection.selectIndex) {
 			this.renderer.drawRect(
 				hover.getRect(),

@@ -49,7 +49,6 @@ export class UIHandler {
         for (let itemID in ItemDB[value]) {
             let itemImg = document.createElement("img");
             itemImg.src = "/Sprites/" + itemID + ".png";
-            itemImg.classList.add("item-img");
             let itemOption = document.createElement("button");
             itemOption.append(itemImg);
             itemOption.innerHTML += ItemDB[value][itemID];
@@ -61,6 +60,29 @@ export class UIHandler {
             };
             $("#item-list").append(itemOption);
         }
+    }
+    loadItemProperties(item) {
+        // Property Name
+        let titleCard = document.createElement("div");
+        titleCard.classList.add("list-group-item");
+        titleCard.classList.add("bigger");
+        let itemImg = document.createElement("img");
+        itemImg.src = item.sprite.data;
+        itemImg.classList.add("item-img");
+        titleCard.append(itemImg);
+        titleCard.innerHTML += item.name;
+        // Property Data
+        let dataCard = document.createElement("div");
+        dataCard.classList.add("list-group-item");
+        dataCard.innerHTML += "eee";
+        // Output
+        $("#prop-name").empty();
+        $("#prop-name").append(titleCard);
+        $("#prop-name").append(dataCard);
+    }
+    clearItemProperties() {
+        $("#prop-name").empty();
+        $("#prop-list").empty();
     }
 }
 //# sourceMappingURL=UIHandler.js.map

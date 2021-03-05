@@ -61,7 +61,6 @@ export class Camera {
 	}
 
 	getMouse(): Vector2 {
-		document.getElementById("debug").innerText = (((InputHandler.mouse.x + this.x) * UnityScale) / this.zoom).toString();
 		return {
 			x: ((InputHandler.mouse.x + this.x) * UnityScale) / this.zoom,
 			y: ((InputHandler.mouse.y + this.y) * UnityScale) / this.zoom

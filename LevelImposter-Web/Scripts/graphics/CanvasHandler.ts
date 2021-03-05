@@ -17,7 +17,7 @@ export class CanvasHandler {
 		this.canvas = document.getElementById('licanvas') as HTMLCanvasElement;
 		this.ctx = this.canvas.getContext('2d');
 		this.resize();
-		window.onresize = this.resize;
+		window.onresize = this.resize.bind(this);
 
 		// Init Object Renderer
 		this.objRender = new ObjectRenderer(
@@ -44,6 +44,11 @@ export class CanvasHandler {
 		this.canvas = document.getElementById('licanvas') as HTMLCanvasElement;
 		this.canvas.height = window.innerHeight - 120;
 		this.canvas.width = window.innerWidth;
+		if (this.objRender) {
+			console.log("dd");
+			this.objRender.canvasWidth = this.canvas.width;
+			this.objRender.canvasHeight = this.canvas.height;
+		}
 	}
 
 	clear() {

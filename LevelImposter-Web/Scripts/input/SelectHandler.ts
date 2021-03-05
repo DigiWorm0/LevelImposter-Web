@@ -4,6 +4,7 @@ import { Object } from '../models/Object.js';
 import { InputHandler } from './InputHandler.js';
 
 export class SelectHandler {
+	freezeSelection: boolean;
 	isSelected: boolean;
 	isHover: boolean;
 	hoverIndex: number;
@@ -11,6 +12,7 @@ export class SelectHandler {
 	cam: Camera;
 
 	constructor(_cam: Camera) {
+		this.freezeSelection = false;
 		this.isSelected = false;
 		this.isHover = false;
 		this.hoverIndex = -1;
@@ -23,9 +25,15 @@ export class SelectHandler {
 			this.hoverIndex = this._findMapElements();
 			this.isHover = this.hoverIndex != -1;
 
-			if (InputHandler.mouse.left) {
+			if (InputHandler.mouse.left && !this.freezeSelection) {
 				this.selectIndex = this.hoverIndex;
 				this.isSelected = this.selectIndex != -1;
+
+				if (this.isSelected) {
+					InputHandler.ui.loadItemProperties(this.getSelection());
+				} else {
+					InputHandler.ui.clearItemProperties();
+				}
 			}
 		} else {
 			this.hoverIndex = -1;

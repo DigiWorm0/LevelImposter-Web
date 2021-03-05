@@ -1,6 +1,7 @@
 import { UnityScale } from './Constants.js';
 export class Object {
-    constructor(_x, _y, _type, _data, _sprite) {
+    constructor(_name, _x, _y, _type, _data, _sprite) {
+        this.name = _name;
         this.x = _x;
         this.y = _y;
         this.xScale = 1;
