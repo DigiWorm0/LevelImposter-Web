@@ -6,13 +6,13 @@ export class UploadHandler {
         UploadHandler.callback = callback_;
     }
     static _onUpload() {
+        $("#upload-bg").hide();
+        $("#upload-window").hide();
         let files = $("#file-input").prop('files');
         if (files.length > 0) {
             let file = files[0];
             UploadHandler.callback(file);
         }
-        $("#upload-bg").hide();
-        $("#upload-window").hide();
     }
 }
 //# sourceMappingURL=UploadHandler.js.map

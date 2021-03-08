@@ -16,6 +16,11 @@ export class MapHandler {
         this.map.objs.push(new Object(name, 0, 0, "existing", type, new Sprite("/Sprites/" + type + ".png")));
         return this.map.objs.length - 1;
     }
+    static delete(obj) {
+        let index = this.map.objs.indexOf(obj);
+        if (index >= 0)
+            this.map.objs.splice(index, 1);
+    }
     static export() {
         // Turn Map into a String
         function replacer(key, value) {

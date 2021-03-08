@@ -12,13 +12,13 @@ export class SelectRenderer {
         let select = this.selection.getSelection();
         let hover = this.selection.getHover();
         if (this.selection.isSelected && this.selection.hoverIndex != this.selection.selectIndex) {
-            this.renderer.drawRect(select.getRect(), "#1772e8");
+            this.renderer.drawRect(select.getRect(), select.rotation, "#1772e8");
         }
         else if (this.selection.isSelected) {
-            this.renderer.drawRect(select.getRect(), "#74aaf1");
+            this.renderer.drawRect(select.getRect(), select.rotation, "#74aaf1");
         }
         if (this.selection.isHover && this.selection.hoverIndex != this.selection.selectIndex) {
-            this.renderer.drawRect(hover.getRect(), "#b9b9b9");
+            this.renderer.drawRect(hover.getRect(), hover.rotation, "#b9b9b9");
         }
     }
 }

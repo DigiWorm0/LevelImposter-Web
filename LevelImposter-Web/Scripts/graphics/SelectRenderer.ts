@@ -23,11 +23,13 @@ export class SelectRenderer {
 		if (this.selection.isSelected && this.selection.hoverIndex != this.selection.selectIndex) {
 			this.renderer.drawRect(
 				select.getRect(),
+				select.rotation,
 				"#1772e8"
 			);
 		} else if (this.selection.isSelected) {
 			this.renderer.drawRect(
 				select.getRect(),
+				select.rotation,
 				"#74aaf1"
 			);
 		}
@@ -35,6 +37,7 @@ export class SelectRenderer {
 		if (this.selection.isHover && this.selection.hoverIndex != this.selection.selectIndex) {
 			this.renderer.drawRect(
 				hover.getRect(),
+				hover.rotation,
 				"#b9b9b9"
 			);
 		}

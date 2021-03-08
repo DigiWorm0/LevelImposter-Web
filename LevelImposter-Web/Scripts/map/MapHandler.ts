@@ -22,6 +22,12 @@ export class MapHandler {
 		return this.map.objs.length - 1;
 	}
 
+	static delete(obj: Object): void {
+		let index = this.map.objs.indexOf(obj);
+		if (index >= 0)
+			this.map.objs.splice(index, 1);
+	}
+
 	static export(): void {
 		// Turn Map into a String
 		function replacer(key: string, value: any): any {

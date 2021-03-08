@@ -32,24 +32,32 @@ export class ObjectRenderer {
         this.ctx.lineTo(bounds2.x, bounds2.y);
         this.ctx.stroke();
     }
-    drawRect(r, strokeColor, fillColor = "") {
+    drawRect(r, rotation, strokeColor, fillColor = "") {
         this.ctx.beginPath();
         this.ctx.strokeStyle = strokeColor;
         this.ctx.fillStyle = fillColor;
         this.ctx.lineWidth = 1;
         let bounds = this._calcCamOffset(r);
         // Draw
+        this.ctx.save();
+        this.ctx.translate(bounds.x + (bounds.w / 2), bounds.y + (bounds.h / 2));
+        this.ctx.rotate(rotation * (Math.PI / 180.0));
         if (fillColor === "") {
-            this.ctx.rect(bounds.x, bounds.y, bounds.w, bounds.h);
+            this.ctx.rect(-bounds.w / 2, -bounds.h / 2, bounds.w, bounds.h);
         }
         else {
-            this.ctx.fillRect(bounds.x, bounds.y, bounds.w, bounds.h);
+            this.ctx.fillRect(-bounds.w / 2, -bounds.h / 2, bounds.w, bounds.h);
         }
         this.ctx.stroke();
+        this.ctx.restore();
     }
     drawObj(obj) {
         let bounds = this._calcCamOffset(obj.getRect());
-        this.ctx.drawImage(obj.sprite.img, bounds.x, bounds.y, bounds.w, bounds.h);
+        this.ctx.save();
+        this.ctx.translate(bounds.x + (bounds.w / 2), bounds.y + (bounds.h / 2));
+        this.ctx.rotate(obj.rotation * (Math.PI / 180.0));
+        this.ctx.drawImage(obj.sprite.img, -bounds.w / 2, -bounds.h / 2, bounds.w, bounds.h);
+        this.ctx.restore();
     }
     clear() {
         this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);

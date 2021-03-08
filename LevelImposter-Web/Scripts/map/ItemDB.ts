@@ -54,5 +54,36 @@
         "util-vitals": "Vitals",
         "util-cams": "Cameras",
         "util-computer": "Freeplay Laptop"
+    },
+    "Rooms": {
+        "polus-admin": "Polus Admin",
+        "polus-electric": "Polus Electric",
+        "polus-comms": "Polus Comms",
+        "polus-medbay": "Polus Medbay",
+        "polus-o2": "Polus O2",
+        "polus-specimen": "Polus Specimen",
+        "polus-specimen-hallway-1": "Polus Hallway 1",
+        "polus-specimen-hallway-2": "Polus Hallway 2",
+        "polus-storage": "Polus Storage",
+        "polus-weapons": "Polus Weapons",
+        "skeld-cafe": "Skeld Cafe",
+        "skeld-electric": "Skeld Electric",
+        "skeld-engine-1": "Skeld Engine 1",
+        "skeld-engine-2": "Skeld Engine 2",
+        "skeld-medbay": "Skeld Medbay",
+        "skeld-nav-hallway": "Skeld Hallway 1",
+        "skeld-reactor-hallway": "Skeld Hallway 2",
+        "skeld-admin-hallway": "Skeld Hallway 3",
+        "skeld-security": "Skeld Security",
+        "skeld-storage": "Skeld Storage",
+    },
+    "Decoration": {
+        "rock1": "Rock 1",
+        "rock2": "Rock 2",
+        "rock3": "Rock 3",
+        "rock4": "Rock 4",
+        "rock5": "Rock 5",
+        "snowman": "Snowman",
+        "dead-snowman": "Dead Snowman"
     }
 };

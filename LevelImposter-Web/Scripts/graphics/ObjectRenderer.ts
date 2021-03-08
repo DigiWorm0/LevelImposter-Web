@@ -46,7 +46,7 @@ export class ObjectRenderer {
 		this.ctx.stroke();
 	}
 
-	drawRect(r: Rect, strokeColor: string, fillColor: string = ""): void {
+	drawRect(r: Rect, rotation: number, strokeColor: string, fillColor: string = ""): void {
 		this.ctx.beginPath();
 		this.ctx.strokeStyle = strokeColor;
 		this.ctx.fillStyle = fillColor;
@@ -54,33 +54,41 @@ export class ObjectRenderer {
 		let bounds = this._calcCamOffset(r);
 
 		// Draw
+		this.ctx.save();
+		this.ctx.translate(bounds.x + (bounds.w / 2), bounds.y + (bounds.h / 2));
+		this.ctx.rotate(rotation * (Math.PI / 180.0));
 		if (fillColor === "") {
 			this.ctx.rect(
-				bounds.x,
-				bounds.y,
+				-bounds.w / 2,
+				-bounds.h / 2,
 				bounds.w,
 				bounds.h
 			);
 		} else {
 			this.ctx.fillRect(
-				bounds.x,
-				bounds.y,
+				-bounds.w / 2,
+				-bounds.h / 2,
 				bounds.w,
 				bounds.h
 			);
 		}
 		this.ctx.stroke();
+		this.ctx.restore();
 	}
 
 	drawObj(obj: Object): void {
 		let bounds = this._calcCamOffset(obj.getRect());
+		this.ctx.save();
+		this.ctx.translate(bounds.x + (bounds.w / 2), bounds.y + (bounds.h / 2));
+		this.ctx.rotate(obj.rotation * (Math.PI / 180.0));
 		this.ctx.drawImage(
 			obj.sprite.img,
-			bounds.x,
-			bounds.y,
+			-bounds.w / 2,
+			-bounds.h / 2,
 			bounds.w,
 			bounds.h
 		);
+		this.ctx.restore();
 	}
 
 	clear(): void {

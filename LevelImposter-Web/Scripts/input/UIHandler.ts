@@ -3,9 +3,7 @@ import { MapHandler } from '../map/MapHandler.js'
 import { Object } from '../models/Object.js'
 
 export class UIHandler {
-	leftPanel: boolean;
-	rightPanel: boolean;
-
+	deletedSelection: boolean;
 	currentItem: Object;
 
 	constructor() {
@@ -20,6 +18,12 @@ export class UIHandler {
 
 		$("#map-name-input").focusout(this.setMapName);
 
+		$("#trash").click((() => {
+			MapHandler.delete(this.currentItem);
+			this.clearItemProperties();
+			this.deletedSelection = true;
+		}).bind(this));
+		this.deletedSelection = false;
 	}
 
 	/*    Map Title    */
@@ -38,7 +42,6 @@ export class UIHandler {
 
 	/*    Left & Right Panels    */
 	toggleLeftPanel() {
-		this.leftPanel = !this.leftPanel;
 		if ($("#left-panel").hasClass("close-left")) {
 			$("#left-panel").removeClass("close-left");
 			$("#left-btn").removeClass("close-left-btn");
@@ -48,7 +51,6 @@ export class UIHandler {
 		}
 	}
 	toggleRightPanel() {
-		this.rightPanel = !this.rightPanel;
 		if ($("#right-panel").hasClass("close-right")) {
 			$("#right-panel").removeClass("close-right");
 			$("#right-btn").removeClass("close-right-btn");
@@ -168,6 +170,9 @@ export class UIHandler {
 		$("#xSInput").change(this.setItemProperties.bind(this));
 		$("#ySInput").change(this.setItemProperties.bind(this));
 		$("#zRInput").change(this.setItemProperties.bind(this));
+
+		// Header
+		$("#trash").prop("disabled", false);
 	}
 	updateItemProperties(item: Object) {
 		$("#xInput").val(item.x);
@@ -177,14 +182,18 @@ export class UIHandler {
 		this.currentItem = undefined;
 		$("#prop-name").empty();
 		$("#prop-list").empty();
+		$("#trash").prop("disabled", true);
 	}
 	setItemProperties() {
-		this.currentItem.x = $("#xInput").val() as number;
-		this.currentItem.y = $("#yInput").val() as number;
-		this.currentItem.z = $("#zInput").val() as number;
-		this.currentItem.xScale = $("#xSInput").val() as number;
-		this.currentItem.yScale = $("#ySInput").val() as number;
-		this.currentItem.rotation = $("#zRInput").val() as number;
-
+		//console.log("Before");
+		//console.log(this.currentItem);
+		this.currentItem.x = parseFloat($("#xInput").val() as string);
+		this.currentItem.y = parseFloat($("#yInput").val() as string);
+		this.currentItem.z = parseFloat($("#zInput").val() as string);
+		this.currentItem.xScale = parseFloat($("#xSInput").val() as string);
+		this.currentItem.yScale = parseFloat($("#ySInput").val() as string);
+		this.currentItem.rotation = parseFloat($("#zRInput").val() as string);
+		//console.log("After");
+		//console.log(this.currentItem);
 	}
 }

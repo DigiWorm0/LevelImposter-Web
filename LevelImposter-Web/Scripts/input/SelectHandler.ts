@@ -21,6 +21,10 @@ export class SelectHandler {
 	}
 
 	update(): void {
+		if (InputHandler.ui.deletedSelection) {
+			InputHandler.ui.deletedSelection = false;
+			this.isSelected = false;
+		}
 		if (InputHandler.mouse.hover) {
 			this.hoverIndex = this._findMapElements();
 			this.isHover = this.hoverIndex != -1;

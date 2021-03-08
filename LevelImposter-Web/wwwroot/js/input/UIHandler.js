@@ -8,6 +8,12 @@ export class UIHandler {
         $("#right-btn").click(this.toggleRightPanel);
         $("#map-name").click(this.renameMap);
         $("#map-name-input").focusout(this.setMapName);
+        $("#trash").click((() => {
+            MapHandler.delete(this.currentItem);
+            this.clearItemProperties();
+            this.deletedSelection = true;
+        }).bind(this));
+        this.deletedSelection = false;
     }
     /*    Map Title    */
     renameMap() {
@@ -24,7 +30,6 @@ export class UIHandler {
     }
     /*    Left & Right Panels    */
     toggleLeftPanel() {
-        this.leftPanel = !this.leftPanel;
         if ($("#left-panel").hasClass("close-left")) {
             $("#left-panel").removeClass("close-left");
             $("#left-btn").removeClass("close-left-btn");
@@ -35,7 +40,6 @@ export class UIHandler {
         }
     }
     toggleRightPanel() {
-        this.rightPanel = !this.rightPanel;
         if ($("#right-panel").hasClass("close-right")) {
             $("#right-panel").removeClass("close-right");
             $("#right-btn").removeClass("close-right-btn");
@@ -143,6 +147,8 @@ export class UIHandler {
         $("#xSInput").change(this.setItemProperties.bind(this));
         $("#ySInput").change(this.setItemProperties.bind(this));
         $("#zRInput").change(this.setItemProperties.bind(this));
+        // Header
+        $("#trash").prop("disabled", false);
     }
     updateItemProperties(item) {
         $("#xInput").val(item.x);
@@ -152,14 +158,19 @@ export class UIHandler {
         this.currentItem = undefined;
         $("#prop-name").empty();
         $("#prop-list").empty();
+        $("#trash").prop("disabled", true);
     }
     setItemProperties() {
-        this.currentItem.x = $("#xInput").val();
-        this.currentItem.y = $("#yInput").val();
-        this.currentItem.z = $("#zInput").val();
-        this.currentItem.xScale = $("#xSInput").val();
-        this.currentItem.yScale = $("#ySInput").val();
-        this.currentItem.rotation = $("#zRInput").val();
+        //console.log("Before");
+        //console.log(this.currentItem);
+        this.currentItem.x = parseFloat($("#xInput").val());
+        this.currentItem.y = parseFloat($("#yInput").val());
+        this.currentItem.z = parseFloat($("#zInput").val());
+        this.currentItem.xScale = parseFloat($("#xSInput").val());
+        this.currentItem.yScale = parseFloat($("#ySInput").val());
+        this.currentItem.rotation = parseFloat($("#zRInput").val());
+        //console.log("After");
+        //console.log(this.currentItem);
     }
 }
 //# sourceMappingURL=UIHandler.js.map
