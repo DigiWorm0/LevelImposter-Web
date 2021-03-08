@@ -204,3 +204,34 @@ input::-webkit-inner-spin-button {
 input[type=number] {
     -moz-appearance: textfield;
 }
+
+/*    Upload    */
+.upload-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    opacity:.4;
+    display: none;
+}
+.upload-window {
+    display: none;
+    position:absolute;
+    background-color:white;
+    top:30vh;
+    left:35vw;
+    width:auto;
+    height:auto;
+    border-radius:2px;
+    text-align:center;
+    padding:20px;
+}
+    .upload-window input {
+        margin:10px;
+        width:90%;
+    }
+    .upload-window button {
+        width:70%;
+    }

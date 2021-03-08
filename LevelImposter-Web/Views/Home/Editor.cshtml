@@ -7,12 +7,12 @@
 <div class="header-1">
 	<a href="/"><img src="~/img/favicon.png" /></a>
 	<a href="#" class="text-dark ml-2" id="map-name">Untitled Map</a>
-	<input class="form-control ml-2" id="map-name-input" value="Untitled map" maxlength="30"/>
+	<input class="form-control ml-2" id="map-name-input" value="Untitled map" maxlength="30" />
 	<p class="float-right" id="debug">?</p>
 </div>
 <div class="header-2 gborder">
-	<button type="button" class="btn btn-outline-dark float-right">Import</button>
-	<button type="button" class="btn btn-outline-dark float-right">Export</button>
+	<button type="button" class="btn btn-outline-dark float-right" id="import">Import</button>
+	<button type="button" class="btn btn-outline-dark float-right" id="export">Export</button>
 </div>
 
 <!--    Left Panel    -->
@@ -43,6 +43,14 @@
 
 <!--    Canvas    -->
 <canvas id="licanvas" class="canvas"></canvas>
+
+<!--    Upload    -->
+<div class="upload-bg" id="upload-bg"></div>
+<div class="upload-window" id="upload-window">
+	<h3>Upload</h3>
+	<input class="form-control" type="file" id="file-input" />
+	<button class="btn btn-dark" id="upload-btn">Upload</button>
+</div>
 
 <!--    Javascript    -->
 <script src="~/lib/jquery/dist/jquery.min.js"></script>

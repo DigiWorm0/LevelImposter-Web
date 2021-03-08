@@ -15,6 +15,7 @@ export class UIHandler {
 
 		$("#left-btn").click(this.toggleLeftPanel);
 		$("#right-btn").click(this.toggleRightPanel);
+
 		$("#map-name").click(this.renameMap);
 
 		$("#map-name-input").focusout(this.setMapName);
@@ -59,8 +60,7 @@ export class UIHandler {
 
 	/*    Item Database    */
 	initItemDB() {
-		for (let typeID in ItemDB)
-		{
+		for (let typeID in ItemDB) {
 			let dropdownOption = document.createElement("option");
 			dropdownOption.value = typeID;
 			dropdownOption.text = typeID;
