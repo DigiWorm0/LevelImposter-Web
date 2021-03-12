@@ -54,6 +54,10 @@ export class Camera {
             y: InputHandler.mouse.y + this.y
         };
     }
+    resize(_w, _h) {
+        this.w = _w;
+        this.h = _h;
+    }
 }
 ;
 //# sourceMappingURL=Camera.js.map

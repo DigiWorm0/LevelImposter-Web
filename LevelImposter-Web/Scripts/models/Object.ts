@@ -1,6 +1,8 @@
 ﻿import { Sprite } from 'Sprite.js'
 import { Rect } from 'Rect.js'
 import { UnityScale } from './Constants.js';
+import { Collider } from './Collider.js';
+import { InputHandler } from '../input/InputHandler.js';
 
 export class Object {
 	name: string;
@@ -10,6 +12,9 @@ export class Object {
 	xScale: number;
 	yScale: number;
 	rotation: number;
+
+	colliders: Array<Collider>;
+
 	type: string;
 	data: string;
 	sprite: Sprite;
@@ -22,6 +27,7 @@ export class Object {
 		this.xScale = 1;
 		this.yScale = 1;
 		this.rotation = 0;
+		this.colliders = new Array<Collider>();
 		this.type = _type;
 		this.data = _data;
 		this.sprite = _sprite;
@@ -34,5 +40,16 @@ export class Object {
 			w: this.xScale * this.sprite.w * UnityScale,
 			h: this.yScale * this.sprite.h * UnityScale
 		};
+	}
+
+	addCollider(): void {
+		this.colliders.push(new Collider(this));
+		InputHandler.ui.props.load(this);
+	}
+
+	remCollider(index: number): void {
+		if (index < 0 || index >= this.colliders.length)
+			return;
+		this.colliders.splice(index, 1);
 	}
 };

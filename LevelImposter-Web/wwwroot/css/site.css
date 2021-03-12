@@ -190,7 +190,17 @@ footer {
         display:inline-block;
         margin:0;
     }
+#prop-list {
+    height: calc(100vh - 310px);
+}
+#item-list {
+    height: calc(100vh - 190px);
+}
 
+.collider-prop {
+    margin:0;
+    margin-bottom: 10px;
+}
 br {
     display: block;
     margin: 1px 0;

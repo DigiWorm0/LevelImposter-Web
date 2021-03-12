@@ -73,4 +73,9 @@ export class Camera {
 			y: InputHandler.mouse.y + this.y
 		};
 	}
+
+	resize(_w: number, _h: number) {
+		this.w = _w;
+		this.h = _h;
+	}
 };

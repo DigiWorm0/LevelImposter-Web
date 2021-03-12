@@ -138,8 +138,52 @@ export class UIHandler {
         dataCard.append(panel);
         // Output
         $("#prop-name").empty();
+        $("#prop-list").empty();
         $("#prop-name").append(titleCard);
         $("#prop-name").append(dataCard);
+        // Colliders
+        item.colliders.forEach((collider, index) => {
+            let colliderCard = document.createElement("div");
+            let colliderTitle = document.createElement("div");
+            let colliderContent = document.createElement("div");
+            let colliderCheckbox = document.createElement("input");
+            let colliderTable = document.createElement("table");
+            colliderTitle.classList.add("list-group-item");
+            colliderTitle.classList.add("bigger");
+            colliderTitle.innerText = "Collider " + (index + 1);
+            colliderCheckbox.type = "checkbox";
+            colliderCheckbox.name = "collider" + index + "-checkbox";
+            colliderCheckbox.id = "collider" + index + "-checkbox";
+            colliderTable.classList.add("table");
+            colliderTable.classList.add("table-striped");
+            collider.points.forEach((point, index) => {
+                let tr = document.createElement("tr");
+                let td1 = document.createElement("td");
+                let td2 = document.createElement("td");
+                td1.innerText = index.toString();
+                td2.innerText = point.x + "," + point.y;
+                tr.appendChild(td1);
+                tr.appendChild(td2);
+                colliderTable.appendChild(tr);
+            });
+            colliderContent.classList.add("list-group-item");
+            colliderContent.innerHTML += "Blocks Light? ";
+            colliderContent.appendChild(colliderCheckbox);
+            colliderContent.innerHTML += "Points: ";
+            colliderContent.appendChild(colliderTable);
+            colliderCard.classList.add("collider-prop");
+            colliderCard.appendChild(colliderTitle);
+            colliderCard.appendChild(colliderContent);
+            $("#prop-list").append(colliderCard);
+        });
+        // Collider Button
+        let btn = document.createElement("button");
+        btn.classList.add("btn");
+        btn.classList.add("btn-light");
+        btn.type = "button";
+        btn.innerText = "Add Wall";
+        btn.onclick = item.addCollider.bind(item);
+        $("#prop-list").append(btn);
         // On Change
         $("#xInput").change(this.setItemProperties.bind(this));
         $("#yInput").change(this.setItemProperties.bind(this));

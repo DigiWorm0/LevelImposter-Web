@@ -10,8 +10,8 @@ export class SelectHandler {
         this.cam = _cam;
     }
     update() {
-        if (InputHandler.ui.deletedSelection) {
-            InputHandler.ui.deletedSelection = false;
+        if (InputHandler.ui.props.toolbar.deletedSelection) {
+            InputHandler.ui.props.toolbar.deletedSelection = false;
             this.isSelected = false;
         }
         if (InputHandler.mouse.hover) {
@@ -21,10 +21,10 @@ export class SelectHandler {
                 this.selectIndex = this.hoverIndex;
                 this.isSelected = this.selectIndex != -1;
                 if (this.isSelected) {
-                    InputHandler.ui.loadItemProperties(this.getSelection());
+                    InputHandler.ui.props.load(this.getSelection());
                 }
                 else {
-                    InputHandler.ui.clearItemProperties();
+                    InputHandler.ui.props.clear();
                 }
             }
         }

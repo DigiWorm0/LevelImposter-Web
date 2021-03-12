@@ -47,6 +47,7 @@ export class CanvasHandler {
 		if (this.objRender) {
 			this.objRender.canvasWidth = this.canvas.width;
 			this.objRender.canvasHeight = this.canvas.height;
+			this.objRender.cam.resize(this.canvas.width, this.canvas.height);
 		}
 	}
 
