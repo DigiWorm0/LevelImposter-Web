@@ -1,3 +1,4 @@
+import { ColliderRenderer } from './ColliderRenderer.js';
 import { GridRenderer } from './GridRenderer.js';
 import { MapRenderer } from './MapRenderer.js';
 import { ObjectRenderer } from './ObjectRenderer.js';
@@ -15,6 +16,7 @@ export class CanvasHandler {
         this.mapRender = new MapRenderer(this.objRender);
         this.selRender = new SelectRenderer(this.objRender);
         this.gridRender = new GridRenderer(this.objRender);
+        this.colRender = new ColliderRenderer(this.objRender);
     }
     resize() {
         this.canvas = document.getElementById('licanvas');

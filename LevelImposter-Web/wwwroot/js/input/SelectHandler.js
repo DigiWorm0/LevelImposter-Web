@@ -1,3 +1,4 @@
+import { ColliderEditor } from '../map/ColliderEditor.js';
 import { MapHandler } from '../map/MapHandler.js';
 import { InputHandler } from './InputHandler.js';
 export class SelectHandler {
@@ -17,7 +18,7 @@ export class SelectHandler {
         if (InputHandler.mouse.hover) {
             this.hoverIndex = this._findMapElements();
             this.isHover = this.hoverIndex != -1;
-            if (InputHandler.mouse.left && !this.freezeSelection) {
+            if (InputHandler.mouse.left && !this.freezeSelection && !ColliderEditor.isEditing) {
                 this.selectIndex = this.hoverIndex;
                 this.isSelected = this.selectIndex != -1;
                 if (this.isSelected) {

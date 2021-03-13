@@ -1,4 +1,5 @@
 import { InputHandler } from '../input/InputHandler.js';
+import { ColliderEditor } from '../map/ColliderEditor.js';
 export class ColliderGenerator {
     constructor(_currentItem) {
         this.currentItem = _currentItem;
@@ -41,6 +42,9 @@ export class ColliderGenerator {
         editBtn.type = "button";
         editBtn.innerText = "Edit";
         editBtn.classList.add("m-1");
+        editBtn.onclick = ((() => {
+            ColliderEditor.edit(this.currentItem, index);
+        }).bind(this));
         // Delete Button
         let delBtn = document.createElement("button");
         delBtn.classList.add("btn");

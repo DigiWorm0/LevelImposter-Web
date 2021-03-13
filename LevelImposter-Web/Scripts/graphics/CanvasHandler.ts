@@ -1,4 +1,5 @@
-﻿import { GridRenderer } from './GridRenderer.js';
+﻿import { ColliderRenderer } from './ColliderRenderer.js';
+import { GridRenderer } from './GridRenderer.js';
 import { MapRenderer } from './MapRenderer.js';
 import { ObjectRenderer } from './ObjectRenderer.js'
 import { SelectRenderer } from './SelectRenderer.js';
@@ -8,6 +9,7 @@ export class CanvasHandler {
 	mapRender:  MapRenderer;
 	selRender: SelectRenderer;
 	gridRender: GridRenderer;
+	colRender: ColliderRenderer;
 
 	canvas: HTMLCanvasElement;
 	ctx: CanvasRenderingContext2D;
@@ -36,6 +38,10 @@ export class CanvasHandler {
 		);
 
 		this.gridRender = new GridRenderer(
+			this.objRender
+		);
+
+		this.colRender = new ColliderRenderer(
 			this.objRender
 		);
 	}

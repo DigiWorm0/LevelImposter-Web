@@ -1,3 +1,4 @@
+import { ColliderEditor } from "../map/ColliderEditor.js";
 import { MapHandler } from "../map/MapHandler.js";
 import { InputHandler } from "./InputHandler.js";
 export class DragHandler {
@@ -7,7 +8,7 @@ export class DragHandler {
         this.selectHandler = _selectHandler;
     }
     update() {
-        if (this.selectHandler.isSelected && InputHandler.mouse.left && !this.isDragging) {
+        if (this.selectHandler.isSelected && InputHandler.mouse.left && !this.isDragging && !ColliderEditor.isEditing) {
             // Init Dragging
             let currentMouse = this.selectHandler.cam.getMouse();
             let currentObj = this.selectHandler.getSelection();

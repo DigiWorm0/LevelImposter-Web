@@ -1,4 +1,5 @@
 ﻿import { InputHandler } from '../input/InputHandler.js';
+import { ColliderEditor } from '../map/ColliderEditor.js';
 import { ItemDB } from '../map/ItemDB.js'
 import { MapHandler } from '../map/MapHandler.js'
 import { Collider } from '../models/Collider.js';
@@ -18,7 +19,7 @@ export class ColliderGenerator {
 		// Card
 		let colliderCard = document.createElement("div");
 		colliderCard.classList.add("collider-prop");
-		
+
 		// Title
 		let colliderTitle = document.createElement("div");
 		colliderTitle.classList.add("list-group-item");
@@ -58,6 +59,9 @@ export class ColliderGenerator {
 		editBtn.type = "button";
 		editBtn.innerText = "Edit";
 		editBtn.classList.add("m-1");
+		editBtn.onclick = ((() => {
+			ColliderEditor.edit(this.currentItem, index);
+		}).bind(this));
 
 		// Delete Button
 		let delBtn = document.createElement("button");

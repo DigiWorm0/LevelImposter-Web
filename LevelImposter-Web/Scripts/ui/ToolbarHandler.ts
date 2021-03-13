@@ -7,7 +7,6 @@ export class ToolbarHandler {
 
 	constructor(_currentItem: Object) {
 		this.currentItem = _currentItem;
-
 		$("#trash").click(this.trash.bind(this));
 	}
 

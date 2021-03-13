@@ -3,6 +3,8 @@ import { Rect } from 'Rect.js'
 import { UnityScale } from './Constants.js';
 import { Collider } from './Collider.js';
 import { InputHandler } from '../input/InputHandler.js';
+import { Point } from './Point.js';
+import { ColliderEditor } from '../map/ColliderEditor.js';
 
 export class Object {
 	name: string;
@@ -33,6 +35,9 @@ export class Object {
 		this.sprite = _sprite;
 	}
 
+	/**
+	 * Converts the object into a Rectangle
+	 */
 	getRect(): Rect {
 		return {
 			x: this.x,
@@ -42,14 +47,42 @@ export class Object {
 		};
 	}
 
+	/**
+	 * Gets collider points In reference to the world
+	 * @param index - Index of Collider
+	 */
+	getColliderPts(index: number): Point[] {
+		if (index < 0 || index >= this.colliders.length)
+			return undefined;
+		let pts = this.colliders[index].points;
+		let newPts = new Array<Point>();
+		for (let i = 0; i < pts.length; i++) {
+			let newPt = new Point();
+			newPt.x = pts[i].x + this.x;
+			newPt.y = pts[i].y + this.y;
+			newPts.push(newPt);
+		}
+		return newPts;
+	}
+
+	/**
+	 * Adds a collider to the object
+	 */
 	addCollider(): void {
 		this.colliders.push(new Collider(this));
 		InputHandler.ui.props.load(this);
 	}
 
+	/**
+	 * Deletes collider of the index
+	 * @param index - Index of the collider
+	 */
 	remCollider(index: number): void {
 		if (index < 0 || index >= this.colliders.length)
 			return;
 		this.colliders.splice(index, 1);
+
+		if (ColliderEditor.index == index)
+			ColliderEditor.stop();
 	}
 };

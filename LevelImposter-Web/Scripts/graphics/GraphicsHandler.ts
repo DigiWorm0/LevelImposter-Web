@@ -17,5 +17,6 @@ export class Graphics {
 		this.canvas.gridRender.drawGrid();			// Draw Grid
 		this.canvas.mapRender.drawMap();			// Draw Map
 		this.canvas.selRender.drawSelection();		// Draw Selection
+		this.canvas.colRender.drawCollider();		// Draw Collider
 	}
 }
