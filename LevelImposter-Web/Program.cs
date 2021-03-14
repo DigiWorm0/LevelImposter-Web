@@ -23,8 +23,8 @@ namespace LevelImposter_Web
                 {
                     webBuilder.UseKestrel()
                         .UseContentRoot(Directory.GetCurrentDirectory())
-                        .UseUrls("http://*:5001")
-                        .UseIISIntegration().UseStartup<Startup>();
+                        .UseIISIntegration()
+                        .UseStartup<Startup>();
                 });
     }
 }
