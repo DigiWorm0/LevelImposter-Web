@@ -8,8 +8,8 @@ class LevelImposter {
 	m: MapHandler;
 
 	constructor() {
-		this.m = new MapHandler();
 		this.g = new Graphics();
+		this.m = new MapHandler(this.g.canvas.objRender.cam);
 		this.i = new InputHandler();
 	}
 };

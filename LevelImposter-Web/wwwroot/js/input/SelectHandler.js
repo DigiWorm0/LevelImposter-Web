@@ -12,13 +12,24 @@ export class SelectHandler {
         this.cam = _cam;
     }
     update() {
+        // Deleted Object
         if (InputHandler.ui.props.toolbar.deletedSelection) {
             InputHandler.ui.props.toolbar.deletedSelection = false;
             InputHandler.ui.props.clear();
             InputHandler.ui.props.toolbar.setEnabled(false);
             this.isSelected = false;
         }
-        if (InputHandler.mouse.hover) {
+        // Follow Mouse when Adding a New Object
+        if (MapHandler.isAdding) {
+            let obj = MapHandler.map.objs[MapHandler.map.objs.length - 1];
+            obj.x = this.cam.getMouse().x;
+            obj.y = this.cam.getMouse().y;
+            if (InputHandler.mouse.left) {
+                MapHandler.isAdding = false;
+            }
+        }
+        // Normal Operation
+        if (InputHandler.mouse.hover && !MapHandler.isAdding) {
             this.hoverIndex = this._findMapElements();
             this.isHover = this.hoverIndex != -1;
             if (InputHandler.mouse.left && !this.freezeSelection && !ColliderEditor.isEditing) {

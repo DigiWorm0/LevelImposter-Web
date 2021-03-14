@@ -3,8 +3,8 @@ import { InputHandler } from './input/InputHandler.js';
 import { MapHandler } from './map/MapHandler.js';
 class LevelImposter {
     constructor() {
-        this.m = new MapHandler();
         this.g = new Graphics();
+        this.m = new MapHandler(this.g.canvas.objRender.cam);
         this.i = new InputHandler();
     }
 }
