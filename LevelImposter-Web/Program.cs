@@ -4,6 +4,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,7 +21,10 @@ namespace LevelImposter_Web
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    webBuilder.UseKestrel()
+                        .UseContentRoot(Directory.GetCurrentDirectory())
+                        .UseUrls("http://*:5001")
+                        .UseIISIntegration().UseStartup<Startup>();
                 });
     }
 }

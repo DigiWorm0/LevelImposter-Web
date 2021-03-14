@@ -53,7 +53,8 @@ export const ItemDB = {
         "util-admin": "Admin Table",
         "util-vitals": "Vitals",
         "util-cams": "Cameras",
-        "util-computer": "Freeplay Laptop"
+        "util-computer": "Freeplay Laptop",
+        "util-player": "Spawn Point"
     },
     "Rooms": {
         "polus-admin": "Polus Admin",
