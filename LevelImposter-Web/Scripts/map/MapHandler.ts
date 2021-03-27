@@ -3,6 +3,7 @@ import { Map } from '../models/Map.js'
 import { Sprite } from '../models/Sprite.js'
 import { UploadHandler } from '../input/UploadHandler.js';
 import { Camera } from '../models/Camera.js';
+import { InputHandler } from '../input/InputHandler.js';
 
 export class MapHandler {
 	static map: Map;
@@ -74,6 +75,7 @@ export class MapHandler {
 				if (ready == true) {
 					MapHandler.map = new Map();
 					MapHandler.map.name = json.name;
+					InputHandler.ui.name.setName(json.name);
 					for (let i = 0; i < json.objs.length; i++) {
 						let o = json.objs[i];
 						if (o.type == "existing") {

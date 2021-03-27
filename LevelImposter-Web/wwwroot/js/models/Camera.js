@@ -1,5 +1,5 @@
 import { InputHandler } from "../input/InputHandler.js";
-import { UnityScale, ZoomDelta } from "./Constants.js";
+import { ArrowScale, UnityScale, ZoomDelta } from "./Constants.js";
 export class Camera {
     constructor(_w, _h) {
         this.x = _w / -2;
@@ -24,6 +24,20 @@ export class Camera {
         }
     }
     updatePosition() {
+        // Keyboard
+        if (InputHandler.key.get(40) || InputHandler.key.get(83)) {
+            this.y += ArrowScale / Math.sqrt(this.zoom);
+        }
+        if (InputHandler.key.get(39) || InputHandler.key.get(68)) {
+            this.x += ArrowScale / Math.sqrt(this.zoom);
+        }
+        if (InputHandler.key.get(38) || InputHandler.key.get(87)) {
+            this.y -= ArrowScale / Math.sqrt(this.zoom);
+        }
+        if (InputHandler.key.get(37) || InputHandler.key.get(65)) {
+            this.x -= ArrowScale / Math.sqrt(this.zoom);
+        }
+        // Mouse
         if (InputHandler.mouse.right && !this.isDragging) {
             // Init Dragging
             this.isDragging = true;

@@ -74,14 +74,29 @@ export class PropertiesHandler {
         // Collider Cards
         item.colliders.forEach(this.colliderGen.generateColliderCard.bind(this.colliderGen));
         // Add Collider Button
-        let btn = document.createElement("button");
-        btn.classList.add("btn");
-        btn.classList.add("btn-light");
-        btn.classList.add("mb-2");
-        btn.type = "button";
-        btn.innerText = "Add Wall";
-        btn.onclick = item.addCollider.bind(item);
-        $("#prop-list").append(btn);
+        if (!item.data.startsWith("util-vent")) {
+            let cbtn = document.createElement("button");
+            cbtn.classList.add("btn");
+            cbtn.classList.add("btn-light");
+            cbtn.classList.add("mb-2");
+            cbtn.classList.add("mr-1");
+            cbtn.type = "button";
+            cbtn.innerText = "Add Collider";
+            cbtn.onclick = item.addCollider.bind(item);
+            $("#prop-list").append(cbtn);
+        }
+        // Add Vent Button
+        if (item.data.startsWith("util-vent")) {
+            let vbtn = document.createElement("button");
+            vbtn.classList.add("btn");
+            vbtn.classList.add("btn-light");
+            vbtn.classList.add("mb-2");
+            vbtn.classList.add("ml-1");
+            vbtn.type = "button";
+            vbtn.innerText = "Add Vent Connection";
+            vbtn.onclick = item.addVentConnection.bind(item);
+            $("#prop-list").append(vbtn);
+        }
         // On Change
         $("#xInput").change(this.setValues.bind(this));
         $("#yInput").change(this.setValues.bind(this));

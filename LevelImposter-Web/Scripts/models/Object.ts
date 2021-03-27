@@ -5,6 +5,7 @@ import { Collider } from './Collider.js';
 import { InputHandler } from '../input/InputHandler.js';
 import { Point } from './Point.js';
 import { ColliderEditor } from '../map/ColliderEditor.js';
+import { VentConnection } from './VentConnection.js';
 
 export class Object {
 	name: string;
@@ -16,6 +17,7 @@ export class Object {
 	rotation: number;
 
 	colliders: Array<Collider>;
+	ventConnection: Array<VentConnection>;
 
 	type: string;
 	data: string;
@@ -30,6 +32,7 @@ export class Object {
 		this.yScale = 1;
 		this.rotation = 0;
 		this.colliders = new Array<Collider>();
+		this.ventConnection = new Array<VentConnection>();
 		this.type = _type;
 		this.data = _data;
 		this.sprite = _sprite;
@@ -70,6 +73,14 @@ export class Object {
 	 */
 	addCollider(): void {
 		this.colliders.push(new Collider(this));
+		InputHandler.ui.props.load(this);
+	}
+
+	/**
+	 * Adds a vent connection to the object
+	 */
+	addVentConnection(): void {
+		this.ventConnection.push(new VentConnection());
 		InputHandler.ui.props.load(this);
 	}
 

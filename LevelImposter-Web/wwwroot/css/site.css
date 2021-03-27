@@ -258,3 +258,11 @@ input[type=number] {
     width:16px !important;
     outline: none;
 }
+
+.list-group-item-action {
+    transition-property: border-color;
+    transition-duration: .2s;
+}
+    .list-group-item-action:hover {
+        border-color: #1d95dd;
+    }

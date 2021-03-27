@@ -10,6 +10,11 @@ export class NameHandler {
 		$("#map-name-input").focusout(this.endRename);
 	}
 
+	setName(name: string) {
+		$("#map-name").text(name);
+		$("#map-name-input").val(name);
+	}
+
 	beginRename() {
 		// Hide Text
 		$("#map-name").hide();
