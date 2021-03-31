@@ -1,4 +1,4 @@
-﻿import { InputHandler } from "../input/InputHandler.js";
+import { InputHandler } from "../input/InputHandler.js";
 import { Vector2 } from "./Vector2.js";
 import { ArrowScale, UnityScale, ZoomDelta } from "./Constants.js";
 

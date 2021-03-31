@@ -29,7 +29,7 @@ export class DragHandler {
 			this.selectHandler.freezeSelection = true;
 			this.isDragging = true;
 			InputHandler.mouse.setCursor("move");
-		} else if (this.isDragging && InputHandler.mouse.left) {
+		} else if (this.selectHandler.isSelected && this.isDragging && InputHandler.mouse.left) {
 			// Currently Dragging
 			let currentMouse = this.selectHandler.cam.getMouse();
 			let currentObj = MapHandler.map.objs[this.index];

@@ -9,9 +9,27 @@ export class MapRenderer {
 		this.renderer = _renderer;
 	}
 
-	drawMap() {
-		MapHandler.map.objs.forEach((obj: Object) => {
-			this.renderer.drawObj(obj);
+	drawMap(): void {
+		let arr = MapHandler.map.objs;
+		for (let i = 0; i < arr.length; i++) {
+			if (arr.length - 1 > i) {
+				if (arr[i].z < arr[i + 1].z) {
+					let temp = arr[i];
+					arr[i] = arr[i + 1];
+					arr[i + 1] = temp;
+					this.triggerSwapEvent(i);
+				}
+			}
+			this.renderer.drawObj(arr[i]);
+		}
+	}
+
+	triggerSwapEvent(index: number): void {
+		let evt = new CustomEvent("mapswap", {
+			detail: {
+				index: index
+			}
 		});
+		document.dispatchEvent(evt);
 	}
 }

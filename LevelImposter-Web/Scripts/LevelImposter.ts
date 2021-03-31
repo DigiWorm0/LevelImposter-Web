@@ -1,5 +1,6 @@
 ﻿import { Graphics } from './graphics/GraphicsHandler.js'
 import { InputHandler } from './input/InputHandler.js';
+import { ItemDB } from './map/ItemDB.js';
 import { MapHandler } from './map/MapHandler.js';
 
 class LevelImposter {
@@ -8,9 +9,9 @@ class LevelImposter {
 	m: MapHandler;
 
 	constructor() {
+		this.i = new InputHandler();
 		this.g = new Graphics();
 		this.m = new MapHandler(this.g.canvas.objRender.cam);
-		this.i = new InputHandler();
 	}
 };
 

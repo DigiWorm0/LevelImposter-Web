@@ -1,4 +1,4 @@
-﻿import { ColliderEditor } from '../map/ColliderEditor.js';
+import { ColliderEditor } from '../map/ColliderEditor.js';
 import { MapHandler } from '../map/MapHandler.js';
 import { Camera } from '../models/Camera.js';
 import { Object } from '../models/Object.js';
@@ -20,6 +20,14 @@ export class SelectHandler {
 		this.hoverIndex = -1;
 		this.selectIndex = -1;
 		this.cam = _cam;
+
+		document.addEventListener("mapswap", (e: CustomEvent) => {
+			let index = e.detail.index;
+			if (this.selectIndex == index)
+				this.selectIndex++;
+			else if (this.selectIndex == index + 1)
+				this.selectIndex--;
+		});
 	}
 
 	update(): void {

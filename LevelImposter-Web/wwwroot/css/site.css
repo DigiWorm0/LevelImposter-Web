@@ -266,3 +266,16 @@ input[type=number] {
     .list-group-item-action:hover {
         border-color: #1d95dd;
     }
+
+/*    Undersized    */
+.undersize {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    padding-top:calc(50vh - 50px);
+    background-color: #e9e9e9;
+    text-align:center;
+}

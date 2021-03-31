@@ -10,6 +10,13 @@ export class SelectHandler {
         this.hoverIndex = -1;
         this.selectIndex = -1;
         this.cam = _cam;
+        document.addEventListener("mapswap", (e) => {
+            let index = e.detail.index;
+            if (this.selectIndex == index)
+                this.selectIndex++;
+            else if (this.selectIndex == index + 1)
+                this.selectIndex--;
+        });
     }
     update() {
         // Deleted Object

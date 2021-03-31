@@ -1,4 +1,5 @@
-﻿import { ColliderRenderer } from './ColliderRenderer.js';
+﻿import { MinWidth } from '../models/Constants.js';
+import { ColliderRenderer } from './ColliderRenderer.js';
 import { GridRenderer } from './GridRenderer.js';
 import { MapRenderer } from './MapRenderer.js';
 import { ObjectRenderer } from './ObjectRenderer.js'
@@ -54,6 +55,13 @@ export class CanvasHandler {
 			this.objRender.canvasWidth = this.canvas.width;
 			this.objRender.canvasHeight = this.canvas.height;
 			this.objRender.cam.resize(this.canvas.width, this.canvas.height);
+		}
+
+		let isMobile = /Android|webOS|iPhone|iPad|Mac|Macintosh|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+		if (window.innerWidth < MinWidth || isMobile) {
+			$("#undersize").show();
+		} else {
+			$("#undersize").hide();
 		}
 	}
 
