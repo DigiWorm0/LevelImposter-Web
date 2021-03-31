@@ -6,44 +6,43 @@ import { Point } from '../models/Point.js';
 import { InputHandler } from './InputHandler.js';
 
 export class SelectHandler {
-	freezeSelection: boolean;
-	isSelected: boolean;
-	isHover: boolean;
-	hoverIndex: number;
-	selectIndex: number;
-	cam: Camera;
+	static freezeSelection: boolean;
+	static isSelected: boolean;
+	static isHover: boolean;
+	static hoverIndex: number;
+	static selectIndex: number;
+	static cam: Camera;
 
 	constructor(_cam: Camera) {
-		this.freezeSelection = false;
-		this.isSelected = false;
-		this.isHover = false;
-		this.hoverIndex = -1;
-		this.selectIndex = -1;
-		this.cam = _cam;
-
-		document.addEventListener("mapswap", (e: CustomEvent) => {
-			let index = e.detail.index;
-			if (this.selectIndex == index)
-				this.selectIndex++;
-			else if (this.selectIndex == index + 1)
-				this.selectIndex--;
-		});
+		SelectHandler.freezeSelection = false;
+		SelectHandler.isSelected = false;
+		SelectHandler.isHover = false;
+		SelectHandler.hoverIndex = -1;
+		SelectHandler.selectIndex = -1;
+		SelectHandler.cam = _cam;
 	}
 
-	update(): void {
+	static mapSwap(index: number): void {
+		if (SelectHandler.selectIndex == index)
+			SelectHandler.selectIndex++;
+		else if (SelectHandler.selectIndex == index + 1)
+			SelectHandler.selectIndex--;
+	}
+
+	static update(): void {
 		// Deleted Object
 		if (InputHandler.ui.props.toolbar.deletedSelection) {
 			InputHandler.ui.props.toolbar.deletedSelection = false;
 			InputHandler.ui.props.clear();
 			InputHandler.ui.props.toolbar.setEnabled(false);
-			this.isSelected = false;
+			SelectHandler.isSelected = false;
 		}
 
 		// Follow Mouse when Adding a New Object
 		if (MapHandler.isAdding) {
 			let obj = MapHandler.map.objs[MapHandler.map.objs.length - 1];
-			obj.x = this.cam.getMouse().x;
-			obj.y = this.cam.getMouse().y;
+			obj.x = SelectHandler.cam.getMouse().x;
+			obj.y = SelectHandler.cam.getMouse().y;
 			if (InputHandler.mouse.left) {
 				MapHandler.isAdding = false;
 			}
@@ -51,42 +50,42 @@ export class SelectHandler {
 
 		// Normal Operation
 		if (InputHandler.mouse.hover && !MapHandler.isAdding) {
-			this.hoverIndex = this._findMapElements();
-			this.isHover = this.hoverIndex != -1;
+			SelectHandler.hoverIndex = SelectHandler._findMapElements();
+			SelectHandler.isHover = SelectHandler.hoverIndex != -1;
 
-			if (InputHandler.mouse.left && !this.freezeSelection && !ColliderEditor.isEditing) {
-				this.selectIndex = this.hoverIndex;
-				this.isSelected = this.selectIndex != -1;
+			if (InputHandler.mouse.left && !SelectHandler.freezeSelection && !ColliderEditor.isEditing) {
+				SelectHandler.selectIndex = SelectHandler.hoverIndex;
+				SelectHandler.isSelected = SelectHandler.selectIndex != -1;
 
-				if (this.isSelected) {
+				if (SelectHandler.isSelected) {
 					InputHandler.ui.props.toolbar.setEnabled(true);
-					InputHandler.ui.props.load(this.getSelection());
+					InputHandler.ui.props.load(SelectHandler.getSelection());
 				} else {
 					InputHandler.ui.props.toolbar.setEnabled(false);
 					InputHandler.ui.props.clear();
 				}
 			}
 		} else {
-			this.hoverIndex = -1;
-			this.isHover = false;
+			SelectHandler.hoverIndex = -1;
+			SelectHandler.isHover = false;
 		}
 		
 	}
 
-	getSelection(): Object {
-		if (!this.isSelected)
+	static getSelection(): Object {
+		if (!SelectHandler.isSelected)
 			return undefined;
-		return MapHandler.map.objs[this.selectIndex];
+		return MapHandler.map.objs[SelectHandler.selectIndex];
 	}
 
-	getHover(): Object {
-		if (!this.isHover)
+	static getHover(): Object {
+		if (!SelectHandler.isHover)
 			return undefined;
-		return MapHandler.map.objs[this.hoverIndex];
+		return MapHandler.map.objs[SelectHandler.hoverIndex];
 	}
 
-	_findMapElements(): number {
-		let mouse = this.cam.getMouse();
+	static _findMapElements(): number {
+		let mouse = SelectHandler.cam.getMouse();
 		let i = -1;
 		MapHandler.map.objs.forEach((obj, index) => {
 			let rect = obj.getRect();

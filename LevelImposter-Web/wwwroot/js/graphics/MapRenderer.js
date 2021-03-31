@@ -1,3 +1,4 @@
+import { SelectHandler } from "../input/SelectHandler.js";
 import { MapHandler } from "../map/MapHandler.js";
 export class MapRenderer {
     constructor(_renderer) {
@@ -11,19 +12,11 @@ export class MapRenderer {
                     let temp = arr[i];
                     arr[i] = arr[i + 1];
                     arr[i + 1] = temp;
-                    this.triggerSwapEvent(i);
+                    SelectHandler.mapSwap(i);
                 }
             }
             this.renderer.drawObj(arr[i]);
         }
-    }
-    triggerSwapEvent(index) {
-        let evt = new CustomEvent("mapswap", {
-            detail: {
-                index: index
-            }
-        });
-        document.dispatchEvent(evt);
     }
 }
 //# sourceMappingURL=MapRenderer.js.map

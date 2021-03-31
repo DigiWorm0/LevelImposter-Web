@@ -1,4 +1,4 @@
-﻿import { InputHandler } from '../input/InputHandler.js';
+import { InputHandler } from '../input/InputHandler.js';
 import { ColliderEditor } from '../map/ColliderEditor.js';
 import { ItemDB } from '../map/ItemDB.js'
 import { MapHandler } from '../map/MapHandler.js'

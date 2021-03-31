@@ -4,23 +4,23 @@ import { ColliderEditor } from "../map/ColliderEditor.js";
 export class SelectRenderer {
     constructor(_renderer) {
         this.renderer = _renderer;
-        this.selection = new SelectHandler(_renderer.cam);
-        this.dragger = new DragHandler(this.selection);
+        new SelectHandler(_renderer.cam);
+        this.dragger = new DragHandler();
     }
     drawSelection() {
-        this.selection.update();
+        SelectHandler.update();
         this.dragger.update();
         if (ColliderEditor.isEditing)
             return;
-        let select = this.selection.getSelection();
-        let hover = this.selection.getHover();
-        if (this.selection.isSelected && this.selection.hoverIndex != this.selection.selectIndex) {
+        let select = SelectHandler.getSelection();
+        let hover = SelectHandler.getHover();
+        if (SelectHandler.isSelected && SelectHandler.hoverIndex != SelectHandler.selectIndex) {
             this.renderer.drawRect(select.getRect(), select.rotation, "#1772e8");
         }
-        else if (this.selection.isSelected) {
+        else if (SelectHandler.isSelected) {
             this.renderer.drawRect(select.getRect(), select.rotation, "#74aaf1");
         }
-        if (this.selection.isHover && this.selection.hoverIndex != this.selection.selectIndex) {
+        if (SelectHandler.isHover && SelectHandler.hoverIndex != SelectHandler.selectIndex) {
             this.renderer.drawRect(hover.getRect(), hover.rotation, "#b9b9b9");
         }
     }

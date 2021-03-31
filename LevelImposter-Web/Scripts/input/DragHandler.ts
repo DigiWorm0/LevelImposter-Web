@@ -8,30 +8,28 @@ export class DragHandler {
 	isDragging: boolean;
 	dragInit: Vector2;
 	index: number;
-	selectHandler: SelectHandler;
 
-	constructor(_selectHandler: SelectHandler) {
+	constructor() {
 		this.isDragging = false;
 		this.index = -1;
-		this.selectHandler = _selectHandler;
 	}
 
 	update(): void {
-		if (this.selectHandler.isSelected && InputHandler.mouse.left && !this.isDragging && !ColliderEditor.isEditing) {
+		if (SelectHandler.isSelected && InputHandler.mouse.left && !this.isDragging && !ColliderEditor.isEditing) {
 			// Init Dragging
-			let currentMouse = this.selectHandler.cam.getMouse();
-			let currentObj = this.selectHandler.getSelection();
+			let currentMouse = SelectHandler.cam.getMouse();
+			let currentObj = SelectHandler.getSelection();
 			this.dragInit = {
 				x: currentObj.x - currentMouse.x,
 				y: currentObj.y - currentMouse.y
 			};
-			this.index = this.selectHandler.selectIndex;
-			this.selectHandler.freezeSelection = true;
+			this.index = SelectHandler.selectIndex;
+			SelectHandler.freezeSelection = true;
 			this.isDragging = true;
 			InputHandler.mouse.setCursor("move");
-		} else if (this.selectHandler.isSelected && this.isDragging && InputHandler.mouse.left) {
+		} else if (SelectHandler.isSelected && this.isDragging && InputHandler.mouse.left) {
 			// Currently Dragging
-			let currentMouse = this.selectHandler.cam.getMouse();
+			let currentMouse = SelectHandler.cam.getMouse();
 			let currentObj = MapHandler.map.objs[this.index];
 			currentObj.x = currentMouse.x + this.dragInit.x;
 			currentObj.y = currentMouse.y + this.dragInit.y;
@@ -39,7 +37,7 @@ export class DragHandler {
 		} else if (this.isDragging) {
 			// End Dragging
 			this.isDragging = false;
-			this.selectHandler.freezeSelection = false;
+			SelectHandler.freezeSelection = false;
 			InputHandler.mouse.setCursor("default");
 		}
 	}
