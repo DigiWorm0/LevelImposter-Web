@@ -1,3 +1,5 @@
+import { ActionHandler } from "../input/Actions/ActionHandler.js";
+import { ChangeAction } from "../input/Actions/ChangeAction.js";
 import { SelectHandler } from "../input/SelectHandler.js";
 import { CardHelper } from "./CardHelper.js";
 export class RoomGenerator {
@@ -26,11 +28,14 @@ export class RoomGenerator {
         CardHelper.append(baseCard);
         // On Change
         $("#roomNameInput").change(this.setValues.bind(this));
+        this.initialState = obj.clone();
     }
     setValues() {
         let currentItem = SelectHandler.getSelection();
         currentItem.name = $("#roomNameInput").val();
         $("#obj-title").text(currentItem.name);
+        ActionHandler.add(new ChangeAction(this.initialState, currentItem));
+        this.initialState = currentItem.clone();
     }
 }
 //# sourceMappingURL=RoomGenerator.js.map

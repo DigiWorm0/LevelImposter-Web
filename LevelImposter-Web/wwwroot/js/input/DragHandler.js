@@ -38,9 +38,11 @@ export class DragHandler {
             SelectHandler.freezeSelection = false;
             InputHandler.mouse.setCursor("default");
             let currentObj = MapHandler.map.objs[this.index];
-            let dist = Math.sqrt(Math.pow(this.initialState.x - currentObj.x, 2) + Math.pow(this.initialState.y - currentObj.y, 2));
-            if (dist > 0)
-                ActionHandler.add(new ChangeAction(this.initialState, currentObj));
+            if (currentObj != undefined) {
+                let dist = Math.sqrt(Math.pow(this.initialState.x - currentObj.x, 2) + Math.pow(this.initialState.y - currentObj.y, 2));
+                if (dist > 0)
+                    ActionHandler.add(new ChangeAction(this.initialState, currentObj));
+            }
         }
     }
 }

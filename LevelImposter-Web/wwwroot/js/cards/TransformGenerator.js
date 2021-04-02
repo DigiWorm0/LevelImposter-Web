@@ -18,6 +18,8 @@ export class TransformGenerator {
         let xSInput = CardHelper.genNumInput("xSInput", obj.xScale);
         let ySInput = CardHelper.genNumInput("ySInput", obj.yScale);
         let zRInput = CardHelper.genNumInput("zRInput", obj.rotation);
+        let flipXInput = CardHelper.genCheckbox("fxInput", obj.flipX, "Flip X");
+        let flipYInput = CardHelper.genCheckbox("fyInput", obj.flipY, "Flip Y");
         // Labels
         let label1 = CardHelper.genP("Position");
         let label2 = CardHelper.genP("Scale");
@@ -40,6 +42,8 @@ export class TransformGenerator {
         contentCard.append(label3);
         contentCard.innerHTML += "Z";
         contentCard.append(zRInput);
+        contentCard.append(flipXInput);
+        contentCard.append(flipYInput);
         titleCard.insertBefore(imgCard, titleCard.firstChild);
         baseCard.appendChild(titleCard);
         baseCard.appendChild(contentCard);
@@ -51,6 +55,8 @@ export class TransformGenerator {
         $("#xSInput").change(this.setValues.bind(this));
         $("#ySInput").change(this.setValues.bind(this));
         $("#zRInput").change(this.setValues.bind(this));
+        $("#fxInput").change(this.setValues.bind(this));
+        $("#fyInput").change(this.setValues.bind(this));
         this.initialState = obj.clone();
     }
     setValues() {
@@ -61,6 +67,8 @@ export class TransformGenerator {
         currentItem.xScale = parseFloat($("#xSInput").val());
         currentItem.yScale = parseFloat($("#ySInput").val());
         currentItem.rotation = parseFloat($("#zRInput").val());
+        currentItem.flipX = $("#fxInput").is(":checked");
+        currentItem.flipY = $("#fyInput").is(":checked");
         ActionHandler.add(new ChangeAction(this.initialState, currentItem));
         this.initialState = currentItem.clone();
     }

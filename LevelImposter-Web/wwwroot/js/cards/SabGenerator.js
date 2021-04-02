@@ -1,3 +1,5 @@
+import { ActionHandler } from "../input/Actions/ActionHandler.js";
+import { ChangeAction } from "../input/Actions/ChangeAction.js";
 import { SelectHandler } from "../input/SelectHandler.js";
 import { MapHandler } from "../map/MapHandler.js";
 import { CardHelper } from "./CardHelper.js";
@@ -37,6 +39,7 @@ export class SabGenerator {
         CardHelper.append(baseCard);
         // On Change
         $("#roomInput").change(this.setValues.bind(this));
+        this.initialState = obj.clone();
     }
     setValues() {
         let currentItem = SelectHandler.getSelection();
@@ -44,6 +47,8 @@ export class SabGenerator {
         currentItem.targetIds = [
             parseInt(id)
         ];
+        ActionHandler.add(new ChangeAction(this.initialState, currentItem));
+        this.initialState = currentItem.clone();
     }
 }
 //# sourceMappingURL=SabGenerator.js.map

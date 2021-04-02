@@ -64,6 +64,7 @@ export class ObjectRenderer {
         this.ctx.save();
         this.ctx.translate(bounds.x + (bounds.w / 2), bounds.y + (bounds.h / 2));
         this.ctx.rotate(obj.rotation * (Math.PI / 180.0));
+        this.ctx.scale(obj.flipX ? -1 : 1, obj.flipY ? -1 : 1);
         this.ctx.drawImage(obj.sprite.img, -bounds.w / 2, -bounds.h / 2, bounds.w, bounds.h);
         if (obj.type == "util-room") {
             this.drawTxt(obj.name, 0, bounds.h / -2);

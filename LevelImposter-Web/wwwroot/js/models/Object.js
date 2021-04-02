@@ -14,6 +14,8 @@ export class Object {
         this.xScale = 1;
         this.yScale = 1;
         this.rotation = 0;
+        this.flipX = false;
+        this.flipY = false;
         this.colliders = new Array();
         this.targetIds = new Array();
         this.spriteType = _spriteType;
@@ -76,6 +78,8 @@ export class Object {
         clone.xScale = this.xScale;
         clone.yScale = this.yScale;
         clone.rotation = this.rotation;
+        clone.flipX = this.flipX;
+        clone.flipY = this.flipY;
         this.colliders.forEach((collider) => {
             clone.colliders.push(collider.clone());
         });

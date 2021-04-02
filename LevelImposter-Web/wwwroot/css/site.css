@@ -195,6 +195,11 @@ footer {
         margin: 2px;
         margin-right: 8px;
     }
+
+        .transform input[type=checkbox] {
+            margin-left:20px;
+        }
+
     .transform p {
         width: 60px;
         display: inline-block;
