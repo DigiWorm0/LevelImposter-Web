@@ -11,11 +11,16 @@ export class UIHandler {
 	panel: PanelToggleHandler;
 	cards: CardHandler;
 
+	canvasFocused: boolean;
+
 	constructor() {
 		$("body").addClass("no-overflow");
 		window.onbeforeunload = () => {
 			return "";
 		};
+		$("body").click((e) => {
+			this.canvasFocused = e.target.id == "licanvas";
+		});
 
 		this.name = new NameHandler();
 		this.item = new ItemDBHandler();

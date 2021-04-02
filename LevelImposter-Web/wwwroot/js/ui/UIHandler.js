@@ -9,6 +9,9 @@ export class UIHandler {
         window.onbeforeunload = () => {
             return "";
         };
+        $("body").click((e) => {
+            this.canvasFocused = e.target.id == "licanvas";
+        });
         this.name = new NameHandler();
         this.item = new ItemDBHandler();
         this.toolbar = new ToolbarHandler();

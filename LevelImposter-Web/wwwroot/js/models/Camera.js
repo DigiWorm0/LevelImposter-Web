@@ -25,17 +25,19 @@ export class Camera {
     }
     updatePosition() {
         // Keyboard
-        if (InputHandler.key.get(40) || InputHandler.key.get(83)) {
-            this.y += ArrowScale / Math.sqrt(this.zoom);
-        }
-        if (InputHandler.key.get(39) || InputHandler.key.get(68)) {
-            this.x += ArrowScale / Math.sqrt(this.zoom);
-        }
-        if (InputHandler.key.get(38) || InputHandler.key.get(87)) {
-            this.y -= ArrowScale / Math.sqrt(this.zoom);
-        }
-        if (InputHandler.key.get(37) || InputHandler.key.get(65)) {
-            this.x -= ArrowScale / Math.sqrt(this.zoom);
+        if (InputHandler.ui.canvasFocused) {
+            if (InputHandler.key.get(40) || InputHandler.key.get(83)) {
+                this.y += ArrowScale / Math.sqrt(this.zoom);
+            }
+            if (InputHandler.key.get(39) || InputHandler.key.get(68)) {
+                this.x += ArrowScale / Math.sqrt(this.zoom);
+            }
+            if (InputHandler.key.get(38) || InputHandler.key.get(87)) {
+                this.y -= ArrowScale / Math.sqrt(this.zoom);
+            }
+            if (InputHandler.key.get(37) || InputHandler.key.get(65)) {
+                this.x -= ArrowScale / Math.sqrt(this.zoom);
+            }
         }
         // Mouse
         if (InputHandler.mouse.right && !this.isDragging) {

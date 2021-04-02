@@ -16,13 +16,21 @@ export class SelectHandler {
             SelectHandler.selectIndex++;
         else if (SelectHandler.selectIndex == index + 1)
             SelectHandler.selectIndex--;
+        if (MapHandler.isAdding && MapHandler.addingIndex == index)
+            MapHandler.addingIndex++;
+        else if (MapHandler.isAdding && MapHandler.addingIndex == index + 1)
+            MapHandler.addingIndex--;
     }
     static update() {
         // Follow Mouse when Adding a New Object
         if (MapHandler.isAdding) {
-            let obj = MapHandler.map.objs[MapHandler.map.objs.length - 1];
+            let obj = MapHandler.map.objs[MapHandler.addingIndex];
             obj.x = SelectHandler.cam.getMouse().x;
             obj.y = SelectHandler.cam.getMouse().y;
+            if (obj.data.startsWith("room-"))
+                obj.z = 10;
+            else if (obj.data == "util-room")
+                obj.z = -10;
             if (InputHandler.mouse.left) {
                 MapHandler.isAdding = false;
             }

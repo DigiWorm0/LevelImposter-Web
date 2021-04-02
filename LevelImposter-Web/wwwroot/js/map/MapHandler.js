@@ -14,17 +14,18 @@ export class MapHandler {
     static addCustom(url) {
         if (this.isAdding)
             this.map.objs.splice(this.map.objs.length - 1, 1);
+        let index = this.map.objs.push(new Object("Custom Object", this.cam.getMouse().x, this.cam.getMouse().y, "custom", url, new Sprite(url))) - 1;
         this.isAdding = true;
-        this.map.objs.push(new Object("Custom Object", this.cam.getMouse().x, this.cam.getMouse().y, "custom", url, new Sprite(url)));
-        console.log(MapHandler.map);
-        return this.map.objs.length - 1;
+        this.addingIndex = index;
+        return index;
     }
     static addExisting(name, type) {
         if (this.isAdding)
             this.map.objs.splice(this.map.objs.length - 1, 1);
+        let index = this.map.objs.push(new Object(name, this.cam.getMouse().x, this.cam.getMouse().y, "existing", type, new Sprite("/Sprites/" + type + ".png"))) - 1;
         this.isAdding = true;
-        this.map.objs.push(new Object(name, this.cam.getMouse().x, this.cam.getMouse().y, "existing", type, new Sprite("/Sprites/" + type + ".png")));
-        return this.map.objs.length - 1;
+        this.addingIndex = index;
+        return index;
     }
     static delete(obj) {
         let index = this.map.objs.indexOf(obj);

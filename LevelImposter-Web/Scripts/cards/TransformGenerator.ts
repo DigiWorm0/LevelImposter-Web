@@ -5,13 +5,14 @@ import { Object } from '../models/Object.js'
 
 export class TransformGenerator implements CardGenerator {
 
-	generate(obj: Object) {
+	generate(obj: Object): void {
 		// Base
 		let baseCard = CardHelper.genBase();
 		let titleCard = CardHelper.genTitle(obj.name);
 		let imgCard = CardHelper.genImg(obj.sprite.data);
 		let contentCard = CardHelper.genContent();
 		contentCard.classList.add("transform");
+		titleCard.id = "obj-title";
 
 		// Inputs
 		let xInput = CardHelper.genNumInput("xInput", obj.x);
@@ -59,7 +60,7 @@ export class TransformGenerator implements CardGenerator {
 		$("#zRInput").change(this.setValues.bind(this));
 	}
 
-	setValues() {
+	setValues(): void {
 		let currentItem = SelectHandler.getSelection();
 
 		currentItem.x = parseFloat($("#xInput").val() as string);
@@ -70,7 +71,7 @@ export class TransformGenerator implements CardGenerator {
 		currentItem.rotation = parseFloat($("#zRInput").val() as string);
 	}
 
-	updateValues(obj: Object) {
+	updateValues(obj: Object): void {
 		$("#xInput").val(obj.x);
 		$("#yInput").val(obj.y);
 	}

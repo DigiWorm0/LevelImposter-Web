@@ -51,12 +51,23 @@ export class ObjectRenderer {
         this.ctx.stroke();
         this.ctx.restore();
     }
+    drawTxt(txt, x, y) {
+        this.ctx.font = "bold 30px Bahnschrift";
+        this.ctx.fillStyle = "white";
+        this.ctx.strokeStyle = "black";
+        this.ctx.lineWidth = 2;
+        this.ctx.strokeText(txt, x - this.ctx.measureText(txt).width / 2, y);
+        this.ctx.fillText(txt, x - this.ctx.measureText(txt).width / 2, y);
+    }
     drawObj(obj) {
         let bounds = this._calcCamOffset(obj.getRect());
         this.ctx.save();
         this.ctx.translate(bounds.x + (bounds.w / 2), bounds.y + (bounds.h / 2));
         this.ctx.rotate(obj.rotation * (Math.PI / 180.0));
         this.ctx.drawImage(obj.sprite.img, -bounds.w / 2, -bounds.h / 2, bounds.w, bounds.h);
+        if (obj.data == "util-room") {
+            this.drawTxt(obj.name, 0, bounds.h / -2);
+        }
         this.ctx.restore();
     }
     clear() {

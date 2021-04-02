@@ -6,6 +6,7 @@ import { ColliderEditor } from '../map/ColliderEditor.js';
 export class Object {
     constructor(_name, _x, _y, _type, _data, _sprite) {
         this.name = _name;
+        this.id = Math.floor((Date.now() + Math.random()) * 1000);
         this.x = _x;
         this.y = _y;
         this.z = 0;

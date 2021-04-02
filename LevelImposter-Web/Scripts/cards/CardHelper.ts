@@ -101,6 +101,16 @@
 		return input;
 	}
 
+	static genTxtInput(id: string, val: string): HTMLInputElement {
+		let input = document.createElement("input");
+
+		input.type = "text";
+		input.id = id;
+		input.setAttribute("value", val);
+
+		return input;
+	}
+
 	static genBottomButton(name: string): HTMLButtonElement {
 		let btn = document.createElement("button");
 
@@ -112,6 +122,22 @@
 		btn.innerText = name;
 
 		return btn;
+	}
+
+	static genDropdown(names: string[], values: string[], id: string): HTMLSelectElement {
+		let select = document.createElement("select");
+		
+		select.id = id;
+		for (let i = 0; i < Math.min(names.length, values.length); i++) {
+			let option = document.createElement("option");
+
+			option.text = names[i];
+			option.value = values[i];
+
+			select.appendChild(option);
+		}
+
+		return select;
 	}
 
 	static append(div: HTMLElement): void {

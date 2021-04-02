@@ -76,6 +76,15 @@ export class ObjectRenderer {
 		this.ctx.restore();
 	}
 
+	drawTxt(txt: string, x: number, y: number): void {
+		this.ctx.font = "bold 30px Bahnschrift";
+		this.ctx.fillStyle = "white";
+		this.ctx.strokeStyle = "black";
+		this.ctx.lineWidth = 2;
+		this.ctx.strokeText(txt, x - this.ctx.measureText(txt).width / 2, y);
+		this.ctx.fillText(txt, x - this.ctx.measureText(txt).width / 2, y);
+	}
+
 	drawObj(obj: Object): void {
 		let bounds = this._calcCamOffset(obj.getRect());
 		this.ctx.save();
@@ -88,6 +97,9 @@ export class ObjectRenderer {
 			bounds.w,
 			bounds.h
 		);
+		if (obj.data == "util-room") {
+			this.drawTxt(obj.name, 0, bounds.h / -2);
+		}
 		this.ctx.restore();
 	}
 

@@ -3,7 +3,7 @@ import { CardGenerator } from "./CardGenerator.js";
 
 export class VentGenerator implements CardGenerator {
 
-	generate(obj: Object) {
+	generate(obj: Object): void {
 		// TODO
 	}
 }

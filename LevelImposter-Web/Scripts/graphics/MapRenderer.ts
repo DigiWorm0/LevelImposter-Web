@@ -1,6 +1,5 @@
 ﻿import { SelectHandler } from "../input/SelectHandler.js";
 import { MapHandler } from "../map/MapHandler.js";
-import { Object } from "../models/Object.js";
 import { ObjectRenderer } from "./ObjectRenderer.js";
 
 export class MapRenderer {

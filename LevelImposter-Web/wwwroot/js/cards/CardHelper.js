@@ -70,6 +70,13 @@ export class CardHelper {
         input.step = "any";
         return input;
     }
+    static genTxtInput(id, val) {
+        let input = document.createElement("input");
+        input.type = "text";
+        input.id = id;
+        input.setAttribute("value", val);
+        return input;
+    }
     static genBottomButton(name) {
         let btn = document.createElement("button");
         btn.classList.add("btn");
@@ -79,6 +86,17 @@ export class CardHelper {
         btn.type = "button";
         btn.innerText = name;
         return btn;
+    }
+    static genDropdown(names, values, id) {
+        let select = document.createElement("select");
+        select.id = id;
+        for (let i = 0; i < Math.min(names.length, values.length); i++) {
+            let option = document.createElement("option");
+            option.text = names[i];
+            option.value = values[i];
+            select.appendChild(option);
+        }
+        return select;
     }
     static append(div) {
         $("#prop-list").append(div);

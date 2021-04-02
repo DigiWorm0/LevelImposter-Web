@@ -8,6 +8,7 @@ export class TransformGenerator {
         let imgCard = CardHelper.genImg(obj.sprite.data);
         let contentCard = CardHelper.genContent();
         contentCard.classList.add("transform");
+        titleCard.id = "obj-title";
         // Inputs
         let xInput = CardHelper.genNumInput("xInput", obj.x);
         let yInput = CardHelper.genNumInput("yInput", obj.y);
