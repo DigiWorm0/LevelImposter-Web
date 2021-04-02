@@ -1,5 +1,7 @@
 import { CardHelper } from './CardHelper.js';
 import { SelectHandler } from '../input/SelectHandler.js';
+import { ActionHandler } from '../input/Actions/ActionHandler.js';
+import { ChangeAction } from '../input/Actions/ChangeAction.js';
 export class TransformGenerator {
     generate(obj) {
         // Base
@@ -49,6 +51,7 @@ export class TransformGenerator {
         $("#xSInput").change(this.setValues.bind(this));
         $("#ySInput").change(this.setValues.bind(this));
         $("#zRInput").change(this.setValues.bind(this));
+        this.initialState = obj.clone();
     }
     setValues() {
         let currentItem = SelectHandler.getSelection();
@@ -58,6 +61,8 @@ export class TransformGenerator {
         currentItem.xScale = parseFloat($("#xSInput").val());
         currentItem.yScale = parseFloat($("#ySInput").val());
         currentItem.rotation = parseFloat($("#zRInput").val());
+        ActionHandler.add(new ChangeAction(this.initialState, currentItem));
+        this.initialState = currentItem.clone();
     }
     updateValues(obj) {
         $("#xInput").val(obj.x);

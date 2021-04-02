@@ -1,3 +1,4 @@
+import { ActionHandler } from "../input/Actions/ActionHandler.js";
 import { DragHandler } from "../input/DragHandler.js";
 import { SelectHandler } from "../input/SelectHandler.js";
 import { ColliderEditor } from "../map/ColliderEditor.js";
@@ -10,6 +11,7 @@ export class SelectRenderer {
     drawSelection() {
         SelectHandler.update();
         this.dragger.update();
+        ActionHandler.update();
         if (ColliderEditor.isEditing)
             return;
         let select = SelectHandler.getSelection();

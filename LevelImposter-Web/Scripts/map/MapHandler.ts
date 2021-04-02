@@ -4,6 +4,9 @@ import { Sprite } from '../models/Sprite.js'
 import { UploadHandler } from '../input/UploadHandler.js';
 import { Camera } from '../models/Camera.js';
 import { InputHandler } from '../input/InputHandler.js';
+import { ActionHandler } from '../input/Actions/ActionHandler.js';
+import { AddAction } from '../input/Actions/AddAction.js';
+import { DelAction } from '../input/Actions/DelAction.js';
 
 export class MapHandler {
 	static map: Map;
@@ -25,6 +28,7 @@ export class MapHandler {
 		let index = this.map.objs.push(new Object("Custom Object", this.cam.getMouse().x, this.cam.getMouse().y, "custom", url, new Sprite(url))) - 1;
 		this.isAdding = true;
 		this.addingIndex = index;
+		ActionHandler.add(new AddAction(this.map.objs[index]));
 		return index;
 	}
 
@@ -34,11 +38,14 @@ export class MapHandler {
 		let index = this.map.objs.push(new Object(name, this.cam.getMouse().x, this.cam.getMouse().y, "existing", type, new Sprite("/Sprites/" + type + ".png"))) - 1;
 		this.isAdding = true;
 		this.addingIndex = index;
+		ActionHandler.add(new AddAction(this.map.objs[index]));
 		return index;
 	}
 
 	static delete(obj: Object): void {
+
 		let index = this.map.objs.indexOf(obj);
+		ActionHandler.add(new DelAction(this.map.objs[index]));
 		if (index >= 0)
 			this.map.objs.splice(index, 1);
 	}

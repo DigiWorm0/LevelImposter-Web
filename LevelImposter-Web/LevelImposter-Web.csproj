@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <RootNamespace>LevelImposter_Web</RootNamespace>
+    <RootNamespace>LevelImposter</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

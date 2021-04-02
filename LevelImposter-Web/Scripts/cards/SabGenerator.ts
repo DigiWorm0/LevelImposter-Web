@@ -1,10 +1,14 @@
-﻿import { SelectHandler } from "../input/SelectHandler.js";
+﻿import { ActionHandler } from "../input/Actions/ActionHandler.js";
+import { ChangeAction } from "../input/Actions/ChangeAction.js";
+import { SelectHandler } from "../input/SelectHandler.js";
 import { MapHandler } from "../map/MapHandler.js";
 import { Object } from "../models/Object.js";
 import { CardGenerator } from "./CardGenerator.js";
 import { CardHelper } from "./CardHelper.js";
 
 export class SabGenerator implements CardGenerator {
+
+	initialState: Object;
 
 	generate(obj: Object): void {
 		if (!obj.type.startsWith("sab-"))
@@ -46,6 +50,8 @@ export class SabGenerator implements CardGenerator {
 
 		// On Change
 		$("#roomInput").change(this.setValues.bind(this));
+
+		this.initialState = obj.clone();
 	}
 
 	setValues(): void {
@@ -55,5 +61,8 @@ export class SabGenerator implements CardGenerator {
 		currentItem.targetIds = [
 			parseInt(id)
 		];
+
+		ActionHandler.add(new ChangeAction(this.initialState, currentItem));
+		this.initialState = currentItem.clone();
 	}
 }

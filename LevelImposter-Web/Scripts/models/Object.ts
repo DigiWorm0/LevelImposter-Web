@@ -1,5 +1,5 @@
-﻿import { Sprite } from 'Sprite.js'
-import { Rect } from 'Rect.js'
+﻿import { Sprite } from './Sprite.js';
+import { Rect } from './Rect.js';
 import { UnityScale } from './Constants.js';
 import { Collider } from './Collider.js';
 import { InputHandler } from '../input/InputHandler.js';
@@ -88,5 +88,27 @@ export class Object {
 
 		if (ColliderEditor.index == index)
 			ColliderEditor.stop();
+	}
+
+	/**
+	 * Clones an object
+	 * @returns Object's Clone
+	 */
+	clone(): Object {
+		let clone = new Object(this.name, this.x, this.y, this.spriteType, this.type, new Sprite(this.sprite.data));
+		clone.z = this.z;
+		clone.xScale = this.xScale;
+		clone.yScale = this.yScale;
+		clone.rotation = this.rotation;
+
+		this.colliders.forEach((collider) => {
+			clone.colliders.push(collider.clone());
+		});
+
+		this.targetIds.forEach((targetId) => {
+			clone.targetIds.push(targetId);
+		});
+
+		return clone;
 	}
 };

@@ -1,9 +1,13 @@
-﻿import { SelectHandler } from "../input/SelectHandler.js";
+﻿import { ActionHandler } from "../input/Actions/ActionHandler.js";
+import { ChangeAction } from "../input/Actions/ChangeAction.js";
+import { SelectHandler } from "../input/SelectHandler.js";
 import { Object } from "../models/Object.js";
 import { CardGenerator } from "./CardGenerator.js";
 import { CardHelper } from "./CardHelper.js";
 
 export class RoomGenerator implements CardGenerator {
+
+	initialState: Object;
 
 	generate(obj: Object): void {
 		if (obj.type != "util-room")
@@ -35,6 +39,8 @@ export class RoomGenerator implements CardGenerator {
 
 		// On Change
 		$("#roomNameInput").change(this.setValues.bind(this));
+
+		this.initialState = obj.clone();
 	}
 
 	setValues(): void {
@@ -43,5 +49,8 @@ export class RoomGenerator implements CardGenerator {
 		currentItem.name = $("#roomNameInput").val() as string;
 
 		$("#obj-title").text(currentItem.name);
+
+		ActionHandler.add(new ChangeAction(this.initialState, currentItem));
+		this.initialState = currentItem.clone();
 	}
 }
