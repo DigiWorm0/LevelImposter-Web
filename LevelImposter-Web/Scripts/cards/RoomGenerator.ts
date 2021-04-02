@@ -6,7 +6,7 @@ import { CardHelper } from "./CardHelper.js";
 export class RoomGenerator implements CardGenerator {
 
 	generate(obj: Object): void {
-		if (obj.data != "util-room")
+		if (obj.type != "util-room")
 			return;
 
 		// Base

@@ -42,9 +42,9 @@ export class SelectHandler {
 			obj.x = SelectHandler.cam.getMouse().x;
 			obj.y = SelectHandler.cam.getMouse().y;
 
-			if (obj.data.startsWith("room-"))
+			if (obj.type.startsWith("room-"))
 				obj.z = 10;
-			else if (obj.data == "util-room")
+			else if (obj.type == "util-room")
 				obj.z = -10;
 
 			if (InputHandler.mouse.left) {

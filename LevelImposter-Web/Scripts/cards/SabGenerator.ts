@@ -7,7 +7,7 @@ import { CardHelper } from "./CardHelper.js";
 export class SabGenerator implements CardGenerator {
 
 	generate(obj: Object): void {
-		if (!obj.data.startsWith("sab-"))
+		if (!obj.type.startsWith("sab-"))
 			return;
 
 		// Base
@@ -19,14 +19,15 @@ export class SabGenerator implements CardGenerator {
 		// Inputs
 		let names: string[] = [];
 		let values: string[] = [];
+		let target = obj.targetIds.length <= 0 ? 0 : obj.targetIds[0];
 		for (let i = 0; i < MapHandler.map.objs.length; i++) {
 			let obj2 = MapHandler.map.objs[i];
-			if (obj2.data == "util-room") {
+			if (obj2.type == "util-room") {
 				names.push(obj2.name);
 				values.push(obj2.id.toString());
 			}
 		}
-		let roomInput = CardHelper.genDropdown(names, values, "roomInput");
+		let roomInput = CardHelper.genDropdown(names, values, target.toString(), "roomInput");
 
 		// Labels
 		let nameLabel = CardHelper.genP("Room");
@@ -50,6 +51,9 @@ export class SabGenerator implements CardGenerator {
 	setValues(): void {
 		let currentItem = SelectHandler.getSelection();
 		let id = $("#roomInput").val() as string;
-		console.log(id);
+
+		currentItem.targetIds = [
+			parseInt(id)
+		];
 	}
 }

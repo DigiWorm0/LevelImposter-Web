@@ -67,9 +67,9 @@ export class MapHandler {
                     InputHandler.ui.name.setName(json.name);
                     for (let i = 0; i < json.objs.length; i++) {
                         let o = json.objs[i];
-                        if (o.type == "existing") {
+                        if (o.spriteType == "existing") {
                             // Init
-                            MapHandler.map.objs.push(new Object(o.name, o.x, o.y, "existing", o.data, new Sprite("/Sprites/" + o.data + ".png")));
+                            MapHandler.map.objs.push(new Object(o.name, o.x, o.y, "existing", o.type, new Sprite("/Sprites/" + o.type + ".png")));
                             // Other Props
                             let newO = MapHandler.map.objs[MapHandler.map.objs.length - 1];
                             newO.xScale = o.xScale;
@@ -78,9 +78,9 @@ export class MapHandler {
                             newO.rotation = o.rotation;
                             newO.colliders = o.colliders;
                         }
-                        else if (o.type == "custom") {
+                        else if (o.spriteType == "custom") {
                             // Init
-                            MapHandler.map.objs.push(new Object(o.name, o.x, o.y, "existing", o.data, new Sprite(o.data)));
+                            MapHandler.map.objs.push(new Object(o.name, o.x, o.y, "existing", o.type, new Sprite(o.type)));
                             // Other Props
                             let newO = MapHandler.map.objs[MapHandler.map.objs.length - 1];
                             newO.xScale = o.xScale;

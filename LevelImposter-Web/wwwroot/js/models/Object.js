@@ -4,7 +4,7 @@ import { InputHandler } from '../input/InputHandler.js';
 import { Point } from './Point.js';
 import { ColliderEditor } from '../map/ColliderEditor.js';
 export class Object {
-    constructor(_name, _x, _y, _type, _data, _sprite) {
+    constructor(_name, _x, _y, _spriteType, _type, _sprite) {
         this.name = _name;
         this.id = Math.floor((Date.now() + Math.random()) * 1000);
         this.x = _x;
@@ -14,8 +14,9 @@ export class Object {
         this.yScale = 1;
         this.rotation = 0;
         this.colliders = new Array();
+        this.targetIds = new Array();
+        this.spriteType = _spriteType;
         this.type = _type;
-        this.data = _data;
         this.sprite = _sprite;
     }
     /**

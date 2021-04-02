@@ -15,7 +15,7 @@ export class ColliderGenerator implements CardGenerator {
 		let contentCard = CardHelper.genContent();
 
 		// Checkbox
-		if (parent.data != "util-room")
+		if (parent.type != "util-room")
 		{
 			let checkbox = CardHelper.genCheckbox("collider" + index + "-checkbox", collider.blocksLight, "Vision Block");
 			(checkbox.firstChild as HTMLInputElement).onchange = (() => {

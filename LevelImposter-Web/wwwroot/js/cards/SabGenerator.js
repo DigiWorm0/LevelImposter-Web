@@ -3,7 +3,7 @@ import { MapHandler } from "../map/MapHandler.js";
 import { CardHelper } from "./CardHelper.js";
 export class SabGenerator {
     generate(obj) {
-        if (!obj.data.startsWith("sab-"))
+        if (!obj.type.startsWith("sab-"))
             return;
         // Base
         let baseCard = CardHelper.genBase();
@@ -13,14 +13,15 @@ export class SabGenerator {
         // Inputs
         let names = [];
         let values = [];
+        let target = obj.targetIds.length <= 0 ? 0 : obj.targetIds[0];
         for (let i = 0; i < MapHandler.map.objs.length; i++) {
             let obj2 = MapHandler.map.objs[i];
-            if (obj2.data == "util-room") {
+            if (obj2.type == "util-room") {
                 names.push(obj2.name);
                 values.push(obj2.id.toString());
             }
         }
-        let roomInput = CardHelper.genDropdown(names, values, "roomInput");
+        let roomInput = CardHelper.genDropdown(names, values, target.toString(), "roomInput");
         // Labels
         let nameLabel = CardHelper.genP("Room");
         let descLabel = CardHelper.genP("Sabotages need a room to link to in order to display on the sabotage map.");
@@ -40,7 +41,9 @@ export class SabGenerator {
     setValues() {
         let currentItem = SelectHandler.getSelection();
         let id = $("#roomInput").val();
-        console.log(id);
+        currentItem.targetIds = [
+            parseInt(id)
+        ];
     }
 }
 //# sourceMappingURL=SabGenerator.js.map

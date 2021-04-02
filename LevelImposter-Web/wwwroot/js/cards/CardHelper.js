@@ -87,13 +87,15 @@ export class CardHelper {
         btn.innerText = name;
         return btn;
     }
-    static genDropdown(names, values, id) {
+    static genDropdown(names, values, selected, id) {
         let select = document.createElement("select");
         select.id = id;
         for (let i = 0; i < Math.min(names.length, values.length); i++) {
             let option = document.createElement("option");
             option.text = names[i];
             option.value = values[i];
+            if (values[i] == selected)
+                option.selected = true;
             select.appendChild(option);
         }
         return select;

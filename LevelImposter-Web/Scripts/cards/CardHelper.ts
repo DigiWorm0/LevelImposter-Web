@@ -124,7 +124,7 @@
 		return btn;
 	}
 
-	static genDropdown(names: string[], values: string[], id: string): HTMLSelectElement {
+	static genDropdown(names: string[], values: string[], selected: string, id: string): HTMLSelectElement {
 		let select = document.createElement("select");
 		
 		select.id = id;
@@ -133,6 +133,8 @@
 
 			option.text = names[i];
 			option.value = values[i];
+			if (values[i] == selected)
+				option.selected = true;
 
 			select.appendChild(option);
 		}

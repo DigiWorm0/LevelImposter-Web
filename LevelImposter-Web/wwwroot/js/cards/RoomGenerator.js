@@ -2,7 +2,7 @@ import { SelectHandler } from "../input/SelectHandler.js";
 import { CardHelper } from "./CardHelper.js";
 export class RoomGenerator {
     generate(obj) {
-        if (obj.data != "util-room")
+        if (obj.type != "util-room")
             return;
         // Base
         let baseCard = CardHelper.genBase();

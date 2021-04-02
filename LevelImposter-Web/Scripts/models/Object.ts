@@ -17,12 +17,13 @@ export class Object {
 	rotation: number;
 
 	colliders: Array<Collider>;
+	targetIds: Array<number>;
 
+	spriteType: string;
 	type: string;
-	data: string;
 	sprite: Sprite;
 
-	constructor(_name:string, _x: number, _y: number, _type: string, _data: string, _sprite: Sprite) {
+	constructor(_name:string, _x: number, _y: number, _spriteType: string, _type: string, _sprite: Sprite) {
 		this.name = _name;
 		this.id = Math.floor((Date.now() + Math.random()) * 1000);
 		this.x = _x;
@@ -32,8 +33,9 @@ export class Object {
 		this.yScale = 1;
 		this.rotation = 0;
 		this.colliders = new Array<Collider>();
+		this.targetIds = new Array<number>();
+		this.spriteType = _spriteType;
 		this.type = _type;
-		this.data = _data;
 		this.sprite = _sprite;
 	}
 

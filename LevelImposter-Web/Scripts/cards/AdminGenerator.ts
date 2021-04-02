@@ -7,7 +7,7 @@ import { CardHelper } from "./CardHelper.js";
 export class AdminGenerator implements CardGenerator {
 
 	generate(obj: Object): void {
-		if (obj.data != "util-admin")
+		if (obj.type != "util-admin")
 			return;
 
 		// Base
@@ -18,7 +18,7 @@ export class AdminGenerator implements CardGenerator {
 		// Labels
 		for (let i = 0; i < MapHandler.map.objs.length; i++) {
 			let obj2 = MapHandler.map.objs[i];
-			if (obj2.data == "util-room") {
+			if (obj2.type == "util-room") {
 				let label = CardHelper.genP(obj2.name);
 				label.style.marginBottom = "0";
 

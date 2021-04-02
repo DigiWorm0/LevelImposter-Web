@@ -97,7 +97,7 @@ export class ObjectRenderer {
 			bounds.w,
 			bounds.h
 		);
-		if (obj.data == "util-room") {
+		if (obj.type == "util-room") {
 			this.drawTxt(obj.name, 0, bounds.h / -2);
 		}
 		this.ctx.restore();

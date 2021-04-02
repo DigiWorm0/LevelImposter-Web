@@ -9,7 +9,7 @@ export class ColliderGenerator {
         let titleCard = CardHelper.genTitle("Collider " + (index + 1));
         let contentCard = CardHelper.genContent();
         // Checkbox
-        if (parent.data != "util-room") {
+        if (parent.type != "util-room") {
             let checkbox = CardHelper.genCheckbox("collider" + index + "-checkbox", collider.blocksLight, "Vision Block");
             checkbox.firstChild.onchange = (() => {
                 collider.blocksLight = document.getElementById("collider" + index + "-checkbox").checked;

@@ -2,7 +2,7 @@ import { MapHandler } from "../map/MapHandler.js";
 import { CardHelper } from "./CardHelper.js";
 export class AdminGenerator {
     generate(obj) {
-        if (obj.data != "util-admin")
+        if (obj.type != "util-admin")
             return;
         // Base
         let baseCard = CardHelper.genBase();
@@ -11,7 +11,7 @@ export class AdminGenerator {
         // Labels
         for (let i = 0; i < MapHandler.map.objs.length; i++) {
             let obj2 = MapHandler.map.objs[i];
-            if (obj2.data == "util-room") {
+            if (obj2.type == "util-room") {
                 let label = CardHelper.genP(obj2.name);
                 label.style.marginBottom = "0";
                 if (obj2.colliders.length <= 0)
