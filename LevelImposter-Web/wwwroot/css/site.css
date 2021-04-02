@@ -175,29 +175,29 @@ footer {
     }
 
 /*    Properties    */
-.prop-side {
+.transform {
     width: 100%;
     font-size:14px;
     text-align:left;
 }
-    .prop-side input {
-        width:20%;
-        margin:2px;
-        margin-right:8px;
+    .transform input {
+        width: 19%;
+        margin: 2px;
+        margin-right: 8px;
     }
-    .prop-side p {
+    .transform p {
         width: 60px;
-        display:inline-block;
-        margin:0;
+        display: inline-block;
+        margin: 0;
     }
 #prop-list {
-    height: calc(100vh - 310px);
+    height: calc(100vh - 140px);
 }
 #item-list {
     height: calc(100vh - 190px);
 }
 
-.collider-prop {
+.li-card {
     margin:0;
     margin-bottom: 10px;
 }

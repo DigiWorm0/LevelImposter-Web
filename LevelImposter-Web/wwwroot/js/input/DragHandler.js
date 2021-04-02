@@ -27,7 +27,7 @@ export class DragHandler {
             let currentObj = MapHandler.map.objs[this.index];
             currentObj.x = currentMouse.x + this.dragInit.x;
             currentObj.y = currentMouse.y + this.dragInit.y;
-            InputHandler.ui.props.updateValues(currentObj);
+            InputHandler.ui.cards.transformGen.updateValues(currentObj);
         }
         else if (this.isDragging) {
             // End Dragging

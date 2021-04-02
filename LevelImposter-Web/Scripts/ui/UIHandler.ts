@@ -1,11 +1,15 @@
-﻿import { NameHandler } from './NameHandler.js';
-import { PanelHandler } from './PanelHandler.js';
-import { PropertiesHandler } from './PropertiesHandler.js';
+﻿import { CardHandler } from '../cards/CardHandler.js';
+import { ItemDBHandler } from './ItemDBHandler.js';
+import { NameHandler } from './NameHandler.js';
+import { PanelToggleHandler } from './PanelToggleHandler.js';
+import { ToolbarHandler } from './ToolbarHandler.js';
 
 export class UIHandler {
-	panels: PanelHandler;
 	name: NameHandler;
-	props: PropertiesHandler;
+	item: ItemDBHandler;
+	toolbar: ToolbarHandler;
+	panel: PanelToggleHandler;
+	cards: CardHandler;
 
 	constructor() {
 		$("body").addClass("no-overflow");
@@ -13,8 +17,10 @@ export class UIHandler {
 			return "";
 		};
 
-		this.panels = new PanelHandler();
 		this.name = new NameHandler();
-		this.props = new PropertiesHandler();
+		this.item = new ItemDBHandler();
+		this.toolbar = new ToolbarHandler();
+		this.panel = new PanelToggleHandler();
+		this.cards = new CardHandler();
 	}
 }

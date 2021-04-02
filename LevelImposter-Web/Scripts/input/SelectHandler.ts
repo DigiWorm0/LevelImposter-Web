@@ -30,13 +30,6 @@ export class SelectHandler {
 	}
 
 	static update(): void {
-		// Deleted Object
-		if (InputHandler.ui.props.toolbar.deletedSelection) {
-			InputHandler.ui.props.toolbar.deletedSelection = false;
-			InputHandler.ui.props.clear();
-			InputHandler.ui.props.toolbar.setEnabled(false);
-			SelectHandler.isSelected = false;
-		}
 
 		// Follow Mouse when Adding a New Object
 		if (MapHandler.isAdding) {
@@ -58,11 +51,11 @@ export class SelectHandler {
 				SelectHandler.isSelected = SelectHandler.selectIndex != -1;
 
 				if (SelectHandler.isSelected) {
-					InputHandler.ui.props.toolbar.setEnabled(true);
-					InputHandler.ui.props.load(SelectHandler.getSelection());
+					InputHandler.ui.toolbar.setEnabled(true);
+					InputHandler.ui.cards.load(SelectHandler.getSelection());
 				} else {
-					InputHandler.ui.props.toolbar.setEnabled(false);
-					InputHandler.ui.props.clear();
+					InputHandler.ui.toolbar.setEnabled(false);
+					InputHandler.ui.cards.clear();
 				}
 			}
 		} else {

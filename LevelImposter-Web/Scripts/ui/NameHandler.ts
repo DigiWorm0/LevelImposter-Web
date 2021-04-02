@@ -1,8 +1,4 @@
-﻿import { ItemDB } from '../map/ItemDB.js'
-import { MapHandler } from '../map/MapHandler.js'
-import { Object } from '../models/Object.js'
-import { ItemDBHandler } from './ItemDBHandler.js';
-import { PropertiesHandler } from './PropertiesHandler.js';
+﻿import { MapHandler } from '../map/MapHandler.js'
 
 export class NameHandler {
 	constructor() {

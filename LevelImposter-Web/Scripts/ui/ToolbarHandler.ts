@@ -1,13 +1,11 @@
 ﻿import { InputHandler } from '../input/InputHandler.js';
+import { SelectHandler } from '../input/SelectHandler.js';
 import { MapHandler } from '../map/MapHandler.js'
 import { Object } from '../models/Object.js'
 
 export class ToolbarHandler {
-	deletedSelection: boolean;
-	currentItem: Object;
 
-	constructor(_currentItem: Object) {
-		this.currentItem = _currentItem;
+	constructor() {
 		$("#trash").click(this.trash.bind(this));
 		document.addEventListener("LIKeyDown", this.update.bind(this));
 	}
@@ -23,9 +21,11 @@ export class ToolbarHandler {
 	}
 
 	trash() {
-		if (this.currentItem) {
-			MapHandler.delete(this.currentItem);
-			this.deletedSelection = true;
+		if (SelectHandler.isSelected) {
+			MapHandler.delete(SelectHandler.getSelection());
+			SelectHandler.isSelected = false;
+			InputHandler.ui.toolbar.setEnabled(false);
+			InputHandler.ui.cards.clear();
 		}
 	}
 }
