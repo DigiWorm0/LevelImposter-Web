@@ -11,7 +11,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                <a class="navbar-brand" asp-area="" asp-controller="Map" asp-action="Index">
 					<img src="~/img/logo-high-maps.png" height="30"/>
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -19,12 +19,8 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
 				<div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-					<partial name="_LoginPartial" />
-					<ul class="navbar-nav flex-grow-1">
-						<!--<li class="nav-item">
-			                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-		                </li>-->
-					</ul>
+					<a class="btn btn-outline-danger m-1" asp-area="" asp-controller="Home" asp-action="Editor">Editor</a>
+					<a class="btn btn-outline-primary m-1" asp-area="" asp-controller="Map" asp-action="Upload">Upload</a>
 				</div>
             </div>
         </nav>
@@ -37,7 +33,7 @@
 
     <footer class="border-top footer text-muted">
 		<div class="container">
-			&copy; LevelImposter 2021<a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+			&copy; LevelImposter 2021
 			<a href="https://github.com/DigiWorm0/LevelImposter">Open Source</a>
 			<a href="https://www.paypal.com/donate?business=WR4V8BLD6AXC4&item_name=Donate+to+Level+Imposter&currency_code=USD">Donate</a>
 		</div>
