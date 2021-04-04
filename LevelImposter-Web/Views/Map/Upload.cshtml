@@ -3,22 +3,28 @@
 }
 @model LevelImposter.Models.MapData
 
-@using Microsoft.Web.Helpers;
+@if (ViewBag.Message != null)
+{
+	<div class="alert alert-danger" role="alert">
+		@ViewBag.Message
+	</div>
+}
+
 @using (Html.BeginForm("Upload", "Map", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
 	<h2>Upload Map</h2>
 	<hr />
 	<div class="form-group">
 		<h4>Name</h4>
-		@Html.TextBoxFor(model => model.name, new { @class = "form-control", required = string.Empty, placeholder = "Map Name" })
+		@Html.TextBoxFor(model => model.Name, new { @class = "form-control", required = string.Empty, placeholder = "Map Name" })
 	</div>
 	<div class="form-group">
 		<h4>Description</h4>
-		@Html.TextAreaFor(model => model.description, new { @class = "form-control", required = string.Empty, placeholder = "Map Description" })
+		@Html.TextAreaFor(model => model.Description, new { @class = "form-control", required = string.Empty, placeholder = "Map Description" })
 	</div>
 	<div class="form-group">
 		<h4>Upload</h4>
-		<input name="mapJson" type="file" required />
+		<input id="JsonFile" name="JsonFile" type="file" required />
 	</div>
 	<div class="form-group">
 		<button class="btn btn-primary m-1" type="submit">Upload</button>

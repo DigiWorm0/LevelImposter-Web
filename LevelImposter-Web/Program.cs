@@ -24,7 +24,10 @@ namespace LevelImposter_Web
                     webBuilder.UseKestrel()
                         .UseContentRoot(Directory.GetCurrentDirectory())
                         .UseIISIntegration()
-                        .UseStartup<Startup>();
+                        .UseStartup<Startup>()
+                        .UseKestrel(options => {
+                            options.Limits.MaxRequestBodySize = null;
+                        });
                 });
     }
 }

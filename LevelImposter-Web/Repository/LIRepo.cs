@@ -17,7 +17,7 @@ namespace LevelImposter.Repository
 
         public MapData GetMapById(int id)
         {
-            return db.LI_Maps.FirstOrDefault(map => map.id == id);
+            return db.LI_Maps.FirstOrDefault(map => map.Id == id);
         }
 
         public MapData[] GetRecent(int amt)
@@ -27,7 +27,7 @@ namespace LevelImposter.Repository
 
         public MapData[] GetMostLikes(int amt)
         {
-            return db.LI_Maps.OrderByDescending(map => map.likes).Take(amt).ToArray();
+            return db.LI_Maps.OrderByDescending(map => map.Likes).Take(amt).ToArray();
         }
 
         public void DeleteMap(MapData map)

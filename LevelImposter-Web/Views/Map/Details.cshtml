@@ -3,6 +3,7 @@
 }
 @model LevelImposter.Models.MapData
 
-<h2>@Model.name</h2>
-<p>@Model.description</p>
-<p>@Model.likes</p>
+<h2>@Model.Name</h2>
+<p>@Model.Description</p>
+@Html.ActionLink("Download", "Download", "Map", new { id = Model.Id }, new { @class = "btn btn-primary" })
+@Html.ActionLink("Return", "Index", "Map", new { }, new { @class = "btn btn-danger" })

@@ -1,8 +1,10 @@
 ﻿using LevelImposter.Models;
 using LevelImposter.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,7 +32,7 @@ namespace LevelImposter.Controllers
                 return;
 
             MapData map = service.GetMap((int)id);
-            byte[] data = Encoding.ASCII.GetBytes(map.mapJson);
+            byte[] data = Encoding.ASCII.GetBytes(map.Json);
 
             Response.Headers.Add("content-disposition", "attachment; filename=map.json");
             await Response.Body.WriteAsync(data, 0, data.Length);
@@ -55,10 +57,53 @@ namespace LevelImposter.Controllers
         }
 
         [HttpPost]
-        public IActionResult Upload(MapData map)
+        [ValidateAntiForgeryToken]
+        public IActionResult Upload(MapData Map, IFormFile JsonFile)
         {
-            service.AddMap(map);
-            return RedirectToAction("Index");
+            // File Existance
+            if (JsonFile == null)
+            {
+                ViewBag.Message = "File provided does not exist";
+                return View();
+            }
+
+            // File Size
+            if (JsonFile.Length > 100 * 1000000)
+            {
+                ViewBag.Message = "File size too big (100mb max)";
+                return View();
+            }
+
+            var test = Path.GetExtension(JsonFile.FileName).ToLower();
+            // File Type
+            if (Path.GetExtension(JsonFile.FileName).ToLower() != ".json")
+            {
+                ViewBag.Message = "File provided was not a proper LevelImposter map file";
+                return View();
+            }
+            
+            // Decode
+            using (Stream stream = JsonFile.OpenReadStream())
+            {
+                byte[] bytes = new byte[JsonFile.Length];
+                stream.Read(bytes, 0, (int)JsonFile.Length);
+
+                Map.Json = Encoding.ASCII.GetString(bytes);
+
+               
+
+                try
+                {
+                    Newtonsoft.Json.JsonConvert.DeserializeObject<MapTemplate>(Map.Json);
+                    service.AddMap(Map);
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    ViewBag.Message = "File provided was not a proper LevelImposter map file";
+                    return View();
+                }
+            }
         }
     }
 }

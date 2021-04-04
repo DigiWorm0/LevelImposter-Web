@@ -4,22 +4,23 @@
 @model LevelImposter.Models.MapData[]
 
 <h2>Recent Uploads</h2>
-@for (int i = 0; i < Model.Length / 3; i++)
-{
+
 <div class="row">
-	@for (int o = 0; o < 3; o++)
+	@for (int i = 0; i < 3; i++)
 	{
-	var map = Model[i + o];
 	<div class="col-sm-4">
-		<div class="card" style="width: 18rem;">
-			<div class="card-body">
-				<h5 class="card-title">@map.name</h5>
-				<p class="card-text">@map.description</p>
-				@Html.ActionLink("Download", "Download", "Map", new { id = map.id }, new { @class = "card-link" })
-				@Html.ActionLink("More Details", "Details", "Map", new { id = map.id }, new { @class = "card-link" })
+		@for (int o = (int)(Math.Ceiling(Model.Length / 3.0) * i); o < Math.Min(Math.Ceiling(Model.Length / 3.0) * (i + 1), Model.Length); o++)
+		{
+			var map = Model[o];
+			<div class="card mb-2">
+				<div class="card-body">
+					<h5 class="card-title">@map.Name</h5>
+					<p class="card-text">@map.Description</p>
+					@Html.ActionLink("Download", "Download", "Map", new { id = map.Id }, new { @class = "card-link" })
+					@Html.ActionLink("More Details", "Details", "Map", new { id = map.Id }, new { @class = "card-link" })
+				</div>
 			</div>
-		</div>
+		}
 	</div>
 	}
 </div>
-}
