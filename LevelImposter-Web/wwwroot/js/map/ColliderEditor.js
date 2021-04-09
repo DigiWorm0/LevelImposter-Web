@@ -7,12 +7,13 @@ export class ColliderEditor {
             return;
         let mouse = cam.getMouse();
         let pts = this.getPts();
+        let closed = this.getClosed();
         if (!this.isEditingPt) {
             let smallestD = Number.MAX_SAFE_INTEGER; // Distance
             let smallestP = new Point(); // Point
             let smallestE = false; // On Edge
             let smallestI = -1; // Index
-            for (let i = 0; i < pts.length; i++) {
+            for (let i = 0; i < pts.length - (closed ? 0 : 1); i++) {
                 let p1 = pts[i];
                 let p2 = pts[(i + 1) % pts.length];
                 let isOnEdge = true;
@@ -89,6 +90,9 @@ export class ColliderEditor {
     static edit(_obj, _index) {
         if (this.index == _index)
             return this.stop();
+        if (this.isEditing)
+            this.stop();
+        $("#colliderBtn" + _index).text("Stop Editing");
         this.isEditing = true;
         this.obj = _obj;
         this.index = _index;
@@ -98,7 +102,15 @@ export class ColliderEditor {
             return;
         return this.obj.getColliderPts(this.index);
     }
+    static getClosed() {
+        if (!this.isEditing)
+            return false;
+        return this.obj.colliders[this.index].isClosed;
+    }
     static stop() {
+        if (!this.isEditing)
+            return;
+        $("#colliderBtn" + this.index).text("Edit");
         this.isEditing = false;
         this.obj = undefined;
         this.index = -1;

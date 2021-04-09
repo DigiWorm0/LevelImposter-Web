@@ -4,10 +4,12 @@ import { Object } from "./Object.js";
 export class Collider {
 
 	blocksLight: boolean;
+	isClosed: boolean;
 	points: Point[];
 
 	constructor(parent?: Object) {
 		this.blocksLight = true;
+		this.isClosed = true;
 		this.points = [];
 
 		if (parent == undefined)

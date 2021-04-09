@@ -2,6 +2,7 @@ import { Point } from "./Point.js";
 export class Collider {
     constructor(parent) {
         this.blocksLight = true;
+        this.isClosed = true;
         this.points = [];
         if (parent == undefined)
             return;

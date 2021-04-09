@@ -10,14 +10,20 @@ export class ColliderGenerator {
         let contentCard = CardHelper.genContent();
         // Checkbox
         if (parent.type != "util-room") {
-            let checkbox = CardHelper.genCheckbox("collider" + index + "-checkbox", collider.blocksLight, "Vision Block");
-            checkbox.firstChild.onchange = (() => {
-                collider.blocksLight = document.getElementById("collider" + index + "-checkbox").checked;
+            let checkbox1 = CardHelper.genCheckbox("collider" + index + "-checkbox1", collider.blocksLight, "Vision Block");
+            checkbox1.firstChild.onchange = (() => {
+                collider.blocksLight = document.getElementById("collider" + index + "-checkbox1").checked;
             }).bind(this);
-            contentCard.appendChild(checkbox);
+            let checkbox2 = CardHelper.genCheckbox("collider" + index + "-checkbox2", collider.blocksLight, "Closed Loop");
+            checkbox2.firstChild.onchange = (() => {
+                collider.isClosed = document.getElementById("collider" + index + "-checkbox2").checked;
+            }).bind(this);
+            contentCard.appendChild(checkbox1);
+            contentCard.appendChild(checkbox2);
         }
         // Edit
         let editBtn = CardHelper.genButton("Edit", "primary");
+        editBtn.id = "colliderBtn" + index;
         editBtn.onclick = ((() => {
             ColliderEditor.edit(SelectHandler.getSelection(), index);
         }).bind(this));
