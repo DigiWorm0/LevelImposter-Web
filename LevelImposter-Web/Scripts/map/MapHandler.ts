@@ -7,6 +7,7 @@ import { InputHandler } from '../input/InputHandler.js';
 import { ActionHandler } from '../input/Actions/ActionHandler.js';
 import { AddAction } from '../input/Actions/AddAction.js';
 import { DelAction } from '../input/Actions/DelAction.js';
+import { Collider } from '../models/Collider.js';
 
 export class MapHandler {
 	static map: Map;
@@ -88,28 +89,30 @@ export class MapHandler {
 					for (let i = 0; i < json.objs.length; i++) {
 						let o = json.objs[i];
 						if (o.spriteType == "existing") {
-							// Init
 							MapHandler.map.objs.push(new Object(o.name, o.x, o.y, "existing", o.type, new Sprite("/Sprites/" + o.type + ".png")));
-
-							// Other Props
-							let newO = MapHandler.map.objs[MapHandler.map.objs.length - 1];
-							newO.xScale = o.xScale;
-							newO.yScale = o.yScale;
-							newO.z = o.z;
-							newO.rotation = o.rotation;
-							newO.colliders = o.colliders;
 						} else if (o.spriteType == "custom") {
-							// Init
 							MapHandler.map.objs.push(new Object(o.name, o.x, o.y, "existing", o.type, new Sprite(o.type)));
-
-							// Other Props
-							let newO = MapHandler.map.objs[MapHandler.map.objs.length - 1];
-							newO.xScale = o.xScale;
-							newO.yScale = o.yScale;
-							newO.z = o.z;
-							newO.rotation = o.rotation;
-							newO.colliders = o.colliders;
+						} else {
+							continue;
 						}
+
+						let newO = MapHandler.map.objs[MapHandler.map.objs.length - 1];
+						newO.xScale = o.xScale;
+						newO.yScale = o.yScale;
+						newO.z = o.z;
+						newO.rotation = o.rotation;
+						newO.flipX = o.flipX;
+						newO.flipY = o.flipY;
+						newO.targetIds = o.targetIds;
+						newO.id = o.id;
+						newO.colliders = new Array<Collider>();
+						o.colliders.forEach((collider) => {
+							var newC = new Collider();
+							newC.points = collider.points;
+							newC.isClosed = collider.isClosed;
+							newC.blocksLight = collider.blocksLight;
+							newO.colliders.push(newC);
+						});
 					}
 				}
 			};
