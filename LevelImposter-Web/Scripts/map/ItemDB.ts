@@ -57,7 +57,9 @@
         "util-vitals": "Vitals",
         "util-computer": "Freeplay Laptop",
         "util-room": "Room",
-        "util-player": "Dummy"
+        "util-player": "Dummy",
+        "util-vent1": "Skeld/Mira Vent",
+        "util-vent2": "Polus Vent"
     },
     "Rooms": {
         "room-polusadmin": "Polus Admin",

@@ -6,6 +6,7 @@ import { RoomGenerator } from "./RoomGenerator.js";
 import { SabGenerator } from "./SabGenerator.js";
 import { TaskGenerator } from "./TaskGenerator.js";
 import { TransformGenerator } from "./TransformGenerator.js";
+import { VentGenerator } from "./VentGenerator.js";
 
 export class CardHandler {
 	transformGen: TransformGenerator;
@@ -14,6 +15,7 @@ export class CardHandler {
 	adminGen: AdminGenerator;
 	sabGen: SabGenerator;
 	taskGen: TaskGenerator;
+	ventGen: VentGenerator;
 
 	constructor() {
 		this.transformGen = new TransformGenerator();
@@ -22,6 +24,7 @@ export class CardHandler {
 		this.adminGen = new AdminGenerator();
 		this.sabGen = new SabGenerator();
 		this.taskGen = new TaskGenerator();
+		this.ventGen = new VentGenerator();
 	}
 
 	load(obj: Object) {
@@ -34,6 +37,7 @@ export class CardHandler {
 		this.sabGen.generate(obj);
 		this.taskGen.generate(obj);
 		this.colliderGen.generate(obj);
+		this.ventGen.generate(obj);
 
 		// Bottom Buttons
 		let colliderButton = CardHelper.genBottomButton("Add Collider");

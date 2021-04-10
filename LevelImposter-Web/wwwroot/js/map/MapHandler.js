@@ -120,5 +120,13 @@ export class MapHandler {
             };
         });
     }
+    static getById(id) {
+        for (let index in this.map.objs) {
+            let obj = this.map.objs[index];
+            if (obj.id == id)
+                return obj;
+        }
+        return undefined;
+    }
 }
 //# sourceMappingURL=MapHandler.js.map

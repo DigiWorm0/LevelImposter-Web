@@ -133,4 +133,13 @@ export class MapHandler {
 			}
 		});
 	}
+
+	static getById(id): Object {
+		for (let index in this.map.objs) {
+			let obj = this.map.objs[index];
+			if (obj.id == id)
+				return obj;
+		}
+		return undefined;
+	}
 }
