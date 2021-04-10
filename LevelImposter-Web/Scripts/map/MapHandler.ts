@@ -91,7 +91,7 @@ export class MapHandler {
 						if (o.spriteType == "existing") {
 							MapHandler.map.objs.push(new Object(o.name, o.x, o.y, "existing", o.type, new Sprite("/Sprites/" + o.type + ".png")));
 						} else if (o.spriteType == "custom") {
-							MapHandler.map.objs.push(new Object(o.name, o.x, o.y, "existing", o.type, new Sprite(o.type)));
+							MapHandler.map.objs.push(new Object(o.name, o.x, o.y, "custom", o.type, new Sprite(o.type)));
 						} else {
 							continue;
 						}

@@ -3,6 +3,7 @@ import { CardHelper } from "./CardHelper.js";
 import { ColliderGenerator } from "./ColliderGenerator.js";
 import { RoomGenerator } from "./RoomGenerator.js";
 import { SabGenerator } from "./SabGenerator.js";
+import { TaskGenerator } from "./TaskGenerator.js";
 import { TransformGenerator } from "./TransformGenerator.js";
 export class CardHandler {
     constructor() {
@@ -11,6 +12,7 @@ export class CardHandler {
         this.roomGen = new RoomGenerator();
         this.adminGen = new AdminGenerator();
         this.sabGen = new SabGenerator();
+        this.taskGen = new TaskGenerator();
     }
     load(obj) {
         this.clear();
@@ -19,6 +21,7 @@ export class CardHandler {
         this.roomGen.generate(obj);
         this.adminGen.generate(obj);
         this.sabGen.generate(obj);
+        this.taskGen.generate(obj);
         this.colliderGen.generate(obj);
         // Bottom Buttons
         let colliderButton = CardHelper.genBottomButton("Add Collider");

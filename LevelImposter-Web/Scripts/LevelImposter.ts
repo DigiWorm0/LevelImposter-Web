@@ -2,6 +2,7 @@
 import { InputHandler } from './input/InputHandler.js';
 import { ItemDB } from './map/ItemDB.js';
 import { MapHandler } from './map/MapHandler.js';
+import { Version } from './models/Constants.js';
 
 class LevelImposter {
 	g: Graphics;
@@ -26,5 +27,6 @@ class LevelImposter {
 // Init
 let li: LevelImposter;
 $(function () {
+	console.log("LevelImposter Editor v" + Version);
 	li = new LevelImposter();
 });
