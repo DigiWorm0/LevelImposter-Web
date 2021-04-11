@@ -13,14 +13,6 @@ class LevelImposter {
 		this.i = new InputHandler();
 		this.g = new Graphics();
 		this.m = new MapHandler(this.g.canvas.objRender.cam);
-
-		/*
-		Object.keys(ItemDB.Tasks).forEach((key, index) => {
-			var i = MapHandler.addExisting(key, key);
-			MapHandler.map.objs[i].x = index * 2;
-			MapHandler.map.objs[i].y = 0;
-			MapHandler.isAdding = false;
-		});*/
 	}
 };
 

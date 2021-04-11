@@ -18,6 +18,6 @@ export class Graphics {
 		this.canvas.mapRender.drawMap();			// Draw Map
 		this.canvas.selRender.drawSelection();		// Draw Selection
 		this.canvas.colRender.drawCollider();		// Draw Collider
-		this.canvas.ventRender.drawVents();			// Draw Vent Connections
+		this.canvas.targetRender.drawTargets();		// Draw Target Lines
 	}
 }

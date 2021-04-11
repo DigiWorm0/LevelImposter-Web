@@ -13,9 +13,11 @@ export class SabGenerator {
         let contentCard = CardHelper.genContent();
         contentCard.classList.add("specialdata");
         // Inputs
-        let names = [];
-        let values = [];
-        let target = obj.targetIds.length <= 0 ? 0 : obj.targetIds[0];
+        let names = ["Default Room"];
+        let values = ["-1"];
+        if (obj.targetIds.length <= 0)
+            obj.targetIds = [-1];
+        let target = obj.targetIds[0];
         for (let i = 0; i < MapHandler.map.objs.length; i++) {
             let obj2 = MapHandler.map.objs[i];
             if (obj2.type == "util-room") {

@@ -4,7 +4,7 @@ import { GridRenderer } from './GridRenderer.js';
 import { MapRenderer } from './MapRenderer.js';
 import { ObjectRenderer } from './ObjectRenderer.js';
 import { SelectRenderer } from './SelectRenderer.js';
-import { VentRenderer } from './VentRenderer.js';
+import { TargetRenderer } from './TargetRenderer.js';
 export class CanvasHandler {
     constructor() {
         // Init Canvas
@@ -19,7 +19,7 @@ export class CanvasHandler {
         this.selRender = new SelectRenderer(this.objRender);
         this.gridRender = new GridRenderer(this.objRender);
         this.colRender = new ColliderRenderer(this.objRender);
-        this.ventRender = new VentRenderer(this.objRender);
+        this.targetRender = new TargetRenderer(this.objRender);
     }
     resize() {
         this.canvas = document.getElementById('licanvas');

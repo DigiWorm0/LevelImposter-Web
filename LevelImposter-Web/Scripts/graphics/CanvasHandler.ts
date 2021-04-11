@@ -5,14 +5,14 @@ import { GridRenderer } from './GridRenderer.js';
 import { MapRenderer } from './MapRenderer.js';
 import { ObjectRenderer } from './ObjectRenderer.js'
 import { SelectRenderer } from './SelectRenderer.js';
-import { VentRenderer } from './VentRenderer.js';
+import { TargetRenderer } from './TargetRenderer.js';
 
 export class CanvasHandler {
 	objRender:  ObjectRenderer;
 	mapRender:  MapRenderer;
 	selRender: SelectRenderer;
 	gridRender: GridRenderer;
-	ventRender: VentRenderer;
+	targetRender: TargetRenderer;
 	colRender: ColliderRenderer;
 
 	canvas: HTMLCanvasElement;
@@ -49,7 +49,7 @@ export class CanvasHandler {
 			this.objRender
 		);
 
-		this.ventRender = new VentRenderer(
+		this.targetRender = new TargetRenderer(
 			this.objRender
 		);
 	}

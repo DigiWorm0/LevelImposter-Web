@@ -21,9 +21,11 @@ export class TaskGenerator implements CardGenerator {
 		contentCard.classList.add("specialdata");
 
 		// Inputs
-		let names: string[] = [];
-		let values: string[] = [];
-		let target = obj.targetIds.length <= 0 ? 0 : obj.targetIds[0];
+		let names: string[] = ["Default Room"];
+		let values: string[] = ["-1"];
+		if (obj.targetIds.length <= 0)
+			obj.targetIds = [-1];
+		let target = obj.targetIds[0];
 		for (let i = 0; i < MapHandler.map.objs.length; i++) {
 			let obj2 = MapHandler.map.objs[i];
 			if (obj2.type == "util-room") {
