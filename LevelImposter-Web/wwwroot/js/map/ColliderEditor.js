@@ -60,9 +60,17 @@ export class ColliderEditor {
                     smallestI = ptIndex;
                 }
             }
-            this.onEdge = smallestE;
-            this.closestPt = smallestP;
-            this.closestIndex = smallestI;
+            document.getElementById("debug").innerText = smallestD.toString();
+            if (smallestD < 1) {
+                this.onEdge = smallestE;
+                this.closestPt = smallestP;
+                this.closestIndex = smallestI;
+            }
+            else {
+                this.onEdge = false;
+                this.closestPt = new Point();
+                this.closestIndex = -1;
+            }
         }
         // Controls
         this.isEditingPt = false;
@@ -74,6 +82,10 @@ export class ColliderEditor {
                 let rawPt = this.obj.colliders[this.index].points[this.closestIndex];
                 rawPt.x = cam.getMouse().x - this.obj.x;
                 rawPt.y = cam.getMouse().y - this.obj.y;
+                if (InputHandler.key.get(16)) {
+                    rawPt.x = Math.round(rawPt.x * 10) / 10;
+                    rawPt.y = Math.round(rawPt.y * 10) / 10;
+                }
             }
             else {
                 this.isEditingPt = true;

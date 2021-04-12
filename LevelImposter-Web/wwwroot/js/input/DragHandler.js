@@ -30,6 +30,10 @@ export class DragHandler {
             let currentObj = MapHandler.map.objs[this.index];
             currentObj.x = currentMouse.x + this.dragInit.x;
             currentObj.y = currentMouse.y + this.dragInit.y;
+            if (InputHandler.key.get(16)) {
+                currentObj.x = Math.round(currentObj.x * 4) / 4;
+                currentObj.y = Math.round(currentObj.y * 4) / 4;
+            }
             InputHandler.ui.cards.transformGen.updateValues(currentObj);
         }
         else if (this.isDragging) {
