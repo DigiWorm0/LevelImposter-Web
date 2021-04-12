@@ -61,7 +61,9 @@ export const ItemDB = {
         "util-room": "Room",
         "util-player": "Dummy",
         "util-vent1": "Skeld/Mira Vent",
-        "util-vent2": "Polus Vent"
+        "util-vent2": "Polus Vent",
+        "util-cam": "Camera",
+        "util-cams": "Camera Panel"
     },
     "Rooms": {
         "room-polusadmin": "Polus Admin",

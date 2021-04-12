@@ -22,7 +22,7 @@ export class ColliderGenerator implements CardGenerator {
 				collider.blocksLight = (document.getElementById("collider" + index + "-checkbox1") as HTMLInputElement).checked;
 			}).bind(this);
 
-			let checkbox2 = CardHelper.genCheckbox("collider" + index + "-checkbox2", collider.blocksLight, "Closed Loop");
+			let checkbox2 = CardHelper.genCheckbox("collider" + index + "-checkbox2", collider.isClosed, "Closed Loop");
 			(checkbox2.firstChild as HTMLInputElement).onchange = (() => {
 				collider.isClosed = (document.getElementById("collider" + index + "-checkbox2") as HTMLInputElement).checked;
 			}).bind(this);

@@ -1,4 +1,5 @@
 import { AdminGenerator } from "./AdminGenerator.js";
+import { CamGenerator } from "./CamGenerator.js";
 import { CardHelper } from "./CardHelper.js";
 import { ColliderGenerator } from "./ColliderGenerator.js";
 import { RoomGenerator } from "./RoomGenerator.js";
@@ -15,6 +16,7 @@ export class CardHandler {
         this.sabGen = new SabGenerator();
         this.taskGen = new TaskGenerator();
         this.ventGen = new VentGenerator();
+        this.camGen = new CamGenerator();
     }
     load(obj) {
         this.clear();
@@ -26,6 +28,7 @@ export class CardHandler {
         this.taskGen.generate(obj);
         this.colliderGen.generate(obj);
         this.ventGen.generate(obj);
+        this.camGen.generate(obj);
         // Bottom Buttons
         let colliderButton = CardHelper.genBottomButton("Add Collider");
         colliderButton.onclick = obj.addCollider.bind(obj);

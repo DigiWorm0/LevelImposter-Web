@@ -60,7 +60,6 @@ export class ColliderEditor {
                     smallestI = ptIndex;
                 }
             }
-            document.getElementById("debug").innerText = smallestD.toString();
             if (smallestD < 1) {
                 this.onEdge = smallestE;
                 this.closestPt = smallestP;
