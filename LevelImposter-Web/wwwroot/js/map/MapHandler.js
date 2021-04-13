@@ -1,7 +1,7 @@
 import { Object } from '../models/Object.js';
 import { Map } from '../models/Map.js';
 import { Sprite } from '../models/Sprite.js';
-import { UploadHandler } from '../input/UploadHandler.js';
+import { UploadHandler } from '../ui/UploadHandler.js';
 import { InputHandler } from '../input/InputHandler.js';
 import { ActionHandler } from '../input/Actions/ActionHandler.js';
 import { AddAction } from '../input/Actions/AddAction.js';

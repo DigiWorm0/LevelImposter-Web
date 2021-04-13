@@ -287,6 +287,20 @@ input[type=number] {
         width:70%;
     }
 
+/*    Settings    */
+.settings-window {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: 30vh;
+    left: 35vw;
+    width: 30vw;
+    height: auto;
+    border-radius: 2px;
+    text-align: center;
+    padding: 20px;
+}
+
 /*   X Button    */
 .x-btn {
     position:absolute;

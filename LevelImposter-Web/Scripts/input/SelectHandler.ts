@@ -42,6 +42,12 @@ export class SelectHandler {
 			obj.x = SelectHandler.cam.getMouse().x;
 			obj.y = SelectHandler.cam.getMouse().y;
 
+			// Grid Snap
+			if (InputHandler.key.get(16)) {
+				obj.x = Math.round(obj.x * 4) / 4;
+				obj.y = Math.round(obj.y * 4) / 4;
+			}
+
 			if (obj.type.startsWith("room-"))
 				obj.z = 10;
 			else if (obj.type == "util-room")

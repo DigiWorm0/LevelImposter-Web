@@ -2,6 +2,7 @@
 import { ItemDBHandler } from './ItemDBHandler.js';
 import { NameHandler } from './NameHandler.js';
 import { PanelToggleHandler } from './PanelToggleHandler.js';
+import { SettingsHandler } from './SettingsHandler.js';
 import { ToolbarHandler } from './ToolbarHandler.js';
 
 export class UIHandler {
@@ -10,6 +11,7 @@ export class UIHandler {
 	toolbar: ToolbarHandler;
 	panel: PanelToggleHandler;
 	cards: CardHandler;
+	settings: SettingsHandler;
 
 	canvasFocused: boolean;
 
@@ -27,5 +29,6 @@ export class UIHandler {
 		this.toolbar = new ToolbarHandler();
 		this.panel = new PanelToggleHandler();
 		this.cards = new CardHandler();
+		this.settings = new SettingsHandler();
 	}
 }
