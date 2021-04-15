@@ -4,6 +4,7 @@ import { NameHandler } from './NameHandler.js';
 import { PanelToggleHandler } from './PanelToggleHandler.js';
 import { SettingsHandler } from './SettingsHandler.js';
 import { ToolbarHandler } from './ToolbarHandler.js';
+import { WarningsHandler } from './WarningsHandler.js';
 
 export class UIHandler {
 	name: NameHandler;
@@ -11,6 +12,7 @@ export class UIHandler {
 	toolbar: ToolbarHandler;
 	panel: PanelToggleHandler;
 	cards: CardHandler;
+	warnings: WarningsHandler;
 	settings: SettingsHandler;
 
 	canvasFocused: boolean;
@@ -29,6 +31,7 @@ export class UIHandler {
 		this.toolbar = new ToolbarHandler();
 		this.panel = new PanelToggleHandler();
 		this.cards = new CardHandler();
+		this.warnings = new WarningsHandler();
 		this.settings = new SettingsHandler();
 	}
 }

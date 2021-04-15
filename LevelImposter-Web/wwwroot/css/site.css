@@ -321,6 +321,17 @@ input[type=number] {
         border-color: #1d95dd;
     }
 
+/*    Warning Panel    */
+.warning {
+    position:absolute;
+    top:65px;
+    right: 5px;
+    width: 400px;
+}
+.warning-btn {
+    display: none;
+}
+
 /*    Undersized    */
 .undersize {
     display: none;
