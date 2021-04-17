@@ -292,9 +292,10 @@ input[type=number] {
     display: none;
     position: absolute;
     background-color: white;
-    top: 30vh;
+    top: 5vh;
     left: 35vw;
     width: 30vw;
+    overflow-y:scroll;
     height: auto;
     border-radius: 2px;
     text-align: center;
@@ -343,4 +344,9 @@ input[type=number] {
     padding-top:calc(50vh - 50px);
     background-color: #e9e9e9;
     text-align:center;
+}
+
+/*    Black Background    */
+.black-bg {
+    background-color:black;
 }

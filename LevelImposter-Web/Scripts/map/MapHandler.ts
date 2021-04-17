@@ -85,6 +85,8 @@ export class MapHandler {
 				if (ready == true) {
 					MapHandler.map = new Map();
 					MapHandler.map.name = json.name;
+					MapHandler.map.btn = json.btn;
+					MapHandler.map.map = json.map;
 					InputHandler.ui.name.setName(json.name);
 					for (let i = 0; i < json.objs.length; i++) {
 						let o = json.objs[i];

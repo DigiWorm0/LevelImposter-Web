@@ -4,13 +4,14 @@ export class SettingsHandler {
 
 	constructor() {
 		$("#settings-btn").click(this.toggleSettings.bind(this));
+		$("#settings-exit").click(this.hide.bind(this));
+		$("#settings-upload1").change(this.onUpload.bind(this));
+		$("#settings-btn-default").click(this.onDefault.bind(this));
 	}
 
 	toggleSettings(): void {
 		$("#upload-bg").show();
 		$("#settings-window").show();
-		$("#settings-exit").click(this.hide.bind(this));
-		$("#settings-upload1").change(this.onUpload.bind(this));
 	}
 
 	hide(): void {
@@ -32,9 +33,19 @@ export class SettingsHandler {
 			reader.readAsDataURL(file);
 			reader.onload = () => {
 				let url = reader.result as string;
-				MapHandler.map.map = url;
-				$("#settings-map").prop('src', url);
+				MapHandler.map.btn = url;
+				$("#settings-btn-img").attr('src', url);
 			}
 		}
+	}
+
+	static setBtn(data: string): void {
+		if (data != undefined && data != "")
+			$("#settings-btn-img").attr('src', data);
+	}
+
+	onDefault(): void {
+		MapHandler.map.btn = "";
+		$("#settings-btn-img").prop('src', "/img/custombtn.png");
 	}
 }

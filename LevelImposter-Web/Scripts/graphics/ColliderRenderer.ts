@@ -26,7 +26,6 @@ export class ColliderRenderer {
 
 		// Draw Point
 		ColliderEditor.update(this.renderer.cam);
-		
 
 		if (ColliderEditor.closestIndex != -1) {
 			let pt = ColliderEditor.closestPt;
@@ -34,8 +33,8 @@ export class ColliderRenderer {
 			this.renderer.drawRect({
 				x: pt.x,
 				y: pt.y,
-				w: .1,
-				h: .1
+				w: .1 / this.renderer.cam.zoom,
+				h: .1 / this.renderer.cam.zoom
 			}, 0, color, color);
 		}
 	}
