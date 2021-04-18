@@ -107,6 +107,7 @@ export class MapHandler {
 						newO.flipY = o.flipY;
 						newO.targetIds = o.targetIds;
 						newO.id = o.id;
+						newO.onlyFromBottom = o.onlyFromBottom;
 						newO.colliders = new Array<Collider>();
 						o.colliders.forEach((collider) => {
 							var newC = new Collider();

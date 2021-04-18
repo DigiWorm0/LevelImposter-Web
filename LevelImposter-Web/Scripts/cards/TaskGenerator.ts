@@ -35,15 +35,20 @@ export class TaskGenerator implements CardGenerator {
 		}
 		let roomInput = CardHelper.genDropdown(names, values, target.toString(), "roomInput");
 
+		// Checkbox
+		let checkbox1 = CardHelper.genCheckbox("task-checkbox1", obj.onlyFromBottom, "Only From Below");
+		(checkbox1.firstChild as HTMLInputElement).onchange = (() => {
+			obj.onlyFromBottom = (document.getElementById("task-checkbox1") as HTMLInputElement).checked;
+		}).bind(this);
+
 		// Labels
-		let nameLabel = CardHelper.genP("Room");
 		let descLabel = CardHelper.genP("Tasks need a room to link to in order to display on the task map.");
 		descLabel.style.width = "100%";
 		descLabel.style.margin = "2px";
 		descLabel.style.textAlign = "center";
 
 		// Children
-		contentCard.append(nameLabel);
+		contentCard.append(checkbox1);
 		contentCard.append(roomInput);
 		contentCard.append(descLabel);
 		baseCard.appendChild(titleCard);

@@ -36,14 +36,12 @@ export class SabGenerator implements CardGenerator {
 		let roomInput = CardHelper.genDropdown(names, values, target.toString(), "roomInput");
 
 		// Labels
-		let nameLabel = CardHelper.genP("Room");
 		let descLabel = CardHelper.genP("Sabotages need a room to link to in order to display on the sabotage map.");
 		descLabel.style.width = "100%";
 		descLabel.style.margin = "2px";
 		descLabel.style.textAlign = "center";
 
 		// Children
-		contentCard.append(nameLabel);
 		contentCard.append(roomInput);
 		contentCard.append(descLabel);
 		baseCard.appendChild(titleCard);

@@ -207,29 +207,8 @@ footer {
     }
 
 .specialdata {
-    width: 100%;
     font-size: 14px;
-    text-align: left;
 }
-
-    .specialdata input {
-        width: 170px;
-        margin: 2px;
-        margin-right: 8px;
-    }
-
-    .specialdata select {
-        width: 170px;
-        margin: 2px;
-        margin-right: 8px;
-    }
-
-    .specialdata p {
-        width: 80px;
-        display: inline-block;
-        margin: 3px;
-        text-align: right;
-    }
 #prop-list {
     height: calc(100vh - 140px);
 }

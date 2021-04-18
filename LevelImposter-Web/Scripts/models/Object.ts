@@ -9,6 +9,7 @@ import { ColliderEditor } from '../map/ColliderEditor.js';
 export class Object {
 	name: string;
 	id: number;
+
 	x: number;
 	y: number;
 	z: number;
@@ -18,6 +19,8 @@ export class Object {
 
 	flipX: boolean;
 	flipY: boolean;
+
+	onlyFromBottom: boolean;
 
 	colliders: Array<Collider>;
 	targetIds: Array<number>;

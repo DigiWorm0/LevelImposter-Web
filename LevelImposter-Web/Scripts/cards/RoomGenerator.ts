@@ -23,14 +23,12 @@ export class RoomGenerator implements CardGenerator {
 		let nameInput = CardHelper.genTxtInput("roomNameInput", obj.name);
 
 		// Labels
-		let nameLabel = CardHelper.genP("Name");
 		let descLabel = CardHelper.genP("Rooms are used for admin table, map, and sabotages. Add a collider surrounding the room if you want the room to show up on admin table.");
 		descLabel.style.width = "100%";
 		descLabel.style.margin = "2px";
 		descLabel.style.textAlign = "center";
 
 		// Children
-		contentCard.append(nameLabel);
 		contentCard.append(nameInput);
 		contentCard.append(descLabel);
 		baseCard.appendChild(titleCard);
