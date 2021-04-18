@@ -25,8 +25,9 @@ export class Object {
 	colliders: Array<Collider>;
 	targetIds: Array<number>;
 
-	spriteType: string;
+	spriteType: string; // SpriteData
 	type: string;
+
 	sprite: Sprite;
 
 	constructor(_name:string, _x: number, _y: number, _spriteType: string, _type: string, _sprite: Sprite) {
@@ -40,6 +41,7 @@ export class Object {
 		this.rotation = 0;
 		this.flipX = false;
 		this.flipY = false;
+		this.onlyFromBottom = false;
 		this.colliders = new Array<Collider>();
 		this.targetIds = new Array<number>();
 		this.spriteType = _spriteType;
@@ -93,7 +95,7 @@ export class Object {
 		if (index < 0 || index >= this.colliders.length)
 			return;
 		this.colliders.splice(index, 1);
-
+		
 		if (ColliderEditor.index == index)
 			ColliderEditor.stop();
 	}

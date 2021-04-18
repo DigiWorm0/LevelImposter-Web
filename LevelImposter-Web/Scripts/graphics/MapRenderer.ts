@@ -20,7 +20,9 @@ export class MapRenderer {
 					SelectHandler.mapSwap(i);
 				}
 			}
-			this.renderer.drawObj(arr[i]);
+			try {
+				this.renderer.drawObj(arr[i]);
+			} catch {}
 		}
 	}
 }
