@@ -5,8 +5,15 @@ export class SettingsHandler {
 	constructor() {
 		$("#settings-btn").click(this.toggleSettings.bind(this));
 		$("#settings-exit").click(this.hide.bind(this));
+
 		$("#settings-upload1").change(this.onUpload.bind(this));
 		$("#settings-btn-default").click(this.onDefault.bind(this));
+
+		$("#settings-exile-type").change(this.onExileChange.bind(this));
+	}
+
+	onExileChange(): void {
+		MapHandler.map.exile = parseInt($("#settings-exile-type").val() as string);
 	}
 
 	toggleSettings(): void {
@@ -39,9 +46,13 @@ export class SettingsHandler {
 		}
 	}
 
-	static setBtn(data: string): void {
-		if (data != undefined && data != "")
-			$("#settings-btn-img").attr('src', data);
+	static import(): void {
+		let map = MapHandler.map;
+
+		if (map.btn != undefined && map.btn != "")
+			$("#settings-btn-img").attr('src', map.btn);
+
+		$("#settings-exile-type").val(map.exile);
 	}
 
 	onDefault(): void {

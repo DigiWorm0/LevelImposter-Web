@@ -83,10 +83,20 @@
 	<div class="form-group">
 		<hr />
 		<h5>Map Button</h5>
-		<img src="~/img/custombtn.png" class="m-3 black-bg" width="300" id="settings-btn-img" />
 		<p>146x47 Reccommended</p>
+		<img src="~/img/custombtn.png" class="mb-3 black-bg" width="146" id="settings-btn-img" />
 		<input type="file" class="form-control-file" id="settings-upload1">
 		<button class="btn btn-primary mt-3" id="settings-btn-default">Set Default</button>
+	</div>
+	<div class="form-group">
+		<hr/>
+		<h5>Exile Type</h5>
+		<select class="form-control" id="settings-exile-type">
+			<option value="0">Skeld</option>
+			<option value="1">Mira</option>
+			<option value="2">Polus</option>
+			<option value="3">Airship</option>
+		</select>
 	</div>
 </div>
 
@@ -96,7 +106,7 @@
 		<h5>Warnings:</h5>
 		<hr />
 		<div id="warnings" class="warnings">
-			
+
 		</div>
 	</div>
 </div>

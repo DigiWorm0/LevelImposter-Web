@@ -8,6 +8,7 @@ import { ActionHandler } from '../input/Actions/ActionHandler.js';
 import { AddAction } from '../input/Actions/AddAction.js';
 import { DelAction } from '../input/Actions/DelAction.js';
 import { Collider } from '../models/Collider.js';
+import { SettingsHandler } from '../ui/SettingsHandler.js';
 
 export class MapHandler {
 	static map: Map;
@@ -87,6 +88,7 @@ export class MapHandler {
 					MapHandler.map.name = json.name;
 					MapHandler.map.btn = json.btn;
 					MapHandler.map.map = json.map;
+					MapHandler.map.exile = json.exile;
 					InputHandler.ui.name.setName(json.name);
 					for (let i = 0; i < json.objs.length; i++) {
 						let o = json.objs[i];
@@ -117,6 +119,8 @@ export class MapHandler {
 							newO.colliders.push(newC);
 						});
 					}
+
+					SettingsHandler.import();
 				}
 			};
 		});

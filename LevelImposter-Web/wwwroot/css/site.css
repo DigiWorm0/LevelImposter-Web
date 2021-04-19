@@ -275,7 +275,8 @@ input[type=number] {
     left: 35vw;
     width: 30vw;
     overflow-y:scroll;
-    height: auto;
+    overflow-x:hidden;
+    height: 90vh;
     border-radius: 2px;
     text-align: center;
     padding: 20px;
