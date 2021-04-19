@@ -329,3 +329,34 @@ input[type=number] {
 .black-bg {
     background-color:black;
 }
+
+/*    Documentation    */
+.docs {
+    overflow: hidden;
+}
+    .docs br {
+        margin-top: 10px;
+    }
+
+.docs-content {
+    height: calc(100vh - 60px);
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding-top:20px;
+    padding-right:20px;
+}
+
+    .docs-content img {
+        max-width: 70%;
+        margin:10px;
+    }
+
+    .docs-content table {
+        max-width: 70%;
+        font-size:15px;
+    }
+
+.small-img {
+    max-width:25% !important;
+    float: right;
+}

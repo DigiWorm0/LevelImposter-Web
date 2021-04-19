@@ -1,3 +1,7 @@
 ﻿@{
-    Layout = "_Layout";
+	var controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
+	if (controllerName == "Map")
+		Layout = "_MapsLayout";
+	else
+		Layout = "_DocsLayout";
 }
