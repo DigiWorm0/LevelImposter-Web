@@ -1,6 +1,5 @@
 ﻿import { Graphics } from './graphics/GraphicsHandler.js'
 import { InputHandler } from './input/InputHandler.js';
-import { ItemDB } from './map/ItemDB.js';
 import { MapHandler } from './map/MapHandler.js';
 import { Version } from './models/Constants.js';
 

@@ -338,6 +338,10 @@ input[type=number] {
         margin-top: 10px;
     }
 
+    .docs .container {
+        margin-left: 0;
+    }
+
 .docs-content {
     height: calc(100vh - 60px);
     overflow-y: scroll;

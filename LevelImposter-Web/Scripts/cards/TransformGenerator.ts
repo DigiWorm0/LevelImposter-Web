@@ -76,17 +76,38 @@ export class TransformGenerator implements CardGenerator {
 	setValues(): void {
 		let currentItem = SelectHandler.getSelection();
 
-		currentItem.x = parseFloat($("#xInput").val() as string);
-		currentItem.y = parseFloat($("#yInput").val() as string);
-		currentItem.z = parseFloat($("#zInput").val() as string);
-		currentItem.xScale = parseFloat($("#xSInput").val() as string);
-		currentItem.yScale = parseFloat($("#ySInput").val() as string);
-		currentItem.rotation = parseFloat($("#zRInput").val() as string);
-		currentItem.flipX = $("#fxInput").is(":checked");
-		currentItem.flipY = $("#fyInput").is(":checked");
+		let x = parseFloat($("#xInput").val() as string);
+		let y = parseFloat($("#yInput").val() as string);
+		let z = parseFloat($("#zInput").val() as string);
+		let xScale = parseFloat($("#xSInput").val() as string);
+		let yScale = parseFloat($("#ySInput").val() as string);
+		let rotation = parseFloat($("#zRInput").val() as string);
+		let flipX = $("#fxInput").is(":checked");
+		let flipY = $("#fyInput").is(":checked");
+
+		if (this._isDefined(x))
+			currentItem.x = x;
+		if (this._isDefined(y))
+			currentItem.y = y;
+		if (this._isDefined(z))
+			currentItem.z = z;
+		if (this._isDefined(xScale))
+			currentItem.xScale = xScale;
+		if (this._isDefined(yScale))
+			currentItem.yScale = yScale;
+		if (this._isDefined(rotation))
+			currentItem.rotation = rotation;
+		if (this._isDefined(flipX))
+			currentItem.flipX = flipX;
+		if (this._isDefined(flipY))
+			currentItem.flipY = flipY;
 
 		ActionHandler.add(new ChangeAction(this.initialState, currentItem));
 		this.initialState = currentItem.clone();
+	}
+
+	_isDefined(v: any) {
+		return v !== null && v !== undefined && Number.isFinite(v);
 	}
 
 	updateValues(obj: Object): void {
