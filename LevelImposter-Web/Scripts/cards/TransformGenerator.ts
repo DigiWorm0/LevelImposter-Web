@@ -97,10 +97,9 @@ export class TransformGenerator implements CardGenerator {
 			currentItem.yScale = yScale;
 		if (this._isDefined(rotation))
 			currentItem.rotation = rotation;
-		if (this._isDefined(flipX))
-			currentItem.flipX = flipX;
-		if (this._isDefined(flipY))
-			currentItem.flipY = flipY;
+
+		currentItem.flipX = flipX;
+		currentItem.flipY = flipY;
 
 		ActionHandler.add(new ChangeAction(this.initialState, currentItem));
 		this.initialState = currentItem.clone();
