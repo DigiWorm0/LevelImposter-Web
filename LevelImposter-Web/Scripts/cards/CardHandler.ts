@@ -4,7 +4,6 @@ import { CamGenerator } from "./CamGenerator.js";
 import { CardHelper } from "./CardHelper.js";
 import { ColliderGenerator } from "./ColliderGenerator.js";
 import { RoomGenerator } from "./RoomGenerator.js";
-import { SabGenerator } from "./SabGenerator.js";
 import { TaskGenerator } from "./TaskGenerator.js";
 import { TransformGenerator } from "./TransformGenerator.js";
 import { VentGenerator } from "./VentGenerator.js";
@@ -14,7 +13,6 @@ export class CardHandler {
 	colliderGen: ColliderGenerator;
 	roomGen: RoomGenerator;
 	adminGen: AdminGenerator;
-	sabGen: SabGenerator;
 	taskGen: TaskGenerator;
 	ventGen: VentGenerator;
 	camGen: CamGenerator;
@@ -24,7 +22,6 @@ export class CardHandler {
 		this.colliderGen = new ColliderGenerator();
 		this.roomGen = new RoomGenerator();
 		this.adminGen = new AdminGenerator();
-		this.sabGen = new SabGenerator();
 		this.taskGen = new TaskGenerator();
 		this.ventGen = new VentGenerator();
 		this.camGen = new CamGenerator();
@@ -37,7 +34,6 @@ export class CardHandler {
 		this.transformGen.generate(obj);
 		this.roomGen.generate(obj);
 		this.adminGen.generate(obj);
-		this.sabGen.generate(obj);
 		this.taskGen.generate(obj);
 		this.colliderGen.generate(obj);
 		this.ventGen.generate(obj);

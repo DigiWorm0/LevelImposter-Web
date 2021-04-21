@@ -361,6 +361,12 @@ input[type=number] {
         font-size:15px;
     }
 
+.docs-scroll {
+    height:100vh;
+    overflow-y:scroll;
+    overflow-x:hidden;
+}
+
 .small-img {
     max-width:25% !important;
     float: right;

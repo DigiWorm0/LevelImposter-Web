@@ -132,6 +132,16 @@ export class WarningsHandler {
 			this.add("Missing Water Jug 1", "You must add water jugs 1 and 2 to use the water jugs task");
 		}
 
+		// Reactor
+		let hasReactorA = get("sab-reactorleft") > 0;
+		let hasReactorB = get("sab-reactorright") > 0;
+		if (hasJugA && !hasJugB) {
+			this.add("Missing Right Reactor", "You must add the left and right reactors to use the reactor sabotage");
+		}
+		else if (!hasJugA && hasJugB) {
+			this.add("Missing Left Reactor", "You must add the left and right reactors to use the reactor sabotage");
+		}
+
 		// Align Engine
 		let hasAlign1 = get("task-align1") > 0;
 		let hasAlign2 = get("task-align2") > 0;

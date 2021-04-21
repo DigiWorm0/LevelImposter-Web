@@ -77,8 +77,8 @@
         "sab-electric": "Lights Panel",
         "sab-reactorleft": "Left Reactor",
         "sab-reactorright": "Right Reactor",
-        "sab-oxygen1": "O2 Panel 1",
-        "sab-oxygen2": "O2 Panel 2",
+        //"sab-oxygen1": "O2 Panel 1",
+        //"sab-oxygen2": "O2 Panel 2",
         "sab-comms": "Comms Panel"
     },
     "Utilities": {
