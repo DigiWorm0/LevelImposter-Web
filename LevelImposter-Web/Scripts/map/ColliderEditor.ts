@@ -30,6 +30,7 @@ export class ColliderEditor {
 			for (let i = 0; i < pts.length - (closed ? 0 : 1); i++) {
 				let p1 = pts[i];
 				let p2 = pts[(i + 1) % pts.length];
+
 				let isOnEdge = true;
 
 				// Distance from Mouse to Line
@@ -94,16 +95,26 @@ export class ColliderEditor {
 		if (InputHandler.mouse.left) {
 			if (this.onEdge) {
 				this.isEditingPt = true;
-				this.closestPt.x = cam.getMouse().x;
-				this.closestPt.y = cam.getMouse().y;
+
+				// Adjust Mouse position
+				let m = cam.getMouse();
+				let d = Math.sqrt(Math.pow(this.obj.x - m.x, 2) + Math.pow(this.obj.y - m.y, 2));
+				let a = Math.atan2(this.obj.y - m.y, this.obj.x - m.x) - (this.obj.rotation * (Math.PI / 180.0));
+				let p = new Point(
+					this.obj.x - ((d * Math.cos(a)) / this.obj.xScale),
+					this.obj.y - ((d * Math.sin(a)) / this.obj.yScale)
+				);
 
 				let rawPt = this.obj.colliders[this.index].points[this.closestIndex];
-				rawPt.x = cam.getMouse().x - this.obj.x;
-				rawPt.y = cam.getMouse().y - this.obj.y;
+				rawPt.x = p.x - this.obj.x;
+				rawPt.y = p.y - this.obj.y;
 				if (InputHandler.key.get(16)) {
 					rawPt.x = Math.round(rawPt.x * 10) / 10;
 					rawPt.y = Math.round(rawPt.y * 10) / 10;
 				}
+
+				this.closestPt.x = m.x;
+				this.closestPt.y = m.y;
 			} else {
 				this.isEditingPt = true;
 				this.onEdge = true;

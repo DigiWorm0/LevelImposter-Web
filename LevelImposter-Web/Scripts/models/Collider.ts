@@ -16,6 +16,8 @@ export class Collider {
 			return;
 
 		let parentRect = parent.getRect();
+		parentRect.w /= parent.xScale;
+		parentRect.h /= parent.yScale;
 		this.points = [
 			new Point(parentRect.w / -2, parentRect.h / -2),
 			new Point(parentRect.w / 2, parentRect.h / -2),

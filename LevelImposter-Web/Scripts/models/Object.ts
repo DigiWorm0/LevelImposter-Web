@@ -72,8 +72,19 @@ export class Object {
 		let newPts = new Array<Point>();
 		for (let i = 0; i < pts.length; i++) {
 			let newPt = new Point();
-			newPt.x = pts[i].x + this.x;
-			newPt.y = pts[i].y + this.y;
+
+			// World
+			newPt.x = (pts[i].x * this.xScale) + this.x;
+			newPt.y = (pts[i].y * this.yScale) + this.y;
+
+			// Rotation
+			let d = Math.sqrt(Math.pow(this.x - newPt.x, 2) + Math.pow(this.y - newPt.y, 2));
+			let a = Math.atan2(this.y - newPt.y, this.x - newPt.x) + (this.rotation * (Math.PI / 180.0));
+			newPt = new Point(
+				this.x - (d * Math.cos(a)),
+				this.y - (d * Math.sin(a))
+			);
+
 			newPts.push(newPt);
 		}
 		return newPts;
