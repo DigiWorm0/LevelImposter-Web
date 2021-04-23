@@ -6,10 +6,10 @@
 <h2>Recent Uploads</h2>
 
 <div class="row">
-	@for (int i = 0; i < 3; i++)
+	@for (int i = 2; i >= 0; i--)
 	{
 	<div class="col-sm-4">
-		@for (int o = (int)(Math.Ceiling(Model.Length / 3.0) * i); o < Math.Min(Math.Ceiling(Model.Length / 3.0) * (i + 1), Model.Length); o++)
+		@for (int o = (int)Math.Min(Math.Ceiling(Model.Length / 3.0) * (i + 1), Model.Length) - 1; o >= (int)(Math.Ceiling(Model.Length / 3.0) * i); o--)
 		{
 			var map = Model[o];
 			<div class="card mb-2">

@@ -16,7 +16,8 @@ export class UtilGenerator implements CardGenerator {
 			obj.type.startsWith("util-spawn") ||
 			obj.type == "util-player" ||
 			obj.type == "util-cam" ||
-			obj.type == "util-room")
+			obj.type == "util-room" ||
+			obj.type == "util-admin")
 			return;
 
 		// Base
