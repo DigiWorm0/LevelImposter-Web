@@ -1,43 +1,38 @@
 ﻿import { Object } from "../models/Object.js";
 import { AdminGenerator } from "./AdminGenerator.js";
 import { CamGenerator } from "./CamGenerator.js";
+import { CardGenerator } from "./CardGenerator.js";
 import { CardHelper } from "./CardHelper.js";
 import { ColliderGenerator } from "./ColliderGenerator.js";
 import { RoomGenerator } from "./RoomGenerator.js";
 import { TaskGenerator } from "./TaskGenerator.js";
 import { TransformGenerator } from "./TransformGenerator.js";
+import { UtilGenerator } from "./UtilGenerator.js";
 import { VentGenerator } from "./VentGenerator.js";
 
 export class CardHandler {
-	transformGen: TransformGenerator;
-	colliderGen: ColliderGenerator;
-	roomGen: RoomGenerator;
-	adminGen: AdminGenerator;
-	taskGen: TaskGenerator;
-	ventGen: VentGenerator;
-	camGen: CamGenerator;
+	generators: CardGenerator[];
 
 	constructor() {
-		this.transformGen = new TransformGenerator();
-		this.colliderGen = new ColliderGenerator();
-		this.roomGen = new RoomGenerator();
-		this.adminGen = new AdminGenerator();
-		this.taskGen = new TaskGenerator();
-		this.ventGen = new VentGenerator();
-		this.camGen = new CamGenerator();
+		this.generators = [
+			new TransformGenerator(),
+			new ColliderGenerator(),
+			new RoomGenerator(),
+			new AdminGenerator(),
+			new TaskGenerator(),
+			new VentGenerator(),
+			new CamGenerator(),
+			new UtilGenerator()
+		];
 	}
 
 	load(obj: Object) {
 		this.clear();
 
 		// Cards
-		this.transformGen.generate(obj);
-		this.roomGen.generate(obj);
-		this.adminGen.generate(obj);
-		this.taskGen.generate(obj);
-		this.colliderGen.generate(obj);
-		this.ventGen.generate(obj);
-		this.camGen.generate(obj);
+		for (var i = 0; i < this.generators.length; i++) {
+			this.generators[i].generate(obj);
+		}
 
 		// Bottom Buttons
 		let colliderButton = CardHelper.genBottomButton("Add Collider");

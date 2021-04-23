@@ -64,7 +64,7 @@ export class CanvasHandler {
 			this.objRender.cam.resize(this.canvas.width, this.canvas.height);
 		}
 
-		let isMobile = /Android|webOS|iPhone|iPad|Mac|Macintosh|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+		let isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 		if (window.innerWidth < MinWidth || isMobile) {
 			$("#undersize").show();
 		} else {

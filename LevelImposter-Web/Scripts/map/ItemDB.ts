@@ -201,7 +201,6 @@
         "dec-chair1": "Chair 1",
         "dec-chair2": "Chair 2",
         "dec-chair3": "Chair 3",
-        "dec-chair4": "Chair 4",
         "dec-panel1": "Panel 1",
         "dec-panel2": "Panel 2",
         "dec-pool1": "Pool Table 1",

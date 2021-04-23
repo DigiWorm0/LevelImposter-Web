@@ -1,4 +1,5 @@
-﻿import { ColliderEditor } from "../map/ColliderEditor.js";
+﻿import { TransformGenerator } from "../cards/TransformGenerator.js";
+import { ColliderEditor } from "../map/ColliderEditor.js";
 import { MapHandler } from "../map/MapHandler.js";
 import { Object } from "../models/Object.js";
 import { Vector2 } from "../models/Vector2.js";
@@ -43,7 +44,7 @@ export class DragHandler {
 				currentObj.x = Math.round(currentObj.x * 4) / 4;
 				currentObj.y = Math.round(currentObj.y * 4) / 4;
 			}
-			InputHandler.ui.cards.transformGen.updateValues(currentObj);
+			(InputHandler.ui.cards.generators[0] as TransformGenerator).updateValues(currentObj);
 		} else if (this.isDragging) {
 			// End Dragging
 			this.isDragging = false;
