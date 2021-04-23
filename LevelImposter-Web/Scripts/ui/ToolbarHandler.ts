@@ -11,7 +11,13 @@ export class ToolbarHandler {
 	}
 
 	update() {
-		if (InputHandler.key.get(46)) {
+		var activeElement = document.activeElement;
+		var inputs = ['input', 'select', 'button', 'textarea'];
+
+		if (activeElement && inputs.indexOf(activeElement.tagName.toLowerCase()) !== -1)
+			return;
+
+		if (InputHandler.key.get(46) || InputHandler.key.get(8)) {
 			this.trash();
 		}
 	}

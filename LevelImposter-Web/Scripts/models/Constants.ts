@@ -5,4 +5,3 @@ export const MaxMouseColliderDist = 400; // Max Distance Between Mouse and Colli
 export const ColliderRange = .00001; // JS Fix for Comparing Floats of Very Close Values
 export const ArrowScale = 5; // Camera movement for arrow keys and wasd
 export const MinWidth = 700;
-export const Version = "0.1.3";
