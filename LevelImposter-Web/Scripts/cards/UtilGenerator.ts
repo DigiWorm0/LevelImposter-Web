@@ -11,7 +11,12 @@ export class UtilGenerator implements CardGenerator {
 	initialState: Object;
 
 	generate(obj: Object): void {
-		if (!obj.type.startsWith("util-") || obj.type == "util-player" || obj.type.startsWith("util-vent") || obj.type == "util-cam" || obj.type.startsWith("util-spawn"))
+		if (!obj.type.startsWith("util-") ||
+			obj.type.startsWith("util-vent") ||
+			obj.type.startsWith("util-spawn") ||
+			obj.type == "util-player" ||
+			obj.type == "util-cam" ||
+			obj.type == "util-room")
 			return;
 
 		// Base

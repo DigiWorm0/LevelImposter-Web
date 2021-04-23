@@ -42,7 +42,7 @@ export class TaskGenerator implements CardGenerator {
 		}).bind(this);
 
 		// Labels
-		let descLabel = CardHelper.genP("Tasks need a room to link to in order to display on the task map.");
+		let descLabel = CardHelper.genP("Tasks need a room to link to in order to categorize properly in the freeplay console.");
 		descLabel.style.width = "100%";
 		descLabel.style.margin = "2px";
 		descLabel.style.textAlign = "center";

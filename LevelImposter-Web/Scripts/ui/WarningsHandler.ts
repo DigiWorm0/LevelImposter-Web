@@ -135,10 +135,10 @@ export class WarningsHandler {
 		// Reactor
 		let hasReactorA = get("sab-reactorleft") > 0;
 		let hasReactorB = get("sab-reactorright") > 0;
-		if (hasJugA && !hasJugB) {
+		if (hasReactorA && !hasReactorB) {
 			this.add("Missing Right Reactor", "You must add the left and right reactors to use the reactor sabotage");
 		}
-		else if (!hasJugA && hasJugB) {
+		else if (!hasReactorA && hasReactorB) {
 			this.add("Missing Left Reactor", "You must add the left and right reactors to use the reactor sabotage");
 		}
 
