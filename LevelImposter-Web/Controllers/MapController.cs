@@ -22,8 +22,7 @@ namespace LevelImposter.Controllers
 
         public IActionResult Index()
         {
-            MapData[] recent = service.GetRecent(100);
-            return View(recent);
+            return Redirect("https://www.reddit.com/r/LevelImposter/");
         }
 
         public async void Download(int? id)
