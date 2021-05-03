@@ -32,8 +32,8 @@ body, * {
     margin-bottom: 30px;
 }
 .content {
-    margin-left: 20vw;
-    margin-right: 20vw;
+    margin-left: 10vw;
+    margin-right: 10vw;
     min-height: calc(100vh - 170px);
 }
     .content ol {
@@ -41,6 +41,10 @@ body, * {
         font-weight: 500;
         line-height: 1.4;
     }
+
+.discord {
+    float:right;
+}
 
 /*    Footer    */
 footer {

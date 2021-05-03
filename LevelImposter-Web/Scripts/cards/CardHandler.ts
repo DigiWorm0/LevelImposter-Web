@@ -43,6 +43,5 @@ export class CardHandler {
 	clear() {
 		$("#prop-name").empty();
 		$("#prop-list").empty();
-		$("#trash").prop("disabled", true);
 	}
 }
