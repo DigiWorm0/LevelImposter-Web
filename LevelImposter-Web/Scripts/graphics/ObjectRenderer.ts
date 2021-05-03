@@ -46,6 +46,31 @@ export class ObjectRenderer {
 		this.ctx.stroke();
 	}
 
+	drawCircle(pos: Vector2, radius: number, strokeColor: string, semiCircle = false) {
+		let rect = {
+			x: pos.x,
+			y: pos.y,
+			w: radius,
+			h: radius
+		};
+
+		let bounds = this._calcCamOffset(rect);
+		this.ctx.strokeStyle = strokeColor;
+		this.ctx.lineWidth = 1;
+
+		// Draw
+		this.ctx.save();
+		this.ctx.beginPath();
+		this.ctx.translate(bounds.x + (bounds.w / 2), bounds.y + (bounds.h / 2));
+		this.ctx.arc(0, 0, bounds.w, 0, semiCircle ? Math.PI : Math.PI * 2);
+		this.ctx.stroke();
+		this.ctx.restore();
+
+		if (semiCircle) {
+			this.drawLine({ x: pos.x - radius, y: pos.y }, { x: pos.x + radius, y: pos.y }, strokeColor);
+		}
+	}
+
 	drawRect(r: Rect, rotation: number, strokeColor: string, fillColor: string = ""): void {
 		this.ctx.beginPath();
 		this.ctx.strokeStyle = strokeColor;

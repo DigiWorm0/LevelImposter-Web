@@ -79,12 +79,12 @@ export class WarningsHandler {
 		}
 
 		// Records
-		let shelfCount = get("task-records1");
-		let hasFolder = get("task-records2") > 0;
-		if (shelfCount > 0 && shelfCount < 14) {
+		let shelfCount = get("task-records2");
+		let hasFolder = get("task-records1") > 0;
+		if (shelfCount > 0 && shelfCount < 8) {
 			this.add("Not Enough Shelves", "You must have exactly 8 shelves and a folder to use the records task");
 		}
-		else if (shelfCount > 14) {
+		else if (shelfCount > 8) {
 			this.add("Too Many Shelves", "You must have exactly 8 shelves and a folder to use the records task");
 		}
 		if (shelfCount > 0 && !hasFolder) {
@@ -243,6 +243,13 @@ export class WarningsHandler {
 			this.add("No Room Utilities", "Admin Table will not work without any room utilities");
 		}
 
+		// Spawns
+		let spawnCountA = get("util-spawn1");
+		let spawnCountB = get("util-spawn2");
+		if (spawnCountA > 1 || spawnCountB > 1) {
+			this.add("Too Many Spawn Points", "You can only have 1 of each type of spawn point. Players are spawned around the spawn point's circle");
+		}
+
 		// Finish
 		if (!this.hasAdded) {
 			this.hide();
@@ -264,8 +271,10 @@ export class WarningsHandler {
 	}
 
 	hide(): void {
-		//$("#warning").hide();
 		$("#warning-btn").hide();
+		var warning = document.getElementById('warning');
+		if (warning.classList.contains("show"))
+			warning.classList.remove("show");
 	}
 
 }
