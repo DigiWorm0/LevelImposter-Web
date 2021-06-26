@@ -30,7 +30,7 @@ namespace LevelImposter.Controllers
             if (id == null)
                 return;
 
-            MapData map = service.GetMap((int)id);
+            MapData map = service.GetMapById((int)id);
             byte[] data = Encoding.ASCII.GetBytes(map.Json);
 
             Response.Headers.Add("content-disposition", "attachment; filename=map.json");
@@ -42,7 +42,7 @@ namespace LevelImposter.Controllers
             if (id == null)
                 return RedirectToAction("Index");
 
-            MapData map = service.GetMap((int)id);
+            MapData map = service.GetMapById((int)id);
 
             if (map == null)
                 return RedirectToAction("Index");

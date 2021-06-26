@@ -16,24 +16,19 @@ namespace LevelImposter.Services
             repo = new LIRepo(context);
         }
 
-        public void DeleteMap(int id)
+        public void DeleteMapById(int id)
         {
             repo.DeleteMap(repo.GetMapById(id));
         }
 
-        public MapData GetMap(int id)
+        public MapData GetMapById(int id)
         {
             return repo.GetMapById(id);
         }
 
-        public MapData[] GetRecent(int amt)
+        public MapData[] GetAllMaps()
         {
-            return repo.GetRecent(amt);
-        }
-
-        public MapData[] GetMostLikes(int amt)
-        {
-            return repo.GetMostLikes(amt);
+            return repo.GetAllMaps();
         }
 
         public void AddMap(MapData map)

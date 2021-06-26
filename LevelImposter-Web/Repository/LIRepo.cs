@@ -20,14 +20,9 @@ namespace LevelImposter.Repository
             return db.LI_Maps.FirstOrDefault(map => map.Id == id);
         }
 
-        public MapData[] GetRecent(int amt)
+        public MapData[] GetAllMaps()
         {
-            return db.LI_Maps.Take(amt).ToArray();
-        }
-
-        public MapData[] GetMostLikes(int amt)
-        {
-            return db.LI_Maps.OrderByDescending(map => map.Likes).Take(amt).ToArray();
+            return db.LI_Maps.ToArray();
         }
 
         public void DeleteMap(MapData map)
