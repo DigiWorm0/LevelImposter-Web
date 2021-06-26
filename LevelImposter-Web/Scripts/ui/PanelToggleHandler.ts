@@ -2,6 +2,25 @@
 	constructor() {
 		$("#left-btn").click(this.toggleLeftPanel);
 		$("#right-btn").click(this.toggleRightPanel);
+
+		this.checkHideURL();
+	}
+
+	checkHideURL() {
+		let params = new URLSearchParams(window.location.search);
+
+		if (!params.has("hidecontrols"))
+			return;
+
+		$("#left-panel").hide();
+		$("#left-btn").hide();
+		$("#right-panel").hide();
+		$("#right-btn").hide();
+		$(".header-1").hide();
+		$(".header-2").hide();
+
+		$("#licanvas").css("top", "0");
+		$("#licanvas").css("height", "100vh");
 	}
 
 	toggleLeftPanel() {

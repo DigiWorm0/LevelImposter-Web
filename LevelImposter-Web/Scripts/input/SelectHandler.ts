@@ -12,6 +12,7 @@ export class SelectHandler {
 	static hoverIndex: number;
 	static selectIndex: number;
 	static cam: Camera;
+	static isEmbed: boolean;
 
 	constructor(_cam: Camera) {
 		SelectHandler.freezeSelection = false;
@@ -20,6 +21,9 @@ export class SelectHandler {
 		SelectHandler.hoverIndex = -1;
 		SelectHandler.selectIndex = -1;
 		SelectHandler.cam = _cam;
+
+		let params = new URLSearchParams(window.location.search);
+		SelectHandler.isEmbed = params.has("hidecontrols");
 	}
 
 	static mapSwap(index: number): void {
@@ -59,7 +63,7 @@ export class SelectHandler {
 		}
 
 		// Normal Operation
-		if (InputHandler.mouse.hover && !MapHandler.isAdding) {
+		if (InputHandler.mouse.hover && !MapHandler.isAdding && !SelectHandler.isEmbed) {
 			SelectHandler.hoverIndex = SelectHandler._findMapElements();
 			SelectHandler.isHover = SelectHandler.hoverIndex != -1;
 

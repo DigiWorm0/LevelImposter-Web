@@ -375,3 +375,8 @@ input[type=number] {
     max-width:25% !important;
     float: right;
 }
+
+.map-embed {
+    aspect-ratio: 1 / 1;
+    width: 100%;
+}

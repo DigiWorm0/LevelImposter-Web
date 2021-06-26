@@ -22,32 +22,48 @@ namespace LevelImposter.Controllers
 
         public IActionResult Index()
         {
-            return Redirect("https://www.reddit.com/r/LevelImposter/");
+            MapData[] maps = service.GetAllMaps();
+            MapDataViewModel[] viewModels = new MapDataViewModel[maps.Length];
+            for (int i = 0; i < viewModels.Length; i++)
+            {
+                viewModels[i] = new MapDataViewModel(maps[i]);
+            }
+
+            return View(viewModels);
         }
 
-        public async void Download(int? id)
+        public async void Download(string? id)
         {
             if (id == null)
                 return;
 
-            MapData map = service.GetMapById((int)id);
-            byte[] data = Encoding.ASCII.GetBytes(map.Json);
+            int realId = MapDataViewModel.StringToId(id);
+            MapData map = service.GetMapById((int)realId);
 
-            Response.Headers.Add("content-disposition", "attachment; filename=map.json");
+            if (map == null)
+            {
+                RedirectToAction("Index");
+                return;
+            }
+
+
+            byte[] data = Encoding.ASCII.GetBytes(map.Json);
+            Response.Headers.Add("content-disposition", "attachment; filename=" + id + ".json");
             await Response.Body.WriteAsync(data, 0, data.Length);
         }
 
-        public IActionResult Details(int? id)
+        public IActionResult Details(string? id)
         {
             if (id == null)
                 return RedirectToAction("Index");
 
-            MapData map = service.GetMapById((int)id);
+            int realId = MapDataViewModel.StringToId(id);
+            MapData map = service.GetMapById((int)realId);
 
             if (map == null)
                 return RedirectToAction("Index");
 
-            return View(map);
+            return View(new MapDataViewModel(map));
         }
 
         public IActionResult Upload()

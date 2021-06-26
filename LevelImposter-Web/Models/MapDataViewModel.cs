@@ -9,7 +9,7 @@ namespace LevelImposter.Models
     public class MapDataViewModel
     {
         [Newtonsoft.Json.JsonIgnore]
-        public readonly char[] ID_STR = { 'A', 'B', 'C', 'D' };
+        public static readonly char[] ID_STR = { 'A', 'B', 'C', 'D' };
 
         public string Id { get; set; }
         public string Name { get; set; }
@@ -21,15 +21,46 @@ namespace LevelImposter.Models
             this.Name = data.Name;
             this.Description = data.Description;
             this.Likes = data.Likes;
-            this.Id = string.Empty;
+            this.Id = IdToString(data.Id);
+        }
 
-            // Assign ID
-            int index = data.Id;
-            for (int i = 0; i < 6 || index != 0; i++)
+        public static string IdToString(int id)
+        {
+            if (id < 0)
+                return string.Empty;
+
+            int index = id;
+            string output = string.Empty;
+
+            for (int i = 0; i < 6; i++)
             {
-                this.Id += ID_STR[index % ID_STR.Length];
+                output += ID_STR[index % ID_STR.Length];
                 index /= ID_STR.Length;
             }
+
+            return output;
+        }
+
+        public static int StringToId(string str)
+        {
+            if (str.Length != 6)
+                return -1;
+
+            int index = 0;
+            char[] chars = str.ToCharArray();
+
+            for (int i = 0; i < 6; i++)
+            {
+                char character = chars[i];
+                int id = Array.IndexOf(ID_STR, character);
+
+                if (id < 0)
+                    return -1;
+
+                index += id * (int)Math.Pow(ID_STR.Length, i);
+            }
+
+            return index;
         }
     }
 }

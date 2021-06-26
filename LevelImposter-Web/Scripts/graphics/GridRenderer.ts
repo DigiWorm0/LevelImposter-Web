@@ -3,12 +3,19 @@ import { ObjectRenderer } from "./ObjectRenderer.js";
 
 export class GridRenderer {
 	renderer: ObjectRenderer;
+	isEmbed: boolean;
 
 	constructor(_renderer: ObjectRenderer) {
 		this.renderer = _renderer;
+
+		let params = new URLSearchParams(window.location.search);
+		this.isEmbed = params.has("hidecontrols");
 	}
 
 	drawGrid(): void {
+		if (this.isEmbed)
+			return;
+
 		for (var x = -100; x <= 100; x += GridScale) {
 			let color = "#595959";
 			if (x === 0)

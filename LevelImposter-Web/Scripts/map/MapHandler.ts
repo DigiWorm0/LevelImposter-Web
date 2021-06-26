@@ -22,6 +22,8 @@ export class MapHandler {
 		$("#export").click(MapHandler.export);
 		$("#import").click(MapHandler.import);
 		$("#add-img").click(MapHandler.addImg);
+
+		MapHandler.importFromAPI();
 	}
 
 	static addCustom(url: string): number {
@@ -72,6 +74,22 @@ export class MapHandler {
 		document.body.removeChild(element);
 	}
 
+	static importFromAPI(): void {
+		let params = new URLSearchParams(window.location.search);
+
+		if (!params.has("id"))
+			return;
+
+		let id = params.get("id");
+		let url = "/MapApi/Download/" + id;
+
+		$.getJSON(url, (data: Map) => {
+			console.log("Downloaded!");
+			console.log(data);
+			MapHandler.importMap(data);
+		});
+	}
+
 	static import(): void {
 		UploadHandler.upload("Map", "application/json", (file) => {
 			if (file.type != "application/json") {
@@ -84,47 +102,51 @@ export class MapHandler {
 				let json = JSON.parse(reader.result as string) as Map;
 				let ready = confirm("Are you sure you want to import this map? (Any unsaved data will be lost)");
 				if (ready == true) {
-					MapHandler.map = new Map();
-					MapHandler.map.name = json.name;
-					MapHandler.map.btn = json.btn;
-					MapHandler.map.map = json.map;
-					MapHandler.map.exile = json.exile;
-					InputHandler.ui.name.setName(json.name);
-					for (let i = 0; i < json.objs.length; i++) {
-						let o = json.objs[i];
-						if (o.spriteType == "existing") {
-							MapHandler.map.objs.push(new Object(o.name, o.x, o.y, "existing", o.type, new Sprite("/Sprites/" + o.type + ".png")));
-						} else if (o.spriteType == "custom") {
-							MapHandler.map.objs.push(new Object(o.name, o.x, o.y, "custom", o.type, new Sprite(o.type)));
-						} else {
-							continue;
-						}
-
-						let newO = MapHandler.map.objs[MapHandler.map.objs.length - 1];
-						newO.xScale = o.xScale;
-						newO.yScale = o.yScale;
-						newO.z = o.z;
-						newO.rotation = o.rotation;
-						newO.flipX = o.flipX;
-						newO.flipY = o.flipY;
-						newO.targetIds = o.targetIds;
-						newO.id = o.id;
-						newO.onlyFromBottom = o.onlyFromBottom;
-						newO.colliders = new Array<Collider>();
-						o.colliders.forEach((collider) => {
-							var newC = new Collider();
-							newC.points = collider.points;
-							newC.isClosed = collider.isClosed;
-							newC.blocksLight = collider.blocksLight;
-							newO.colliders.push(newC);
-						});
-					}
-
-					SettingsHandler.import();
+					MapHandler.importMap(json);
 				}
 			};
 		});
 	};
+
+	static importMap(json: Map): void {
+		MapHandler.map = new Map();
+		MapHandler.map.name = json.name;
+		MapHandler.map.btn = json.btn;
+		MapHandler.map.map = json.map;
+		MapHandler.map.exile = json.exile;
+		InputHandler.ui.name.setName(json.name);
+		for (let i = 0; i < json.objs.length; i++) {
+			let o = json.objs[i];
+			if (o.spriteType == "existing") {
+				MapHandler.map.objs.push(new Object(o.name, o.x, o.y, "existing", o.type, new Sprite("/Sprites/" + o.type + ".png")));
+			} else if (o.spriteType == "custom") {
+				MapHandler.map.objs.push(new Object(o.name, o.x, o.y, "custom", o.type, new Sprite(o.type)));
+			} else {
+				continue;
+			}
+
+			let newO = MapHandler.map.objs[MapHandler.map.objs.length - 1];
+			newO.xScale = o.xScale;
+			newO.yScale = o.yScale;
+			newO.z = o.z;
+			newO.rotation = o.rotation;
+			newO.flipX = o.flipX;
+			newO.flipY = o.flipY;
+			newO.targetIds = o.targetIds;
+			newO.id = o.id;
+			newO.onlyFromBottom = o.onlyFromBottom;
+			newO.colliders = new Array<Collider>();
+			o.colliders.forEach((collider) => {
+				var newC = new Collider();
+				newC.points = collider.points;
+				newC.isClosed = collider.isClosed;
+				newC.blocksLight = collider.blocksLight;
+				newO.colliders.push(newC);
+			});
+		}
+
+		SettingsHandler.import();
+	}
 
 	static addImg(): void {
 		UploadHandler.upload("Image", "image/*", (file) => {

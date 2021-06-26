@@ -1,7 +1,7 @@
 ﻿@{
 	ViewData["Title"] = "Map - Level Imposter";
 }
-@model LevelImposter.Models.MapData[]
+@model LevelImposter.Models.MapDataViewModel[]
 
 <h2>Recent Uploads</h2>
 
@@ -15,6 +15,7 @@
 			<div class="card mb-2">
 				<div class="card-body">
 					<h5 class="card-title">@map.Name</h5>
+					<h6 class="card-title"><b>Code: </b>@map.Id</h6>
 					<p class="card-text">@map.Description</p>
 					@Html.ActionLink("Download", "Download", "Map", new { id = map.Id }, new { @class = "card-link" })
 					@Html.ActionLink("More Details", "Details", "Map", new { id = map.Id }, new { @class = "card-link" })

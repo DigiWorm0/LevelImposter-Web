@@ -19,9 +19,6 @@ export class UIHandler {
 
 	constructor() {
 		$("body").addClass("no-overflow");
-		window.onbeforeunload = () => {
-			return "";
-		};
 		$("body").click((e) => {
 			this.canvasFocused = e.target.id == "licanvas";
 		});
@@ -33,5 +30,11 @@ export class UIHandler {
 		this.cards = new CardHandler();
 		this.warnings = new WarningsHandler();
 		this.settings = new SettingsHandler();
+
+		window.onbeforeunload = (() => {
+			let params = new URLSearchParams(window.location.search);
+			if (!params.has("hidecontrols"))
+				return "";
+		}).bind(this);
 	}
 }

@@ -32,17 +32,21 @@ namespace LevelImposter.Controllers
             return viewModels;
         }
 
-        public MapDataViewModel GetMap(int id)
+        public MapDataViewModel GetMap(string id)
         {
-            MapData map = service.GetMapById(id);
+            int realId = MapDataViewModel.StringToId(id);
+
+            MapData map = service.GetMapById(realId);
             if (map == null)
                 return null;
             return new MapDataViewModel(map);
         }
 
-        public string Download(int id)
+        public string Download(string id)
         {
-            MapData map = service.GetMapById(id);
+            int realId = MapDataViewModel.StringToId(id);
+
+            MapData map = service.GetMapById(realId);
             if (map == null)
                 return null;
             return map.Json;

@@ -20,7 +20,13 @@ export class CanvasHandler {
 	canvas: HTMLCanvasElement;
 	ctx: CanvasRenderingContext2D;
 
+	isEmbed: boolean;
+
 	constructor() {
+		// Embed
+		let params = new URLSearchParams(window.location.search);
+		this.isEmbed = params.has("hidecontrols");
+
 		// Init Canvas
 		this.canvas = document.getElementById('licanvas') as HTMLCanvasElement;
 		this.ctx = this.canvas.getContext('2d');
@@ -62,7 +68,7 @@ export class CanvasHandler {
 
 	resize() {
 		this.canvas = document.getElementById('licanvas') as HTMLCanvasElement;
-		this.canvas.height = window.innerHeight - 120;
+		this.canvas.height = window.innerHeight - (this.isEmbed ? 0 : 120);
 		this.canvas.width = window.innerWidth;
 		if (this.objRender) {
 			this.objRender.canvasWidth = this.canvas.width;
@@ -71,7 +77,7 @@ export class CanvasHandler {
 		}
 
 		let isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-		if (window.innerWidth < MinWidth || isMobile) {
+		if ((window.innerWidth < MinWidth || isMobile) && !this.isEmbed) {
 			$("#undersize").show();
 		} else {
 			$("#undersize").hide();
