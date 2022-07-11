@@ -5,5 +5,5 @@ export default interface LIMetadata {
     name: string;
     description: string;
     authorID: string;
-    downloadURL: string;
+    storageURL: string;
 }

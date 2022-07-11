@@ -2,7 +2,7 @@ import { addDoc, collection, doc, getDoc, getDocs, limit, query, where } from "f
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import LIMap from "../types/LIMap";
+import LIMapFile from "../types/LIMapFile";
 import LIMetadata from "../types/LIMetadata";
 import { auth, db, storage } from "./Firebase";
 import generateGUID from "./generateGUID";
@@ -31,14 +31,14 @@ export default function useMaps(userID?: string, includePrivate?: boolean) {
 }
 
 export function useMap(mapID?: string) {
-    const [map, setMap] = React.useState<LIMap | undefined | null>(undefined);
+    const [map, setMap] = React.useState<LIMetadata | undefined | null>(undefined);
 
     React.useEffect(() => {
         const storeRef = collection(db, "maps");
         const docRef = doc(storeRef, mapID);
         getDoc(docRef).then(doc => {
             if (doc.exists())
-                setMap(doc.data() as LIMap);
+                setMap(doc.data() as LIMetadata);
             else
                 setMap(null);
         });
@@ -47,7 +47,7 @@ export function useMap(mapID?: string) {
     return map;
 }
 
-export function useMapUploader(): [() => void, (mapData: LIMap) => void] {
+export function useMapUploader(): [() => void, (mapData: LIMapFile) => void] {
     const [user] = useAuthState(auth);
 
     const openDialog = () => {
@@ -63,7 +63,7 @@ export function useMapUploader(): [() => void, (mapData: LIMap) => void] {
                 const data = reader.result;
                 console.log(data);
                 if (typeof data === "string") {
-                    uploadMap(JSON.parse(data) as LIMap);
+                    uploadMap(JSON.parse(data) as LIMapFile);
                 }
             }
             reader.readAsText(file);
@@ -71,7 +71,7 @@ export function useMapUploader(): [() => void, (mapData: LIMap) => void] {
         input.click();
     }
 
-    const uploadMap = async (mapData: LIMap) => {
+    const uploadMap = async (mapData: LIMapFile) => {
         if (!user) {
             console.error("User not logged in");
             return;
@@ -94,7 +94,7 @@ export function useMapUploader(): [() => void, (mapData: LIMap) => void] {
             name: mapData.name,
             description: mapData.description,
             authorID: user.uid,
-            downloadURL: storageURL,
+            storageURL: storageURL,
         } as LIMetadata);
         console.log(`Map added to Firestore: ${mapDocument.id}`);
 
