@@ -9,7 +9,7 @@ import useMaps, { useMapUploader } from '../hooks/useMaps';
 export default function Profile() {
     const [user] = useAuthState(auth);
     const [openDialog] = useMapUploader();
-    const mapList = useMaps(user?.uid);
+    const mapList = useMaps(user?.uid, true);
 
     if (!user) {
         return <Navigate to="/login" />;

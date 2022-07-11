@@ -1,4 +1,4 @@
-import { addDoc, collection, getDocs, limit, query, where } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, getDocs, limit, query, where } from "firebase/firestore";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -9,7 +9,7 @@ import generateGUID from "./generateGUID";
 
 const MAX_PER_PAGE = 20;
 
-export default function useMaps(userID?: string) {
+export default function useMaps(userID?: string, includePrivate?: boolean) {
     const [mapList, setMapList] = React.useState<LIMetadata[]>([]);
 
     React.useEffect(() => {
@@ -17,13 +17,15 @@ export default function useMaps(userID?: string) {
         const mapQueries = [];
         if (userID)
             mapQueries.push(where("authorID", "==", userID));
+        if (!includePrivate)
+            mapQueries.push(where("isPublic", "==", true));
         mapQueries.push(limit(MAX_PER_PAGE));
         const mapsQuery = query(storeRef, ...mapQueries);
 
         getDocs(mapsQuery).then(docs => {
             setMapList(docs.docs.map(doc => doc.data() as LIMetadata));
         });
-    }, [userID]);
+    }, [userID, includePrivate]);
 
     return mapList;
 }
@@ -33,11 +35,10 @@ export function useMap(mapID?: string) {
 
     React.useEffect(() => {
         const storeRef = collection(db, "maps");
-        const mapQuery = query(storeRef, where("id", "==", mapID));
-
-        getDocs(mapQuery).then(docs => {
-            if (docs.docs.length > 0)
-                setMap(docs.docs[0].data() as LIMap);
+        const docRef = doc(storeRef, mapID);
+        getDoc(docRef).then(doc => {
+            if (doc.exists())
+                setMap(doc.data() as LIMap);
             else
                 setMap(null);
         });
