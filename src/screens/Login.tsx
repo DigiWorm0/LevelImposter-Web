@@ -2,7 +2,7 @@ import { signInWithPopup } from 'firebase/auth';
 import React from 'react';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import MainHeader from '../components/home/MainHeader';
+import MainHeader from '../components/MainHeader';
 import { auth, githubProvider, googleProvider } from '../hooks/Firebase';
 import { Navigate } from 'react-router-dom';
 

@@ -1,7 +1,7 @@
 import React from 'react';
-import { Button, Col, Container, Row, Spinner } from 'react-bootstrap';
+import { Button, Col, Container, Placeholder, Row, Spinner } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
-import MainHeader from '../components/home/MainHeader';
+import MainHeader from '../components/MainHeader';
 import { useMap } from '../hooks/useMaps';
 import { getDownloadURL, ref } from 'firebase/storage';
 import { storage } from '../hooks/Firebase';
@@ -26,23 +26,37 @@ export default function Map() {
     return (
         <>
             <MainHeader />
-            <Container className="Maps" style={{ padding: 15 }}>
+            <Container className="Maps">
                 <Row>
-                    <Col>
+                    <Col xs={5} style={{ padding: 30 }}>
+                        <img src={"https://via.placeholder.com/500"} alt={"Map"} style={{ width: "100%", borderRadius: 5 }} />
+                    </Col>
+                    <Col xs={7} style={{ padding: 30 }}>
                         {map ? (
                             <>
                                 <h1>{map.name}</h1>
                                 <p>{map.description === "" ? <i>No Description</i> : map.description}</p>
                                 <Button
                                     variant="primary"
-                                    href={downloadURL}>
-                                    Download
+                                    onClick={() => {
+                                        alert("To Be Implemented");
+                                    }}>
+                                    Launch in Among Us
+                                </Button>
+                                <br />
+                                <Button
+                                    variant="outline-danger"
+                                    href={downloadURL}
+                                    style={{ marginTop: 10 }}>
+                                    Download LIM
                                 </Button>
                             </>
                         ) : (
                             map === undefined ?
                                 (
-                                    <Spinner animation='border' />
+                                    <>
+                                        <Spinner animation="border" />
+                                    </>
                                 ) : (
                                     <>
                                         <h1>404</h1>

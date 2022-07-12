@@ -1,14 +1,13 @@
 import { signOut } from 'firebase/auth';
 import { Button, Col, Container, ListGroup, Row } from 'react-bootstrap';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import MainHeader from '../components/home/MainHeader';
+import MainHeader from '../components/MainHeader';
 import { auth } from '../hooks/Firebase';
 import { Navigate } from 'react-router-dom';
-import useMaps, { useMapUploader } from '../hooks/useMaps';
+import useMaps from '../hooks/useMaps';
 
 export default function Profile() {
     const [user] = useAuthState(auth);
-    const [openDialog] = useMapUploader();
     const mapList = useMaps(user?.uid, true);
 
     if (!user) {
@@ -69,13 +68,6 @@ export default function Profile() {
                                 </ListGroup.Item>
                             ))}
                         </ListGroup>
-
-                        <Button
-                            variant="primary"
-                            onClick={openDialog}
-                            style={{ marginBottom: 10 }}>
-                            Upload Map
-                        </Button>
                     </Col>
                 </Row>
             </Container>

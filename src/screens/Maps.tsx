@@ -1,5 +1,5 @@
 import { Col, Container, ListGroup, Row } from 'react-bootstrap';
-import MainHeader from '../components/home/MainHeader';
+import MainHeader from '../components/MainHeader';
 import useMaps from '../hooks/useMaps';
 
 export default function Maps() {
@@ -9,9 +9,9 @@ export default function Maps() {
         <>
             <MainHeader />
             <Container className="Maps" style={{ padding: 15 }}>
-                <Row>
+                <Row style={{ textAlign: "center" }}>
                     <Col>
-                        <h1>Maps</h1>
+                        <h1>Latest Maps</h1>
                     </Col>
                 </Row>
                 <Row>

@@ -1,13 +1,13 @@
 import React from 'react';
 import { Container, Nav, Navbar } from 'react-bootstrap';
-import { auth } from '../../hooks/Firebase';
+import { auth } from '../hooks/Firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 export default function MainHeader() {
     const [user] = useAuthState(auth);
 
     return (
-        <Navbar bg="light" variant="light" expand="lg">
+        <Navbar bg="dark" variant="dark" expand="lg">
             <Container>
                 <Navbar.Brand href="/">
                     <img
@@ -22,10 +22,10 @@ export default function MainHeader() {
                 <Navbar.Toggle aria-controls="navbar-main" />
                 <Navbar.Collapse id="navbar-main">
                     <Nav className="mr-auto">
-                        <Nav.Link href="https://docs.levelimposter.net/">Docs</Nav.Link>
-                        <Nav.Link href="https://editor.levelimposter.net/">Editor</Nav.Link>
                         <Nav.Link href="https://github.com/DigiWorm0/LevelImposter/releases">Download</Nav.Link>
+                        <Nav.Link href="https://editor.levelimposter.net/">Editor</Nav.Link>
                         <Nav.Link href="/maps/">Maps</Nav.Link>
+                        <Nav.Link href="https://docs.levelimposter.net/">Learn</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
 
