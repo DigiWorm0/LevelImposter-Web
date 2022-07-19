@@ -5,5 +5,8 @@ export default interface LIMetadata {
     name: string;
     description: string;
     authorID: string;
+    authorName: string;
+    isPublic: boolean;
+    isVerified: boolean;
     storageURL: string;
 }

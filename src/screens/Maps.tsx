@@ -1,28 +1,55 @@
+import React from 'react';
 import { Col, Container, ListGroup, Row } from 'react-bootstrap';
+import BetaHeader from '../components/home/BetaHeader';
 import MainHeader from '../components/MainHeader';
+import MapThumbnail from '../components/map/MapThumbnail';
 import useMaps from '../hooks/useMaps';
+import LIMetadata from '../types/LIMetadata';
 
 export default function Maps() {
     const mapList = useMaps();
+    const [verifiedMaps, setVerifiedMaps] = React.useState<LIMetadata[]>([]);
+
+    React.useEffect(() => {
+        const verifiedMapList = mapList.filter((map) => map.isVerified);
+        setVerifiedMaps(verifiedMapList);
+    }, [mapList]);
 
     return (
         <>
             <MainHeader />
-            <Container className="Maps" style={{ padding: 15 }}>
-                <Row style={{ textAlign: "center" }}>
-                    <Col>
-                        <h1>Latest Maps</h1>
-                    </Col>
-                </Row>
+            <BetaHeader />
+            <Container className="Maps" style={{ padding: 30 }}>
                 <Row>
-                    <Col >
+                    <Col>
+                        <h3 style={{ textAlign: "center" }}>Recent Uploads</h3>
                         <ListGroup>
                             {mapList.map((map) => (
-                                <ListGroup.Item key={map.id} href={"/map/" + map.id} action>
-                                    <h5>{map.name}</h5>
-                                    <p>{map.description === "" ? <i>No Description</i> : map.description}</p>
-
-                                </ListGroup.Item>
+                                <MapThumbnail
+                                    key={map.id}
+                                    id={map.id}
+                                    name={map.name}
+                                    authorName={map.authorName}
+                                    description={map.description}
+                                    isVerified={map.isVerified}
+                                    isPublic={map.isPublic}
+                                />
+                            ))}
+                        </ListGroup>
+                    </Col>
+                    <Col>
+                        <h3 style={{ textAlign: "center" }}>Verified Maps</h3>
+                        <ListGroup>
+                            {verifiedMaps.map((map) => (
+                                <MapThumbnail
+                                    key={map.id}
+                                    id={map.id}
+                                    name={map.name}
+                                    authorName={map.authorName}
+                                    description={map.description}
+                                    isVerified={map.isVerified}
+                                    isPublic={map.isPublic}
+                                />
                             ))}
                         </ListGroup>
                     </Col>

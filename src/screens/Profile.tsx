@@ -5,6 +5,8 @@ import MainHeader from '../components/MainHeader';
 import { auth } from '../hooks/Firebase';
 import { Navigate } from 'react-router-dom';
 import useMaps from '../hooks/useMaps';
+import MapThumbnail from '../components/map/MapThumbnail';
+import BetaHeader from '../components/home/BetaHeader';
 
 export default function Profile() {
     const [user] = useAuthState(auth);
@@ -17,6 +19,7 @@ export default function Profile() {
     return (
         <>
             <MainHeader />
+            <BetaHeader />
             <Container fluid className="Login">
                 <Row>
                     <Col xs={{ span: 1, offset: 3 }} style={{ textAlign: "center" }}>
@@ -61,11 +64,15 @@ export default function Profile() {
 
                         <ListGroup>
                             {mapList.map((map) => (
-                                <ListGroup.Item key={map.id} href={"/map/" + map.id} action>
-                                    <h5>{map.name}</h5>
-                                    <p>{map.description === "" ? <i>No Description</i> : map.description}</p>
-
-                                </ListGroup.Item>
+                                <MapThumbnail
+                                    key={map.id}
+                                    id={map.id}
+                                    name={map.name}
+                                    authorName={map.authorName}
+                                    description={map.description}
+                                    isVerified={map.isVerified}
+                                    isPublic={map.isPublic}
+                                />
                             ))}
                         </ListGroup>
                     </Col>

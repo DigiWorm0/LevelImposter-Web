@@ -1,5 +1,4 @@
-import React from 'react';
-import { Button, Col, Container, Row } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
 import DownloadHeader from '../components/home/DownloadHeader';
 import MainFooter from '../components/MainFooter';
 import MainHeader from '../components/MainHeader';

@@ -9,6 +9,8 @@ import Maps from './screens/Maps';
 import Login from './screens/Login';
 import Profile from './screens/Profile';
 import Map from './screens/Map';
+import User from './screens/User';
+import NotFound from './screens/NotFound';
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
@@ -20,7 +22,9 @@ root.render(
             <Route path="/login" element={<Login />} />
             <Route path="/maps" element={<Maps />} />
             <Route path="/map/:id" element={<Map />} />
+            <Route path="/user/:id" element={<User />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="*" element={<NotFound />} />
         </Routes>
     </BrowserRouter>
 );

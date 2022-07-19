@@ -1,11 +1,8 @@
-import { addDoc, collection, doc, getDoc, getDocs, limit, query, where } from "firebase/firestore";
-import { getDownloadURL, ref, uploadString } from "firebase/storage";
+import { collection, deleteDoc, doc, getDoc, getDocs, limit, query, where } from "firebase/firestore";
+import { deleteObject, ref } from "firebase/storage";
 import React from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
-import LIMapFile from "../types/LIMapFile";
 import LIMetadata from "../types/LIMetadata";
-import { auth, db, storage } from "./Firebase";
-import generateGUID from "./generateGUID";
+import { db, storage } from "./Firebase";
 
 const MAX_PER_PAGE = 20;
 
@@ -47,60 +44,15 @@ export function useMap(mapID?: string) {
     return map;
 }
 
-export function useMapUploader(): [() => void, (mapData: LIMapFile) => void] {
-    const [user] = useAuthState(auth);
+export async function deleteMap(mapID: string, authorID: string) {
+    const storeRef = collection(db, "maps");
+    const docRef = doc(storeRef, mapID);
+    const docPromise = deleteDoc(docRef);
 
-    const openDialog = () => {
-        const input = document.createElement('input');
-        input.type = "file";
-        input.accept = ".lim,application/levelimposter.map";
-        input.onchange = (e) => {
-            if (input.files === null)
-                return;
-            const file = input.files[0];
-            const reader = new FileReader();
-            reader.onload = () => {
-                const data = reader.result;
-                console.log(data);
-                if (typeof data === "string") {
-                    uploadMap(JSON.parse(data) as LIMapFile);
-                }
-            }
-            reader.readAsText(file);
-        }
-        input.click();
-    }
+    const storageURL = `maps/${authorID}/${mapID}.lim`;
+    const storageRef = ref(storage, storageURL);
+    console.log(storageRef.name);
+    const storagePromise = deleteObject(storageRef);
 
-    const uploadMap = async (mapData: LIMapFile) => {
-        if (!user) {
-            console.error("User not logged in");
-            return;
-        }
-
-        // Parse
-        const mapJSON = JSON.stringify(mapData);
-        mapData.id = generateGUID();
-
-        // Storage
-        const storageRef = ref(storage, `maps/${user.uid}/${mapData.id}.lim`);
-        const storageDoc = await uploadString(storageRef, mapJSON);
-        const storageURL = await getDownloadURL(storageDoc.ref);
-        console.log(`Map uploaded to ${storageURL}`);
-
-        // Firestore
-        const storeRef = collection(db, "maps");
-        const mapDocument = await addDoc(storeRef, {
-            id: mapData.id,
-            name: mapData.name,
-            description: mapData.description,
-            authorID: user.uid,
-            storageURL: storageURL,
-        } as LIMetadata);
-        console.log(`Map added to Firestore: ${mapDocument.id}`);
-
-        return mapDocument.id;
-    }
-
-    return [openDialog, uploadMap];
+    await Promise.all([docPromise, storagePromise]);
 }
-

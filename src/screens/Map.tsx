@@ -1,31 +1,20 @@
-import React from 'react';
-import { Button, Col, Container, Placeholder, Row, Spinner } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
+import { Col, Container, Row, Spinner } from 'react-bootstrap';
+import { Navigate, useParams } from 'react-router-dom';
+import BetaHeader from '../components/home/BetaHeader';
 import MainHeader from '../components/MainHeader';
+import MapDeleteBtn from '../components/map/MapDeleteBtn';
+import MapDownloadBtn from '../components/map/MapDownloadBtn';
+import MapTags from '../components/map/MapTags';
 import { useMap } from '../hooks/useMaps';
-import { getDownloadURL, ref } from 'firebase/storage';
-import { storage } from '../hooks/Firebase';
 
 export default function Map() {
     const { id } = useParams();
     const map = useMap(id);
-    const [downloadURL, setDownloadURL] = React.useState<string | undefined>(undefined);
-
-    React.useEffect(() => {
-        if (map) {
-            const storeRef = ref(storage, map.storageURL);
-            getDownloadURL(storeRef).then((url) => {
-                setDownloadURL(url);
-            }).catch((err) => {
-                console.log(err);
-            })
-        }
-    }, [map]);
-
 
     return (
         <>
             <MainHeader />
+            <BetaHeader />
             <Container className="Maps">
                 <Row>
                     <Col xs={5} style={{ padding: 30 }}>
@@ -34,22 +23,16 @@ export default function Map() {
                     <Col xs={7} style={{ padding: 30 }}>
                         {map ? (
                             <>
+                                <MapTags
+                                    isPublic={map.isPublic}
+                                    isVerified={map.isVerified}
+                                />
                                 <h1>{map.name}</h1>
-                                <p>{map.description === "" ? <i>No Description</i> : map.description}</p>
-                                <Button
-                                    variant="primary"
-                                    onClick={() => {
-                                        alert("To Be Implemented");
-                                    }}>
-                                    Launch in Among Us
-                                </Button>
+                                <h5>by {map.authorName}</h5>
+                                <p>{map.description}</p>
+                                <MapDownloadBtn id={map.id} authorID={map.authorID} />
                                 <br />
-                                <Button
-                                    variant="outline-danger"
-                                    href={downloadURL}
-                                    style={{ marginTop: 10 }}>
-                                    Download LIM
-                                </Button>
+                                <MapDeleteBtn id={map.id} authorID={map.authorID} />
                             </>
                         ) : (
                             map === undefined ?
@@ -58,10 +41,7 @@ export default function Map() {
                                         <Spinner animation="border" />
                                     </>
                                 ) : (
-                                    <>
-                                        <h1>404</h1>
-                                        <h5>Map of id '{id}' was not found</h5>
-                                    </>
+                                    <Navigate to="/404" replace />
                                 )
                         )}
                     </Col>
