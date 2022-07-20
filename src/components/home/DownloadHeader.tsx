@@ -1,5 +1,4 @@
-import React from 'react';
-import { Button, Col, Container, OverlayTrigger, Row, Tooltip } from 'react-bootstrap';
+import { Button, Col, Container, Row } from 'react-bootstrap';
 
 export default function DownloadHeader() {
     return (
@@ -27,24 +26,13 @@ export default function DownloadHeader() {
                     <h1>Mapping Studio</h1>
                     <p>Free. Open Source. Forever.</p>
 
-                    <OverlayTrigger
-                        placement='right'
-                        overlay={
-                            <Tooltip id='tooltip-right'>
-                                <strong>Coming Soon</strong>
-                            </Tooltip>
-                        }>
-                        <div>
-                            <Button
-                                variant="primary"
-                                size="lg"
-                                href="https://github.com/DigiWorm0/LevelImposter/releases"
-                                style={{ margin: 5 }}
-                                disabled>
-                                Download Mod
-                            </Button>
-                        </div>
-                    </OverlayTrigger>
+                    <Button
+                        variant="primary"
+                        size="lg"
+                        href="https://github.com/DigiWorm0/LevelImposter/releases"
+                        style={{ margin: 5 }}>
+                        Download Mod
+                    </Button>
                     <Button
                         variant="danger"
                         size="lg"

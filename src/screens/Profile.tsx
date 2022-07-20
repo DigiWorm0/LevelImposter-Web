@@ -75,6 +75,10 @@ export default function Profile() {
                                 />
                             ))}
                         </ListGroup>
+
+                        {mapList.length === 0 && (
+                            <p>You haven't uploaded a map yet! You can make and upload maps using our <a href="https://editor.levelimposter.net/">editor</a>.</p>
+                        )}
                     </Col>
                 </Row>
             </Container>

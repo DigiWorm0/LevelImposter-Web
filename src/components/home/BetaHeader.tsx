@@ -19,7 +19,7 @@ export default function BetaHeader() {
                         display: "flex",
                         flexDirection: "column"
                     }}>
-                    <p><b>Note:</b> LI-Maps are in early access and subject to frequent changes.</p>
+                    <p><b>Note:</b> LevelImposter is in early access and subject to frequent changes.</p>
                 </Col>
             </Row>
         </Container>
