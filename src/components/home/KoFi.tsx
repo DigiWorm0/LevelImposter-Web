@@ -4,7 +4,7 @@ export default function KoFi() {
     return (
         <KofiButton
             username="DigiWorm"
-            label=""
+            label="i hate coffee"
             preset="skinny"
             backgroundColor="kofiRed"
             animation="on_hover"

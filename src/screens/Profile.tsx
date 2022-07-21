@@ -1,12 +1,12 @@
 import { signOut } from 'firebase/auth';
 import { Button, Col, Container, ListGroup, Row } from 'react-bootstrap';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import MainHeader from '../components/MainHeader';
-import { auth } from '../hooks/Firebase';
 import { Navigate } from 'react-router-dom';
-import useMaps from '../hooks/useMaps';
-import MapThumbnail from '../components/map/MapThumbnail';
 import BetaHeader from '../components/home/BetaHeader';
+import MainHeader from '../components/MainHeader';
+import MapThumbnail from '../components/map/MapThumbnail';
+import { auth } from '../hooks/Firebase';
+import useMaps from '../hooks/useMaps';
 
 export default function Profile() {
     const [user] = useAuthState(auth);
