@@ -37,7 +37,7 @@ export default function Policy() {
                         <p>
                             Both LevelImposter and InnerSloth reserve the right to modify or delete your map or account at any time for any reason.
                             <br /><br />
-                            My utilizing the LevelImposter API, you are agreeing to abide by these rules and to be bound by the terms of the Among Us Mod Policy.
+                            By utilizing the LevelImposter API, you are agreeing to abide by these rules and to be bound by the terms of the Among Us Mod Policy.
                             <br /><br />
                             A copy of these rules can be found at <a href="https://levelimposter.net/policy" target={"_blank"} rel="noreferrer">LevelImposter.net/Policy</a>
                         </p>
