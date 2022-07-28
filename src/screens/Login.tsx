@@ -56,7 +56,6 @@ export default function Login() {
         });
     }
 
-
     const signInWithGithub = () => {
         signInWithPopup(auth, githubProvider).then(onSignUp).catch((e) => {
             handleFirebaseError(e);
