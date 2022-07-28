@@ -11,7 +11,7 @@ export default function Home() {
 
             <Container className="Home">
                 <Row>
-                    <Col xs={6}>
+                    <Col lg={6}>
                         <div style={{ margin: 80 }}>
                             <h2 style={{ marginTop: 30, textAlign: "center" }}>
                                 Built for creators, <br />not modders.
@@ -26,7 +26,7 @@ export default function Home() {
                         </div>
                     </Col>
 
-                    <Col xs={{ span: 6 }}>
+                    <Col lg={6}>
                         <div style={{ margin: 15 }}>
                             <iframe
                                 title={"Discord"}

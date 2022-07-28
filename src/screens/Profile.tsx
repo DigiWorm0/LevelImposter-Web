@@ -1,5 +1,8 @@
-import { signOut } from 'firebase/auth';
+import { Badge } from 'react-bootstrap';
+import { signOut, updateProfile } from 'firebase/auth';
+import React from 'react';
 import { Button, Col, Container, ListGroup, Row } from 'react-bootstrap';
+import Form from 'react-bootstrap/Form';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Navigate } from 'react-router-dom';
 import BetaHeader from '../components/home/BetaHeader';
@@ -7,10 +10,18 @@ import MainHeader from '../components/MainHeader';
 import MapThumbnail from '../components/map/MapThumbnail';
 import { auth } from '../hooks/Firebase';
 import useMaps from '../hooks/useMaps';
+import useUser from '../hooks/useUser';
 
 export default function Profile() {
     const [user] = useAuthState(auth);
+    const userData = useUser();
+    const [isEditing, setIsEditing] = React.useState(false);
+    const [displayName, setDisplayName] = React.useState('');
     const mapList = useMaps(user?.uid, true);
+
+    React.useEffect(() => {
+        setDisplayName(user?.displayName || '');
+    }, [user]);
 
     if (!user) {
         return <Navigate to="/login" />;
@@ -20,30 +31,70 @@ export default function Profile() {
         <>
             <MainHeader />
             <BetaHeader />
-            <Container fluid className="Login">
+            <Container className="Profile">
                 <Row>
-                    <Col xs={{ span: 1, offset: 3 }} style={{ textAlign: "center" }}>
+                    <Col lg={12} style={{ textAlign: "center" }}>
                         <img
-                            src={user.photoURL ? user.photoURL : 'https://via.placeholder.com/150'}
-                            alt={user.displayName ? user.displayName : 'User'}
+                            src={user.photoURL ? user.photoURL : 'https://via.placeholder.com/150?text=Profile'}
+                            alt={user.displayName ? user.displayName : 'New User'}
                             style={{
-                                width: 100,
-                                height: 100,
-                                borderRadius: 50,
-                                marginTop: 30,
-                                marginBottom: 30,
+                                width: 200,
+                                height: 200,
+                                borderRadius: 20,
+                                marginTop: 10,
                             }}
                         />
                     </Col>
-                    <Col xs={{ span: 6 }}>
-                        <h2 style={{ marginTop: 30 }}>
-                            {user.displayName}
-                        </h2>
-                        <h6>
-                            {user.email}
-                        </h6>
+                </Row>
+                <Row>
+                    <Col lg={12} style={{ textAlign: "center" }}>
+                        {isEditing ? (
+                            <Form.Control
+                                size="lg"
+                                type="text"
+                                placeholder="Display Name"
+                                value={displayName}
+                                style={{ marginTop: 20, marginBottom: 20, textAlign: "center", fontSize: 32 }}
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                    setDisplayName(e.target.value);
+                                }}
+                            />
+
+                        ) : (
+                            <>
+                                <h2 style={{ marginTop: 20 }}>
+                                    {user.displayName ? user.displayName : 'New User'}
+                                </h2>
+                                <h6>
+                                    {user.email ? user.email : 'why@dontyouhave.email'}
+                                </h6>
+                            </>
+                        )}
                         <Button
-                            variant="primary"
+                            style={{ marginLeft: 5 }}
+                            variant={'primary'}
+                            onClick={() => {
+                                setIsEditing(e => !e);
+                            }}>
+                            {isEditing ? 'Cancel' : 'Edit Profile'}
+                        </Button>
+                        {isEditing && (
+                            <Button
+                                style={{ marginLeft: 5 }}
+                                variant="success"
+                                onClick={() => {
+                                    updateProfile(user, {
+                                        displayName: displayName,
+                                    }).then(() => {
+                                        setIsEditing(e => !e);
+                                    });
+                                }}>
+                                Save
+                            </Button>
+                        )}
+                        <Button
+                            style={{ marginLeft: 5 }}
+                            variant="danger"
                             onClick={() => {
                                 signOut(auth);
                             }}>
@@ -54,24 +105,19 @@ export default function Profile() {
                     </Col>
                 </Row>
                 <Row>
-                    <Col xs={{ span: 6, offset: 3 }}>
+                    <Col xs={{ span: 8, offset: 2 }}>
                         <hr />
                     </Col>
                 </Row>
                 <Row>
-                    <Col xs={{ span: 6, offset: 4 }}>
+                    <Col xs={{ span: 6, offset: 3 }}>
                         <h3>Your Maps:</h3>
 
                         <ListGroup>
                             {mapList.map((map) => (
                                 <MapThumbnail
                                     key={map.id}
-                                    id={map.id}
-                                    name={map.name}
-                                    authorName={map.authorName}
-                                    description={map.description}
-                                    isVerified={map.isVerified}
-                                    isPublic={map.isPublic}
+                                    map={map}
                                 />
                             ))}
                         </ListGroup>
@@ -79,6 +125,28 @@ export default function Profile() {
                         {mapList.length === 0 && (
                             <p>You haven't uploaded a map yet! You can make and upload maps using our <a href="https://editor.levelimposter.net/">editor</a>.</p>
                         )}
+                    </Col>
+                </Row>
+                <Row>
+                    <Col xs={{ span: 8, offset: 2 }}>
+                        <hr />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <div style={{ textAlign: "center" }}>
+                            <p>
+                                {user.uid}
+                            </p>
+                            {userData?.isAdmin && (
+                                <Badge
+                                    pill
+                                    bg="danger"
+                                    style={{ marginLeft: 5 }}>
+                                    Admin
+                                </Badge>
+                            )}
+                        </div>
                     </Col>
                 </Row>
             </Container>

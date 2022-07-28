@@ -1,19 +1,23 @@
 import React from "react";
 import { Button, Modal } from "react-bootstrap";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../../hooks/Firebase";
+import { useNavigate } from "react-router-dom";
 import { deleteMap } from "../../hooks/useMaps";
+import useUser from "../../hooks/useUser";
 
 export default function MapDeleteBtn(props: { id: string, authorID: string }) {
-    const [user] = useAuthState(auth);
     const [isDeleting, setIsDeleting] = React.useState(false);
     const [isModalOpen, setModalOpen] = React.useState(false);
+    const userData = useUser();
+    const navigate = useNavigate();
 
     const onDelete = () => {
+        if (!userData)
+            return;
+
         setIsDeleting(true);
-        deleteMap(props.id, props.authorID).then(() => {
+        deleteMap(props.id, props.authorID, userData.uid).then(() => {
             setIsDeleting(false);
-            window.location.href = "/Profile";
+            navigate("/maps");
         }).catch(err => {
             console.error(err);
             alert(err);
@@ -21,7 +25,7 @@ export default function MapDeleteBtn(props: { id: string, authorID: string }) {
         });
     }
 
-    if (user?.uid !== props.authorID)
+    if (userData?.uid !== props.authorID && !userData?.isAdmin)
         return null;
 
     return (

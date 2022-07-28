@@ -4,10 +4,12 @@ import BetaHeader from '../components/home/BetaHeader';
 import MainHeader from '../components/MainHeader';
 import MapThumbnail from '../components/map/MapThumbnail';
 import useMaps from '../hooks/useMaps';
+import useUser from '../hooks/useUser';
 import LIMetadata from '../types/LIMetadata';
 
 export default function Maps() {
-    const mapList = useMaps();
+    const userData = useUser();
+    const mapList = useMaps(undefined, userData?.isAdmin);
     const [verifiedMaps, setVerifiedMaps] = React.useState<LIMetadata[]>([]);
 
     React.useEffect(() => {
@@ -27,12 +29,7 @@ export default function Maps() {
                             {mapList.map((map) => (
                                 <MapThumbnail
                                     key={map.id}
-                                    id={map.id}
-                                    name={map.name}
-                                    authorName={map.authorName}
-                                    description={map.description}
-                                    isVerified={map.isVerified}
-                                    isPublic={map.isPublic}
+                                    map={map}
                                 />
                             ))}
                         </ListGroup>
@@ -43,12 +40,7 @@ export default function Maps() {
                             {verifiedMaps.map((map) => (
                                 <MapThumbnail
                                     key={map.id}
-                                    id={map.id}
-                                    name={map.name}
-                                    authorName={map.authorName}
-                                    description={map.description}
-                                    isVerified={map.isVerified}
-                                    isPublic={map.isPublic}
+                                    map={map}
                                 />
                             ))}
                         </ListGroup>

@@ -1,17 +1,23 @@
-import { Link } from "react-router-dom";
-import GUID from "../../types/GUID";
+import { Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import LIMetadata from "../../types/LIMetadata";
 import MapTags from "./MapTags";
 
-export default function MapThumbnail(props: { id: GUID, name: string, authorName: string, description: string, isVerified: boolean, isPublic: boolean }) {
+export default function MapThumbnail(props: { map: LIMetadata }) {
+    const map = props.map;
+    const navigate = useNavigate();
+
     return (
-        <Link to={"/map/" + props.id} className="list-group-item list-group-item-action">
-            <h4>{props.name}</h4>
-            <h6>by {props.authorName}</h6>
-            <p>{props.description === "" ? <i>No Description</i> : props.description}</p>
+        <Button
+            onClick={() => navigate(`/map/${map.id}`)}
+            className="list-group-item list-group-item-action">
             <MapTags
-                isPublic={props.isPublic}
-                isVerified={props.isVerified}
+                isPublic={map.isPublic}
+                isVerified={map.isVerified}
             />
-        </Link>
+            <h4>{map.name}</h4>
+            <h5>by {map.authorName}</h5>
+            <p>{map.description === "" ? <i>No Description</i> : map.description}</p>
+        </Button>
     );
 }

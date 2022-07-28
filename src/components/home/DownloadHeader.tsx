@@ -12,7 +12,7 @@ export default function DownloadHeader() {
             <Row>
 
                 <Col
-                    xs={{ span: 5, offset: 1 }}
+                    sm={{ span: 5, offset: 1 }}
                     style={{
                         padding: 50,
                         textAlign: "center",
@@ -43,7 +43,16 @@ export default function DownloadHeader() {
 
                 </Col>
 
-                <Col xs={{ span: 5, offset: 1 }} style={{ margin: 20 }}>
+                <Col
+                    sm={{ span: 5, offset: 1 }}
+                    style={{
+                        padding: 20,
+                        textAlign: "center",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        display: "flex",
+                        flexDirection: "column"
+                    }}>
                     <img alt="screenshot" src="/editor-1.png" style={{ width: "100%" }} />
                 </Col>
             </Row>

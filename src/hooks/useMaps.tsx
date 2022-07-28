@@ -44,15 +44,19 @@ export function useMap(mapID?: string) {
     return map;
 }
 
-export async function deleteMap(mapID: string, authorID: string) {
+export async function deleteMap(mapID: string, authorID: string, userID: string) {
+    const promises = []
     const storeRef = collection(db, "maps");
     const docRef = doc(storeRef, mapID);
-    const docPromise = deleteDoc(docRef);
+    promises.push(deleteDoc(docRef));
 
-    const storageURL = `maps/${authorID}/${mapID}.lim`;
-    const storageRef = ref(storage, storageURL);
-    console.log(storageRef.name);
-    const storagePromise = deleteObject(storageRef);
+    if (authorID === userID) {
+        const storageURL = `maps/${authorID}/${mapID}.lim`;
+        const storageRef = ref(storage, storageURL);
+        promises.push(deleteObject(storageRef));
+    }
 
-    await Promise.all([docPromise, storagePromise]);
+    await Promise.all(promises).catch((e) => {
+        console.error(e);
+    });
 }
