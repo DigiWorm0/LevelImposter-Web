@@ -1,4 +1,5 @@
 import { Col, Container, Row } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import DownloadHeader from '../components/home/DownloadHeader';
 import MainFooter from '../components/MainFooter';
 import MainHeader from '../components/MainHeader';
@@ -14,14 +15,15 @@ export default function Home() {
                     <Col lg={6}>
                         <div style={{ margin: 80 }}>
                             <h2 style={{ marginTop: 30, textAlign: "center" }}>
-                                Built for creators, <br />not modders.
+                                Zero programming<br />experience required
                             </h2>
                             <h5 style={{ lineHeight: 2 }}>
-                                ✏️ Easy-to-use editing studio <i>(now with dark mode!)</i><br />
-                                ⌨️ No programming required<br />
-                                🖼️ Include custom sprites / images<br />
-                                🔧 Include any task, vent, or utility<br />
-                                🚀 Deploy to any LevelImposter user<br />
+                                ✏️ Easy-to-use <a href="https://editor.levelimposter.net/">editing studio</a> built with React<br />
+                                🖼️ Include your own custom sprites / images<br />
+                                🔧 Add any task, sabotage, vent, or utility<br />
+                                🚀 Deploy to others using <Link to="/maps">LevelImposter API</Link><br />
+                                👋 Join the community of other map makers<br />
+                                ⌨️ Completly open source under <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">GNU GPLv3.0</a><br />
                             </h5>
                         </div>
                     </Col>

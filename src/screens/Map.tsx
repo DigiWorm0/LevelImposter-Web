@@ -18,13 +18,13 @@ export default function Map() {
             <BetaHeader />
             <Container className="Maps">
                 <Row>
-                    <Col xs={6} style={{ padding: 10 }}>
+                    <Col sm={6} style={{ padding: 10 }}>
                         <iframe
                             src={`https://editor.levelimposter.net/?id=${id}&embed`}
                             style={{ width: '100%', aspectRatio: "1", borderRadius: 10 }}
                             title={"Editor Embed"} />
                     </Col>
-                    <Col xs={6} style={{ padding: 30 }}>
+                    <Col sm={6} style={{ padding: 30 }}>
                         {map ? (
                             <>
                                 <MapTags

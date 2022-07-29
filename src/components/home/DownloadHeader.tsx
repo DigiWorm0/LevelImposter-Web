@@ -24,7 +24,7 @@ export default function DownloadHeader() {
 
                     <h4>The only Among Us</h4>
                     <h1>Mapping Studio</h1>
-                    <p>Free. Open Source. Forever.</p>
+                    <p>Built for Makers, not Modders</p>
 
                     <Button
                         variant="primary"
@@ -44,7 +44,7 @@ export default function DownloadHeader() {
                 </Col>
 
                 <Col
-                    sm={{ span: 5, offset: 1 }}
+                    sm={5}
                     style={{
                         padding: 20,
                         textAlign: "center",
