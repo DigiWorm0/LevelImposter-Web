@@ -133,7 +133,7 @@ export default function Profile() {
                     <Col>
                         <div style={{ textAlign: "center" }}>
                             <p>
-                                {user.uid} - {user.email}
+                                {user.uid}
                             </p>
                             {userData?.isAdmin && (
                                 <Badge

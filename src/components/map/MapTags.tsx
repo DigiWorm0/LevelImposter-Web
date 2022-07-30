@@ -9,7 +9,7 @@ export default function MapTags(props: { isPublic: boolean, isVerified: boolean 
                 <Badge pill bg="danger">Private</Badge>
             )}
             {props.isVerified ? (
-                <Badge pill bg="warning">Verified</Badge>
+                <Badge pill bg="warning">Featured</Badge>
             ) : (
                 null
             )}

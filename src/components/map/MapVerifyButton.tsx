@@ -30,7 +30,7 @@ export default function MapVerifyButton(props: { id: string, isVerified: boolean
             }
         });
     }
-    const verifyText = props.isVerified ? "Unverify" : "Verify";
+    const verifyText = props.isVerified ? "Unfeature" : "Feature";
 
     if (!userData?.isAdmin)
         return null;

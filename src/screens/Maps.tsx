@@ -18,10 +18,10 @@ export default function Maps() {
             <BetaHeader />
             <Container className="Maps" style={{ padding: 30 }}>
                 <Row>
-                    <Col sm={6}>
-                        <h3 style={{ textAlign: "center", marginTop: 5 }}>Recent Uploads</h3>
+                    <Col sm={7}>
+                        <h3 style={{ textAlign: "center", marginTop: 5 }}>Featured Maps</h3>
                         <ListGroup>
-                            {mapList.map((map) => (
+                            {verifiedMaps.map((map) => (
                                 <MapThumbnail
                                     key={map.id}
                                     map={map}
@@ -29,10 +29,10 @@ export default function Maps() {
                             ))}
                         </ListGroup>
                     </Col>
-                    <Col sm={6}>
-                        <h3 style={{ textAlign: "center", marginTop: 5 }}>Verified Maps</h3>
+                    <Col sm={5}>
+                        <h3 style={{ textAlign: "center", marginTop: 5 }}>Recent Uploads</h3>
                         <ListGroup>
-                            {verifiedMaps.map((map) => (
+                            {mapList.map((map) => (
                                 <MapThumbnail
                                     key={map.id}
                                     map={map}
