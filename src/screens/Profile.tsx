@@ -65,9 +65,6 @@ export default function Profile() {
                                 <h2 style={{ marginTop: 20 }}>
                                     {user.displayName ? user.displayName : 'New User'}
                                 </h2>
-                                <h6>
-                                    {user.email ? user.email : 'why@dontyouhave.email'}
-                                </h6>
                             </>
                         )}
                         <Button
@@ -76,7 +73,7 @@ export default function Profile() {
                             onClick={() => {
                                 setIsEditing(e => !e);
                             }}>
-                            {isEditing ? 'Cancel' : 'Edit Profile'}
+                            {isEditing ? 'Cancel' : 'Edit Name'}
                         </Button>
                         {isEditing && (
                             <Button
@@ -136,7 +133,7 @@ export default function Profile() {
                     <Col>
                         <div style={{ textAlign: "center" }}>
                             <p>
-                                {user.uid}
+                                {user.uid} - {user.email}
                             </p>
                             {userData?.isAdmin && (
                                 <Badge

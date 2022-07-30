@@ -21,9 +21,9 @@ export default function Home() {
                                 ✏️ Easy-to-use <a href="https://editor.levelimposter.net/">editing studio</a> built with React<br />
                                 🖼️ Include your own custom sprites / images<br />
                                 🔧 Add any task, sabotage, vent, or utility<br />
-                                🚀 Deploy to others using <Link to="/maps">LevelImposter API</Link><br />
-                                👋 Join the community of other map makers<br />
-                                ⌨️ Completly open source under <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">GNU GPLv3.0</a><br />
+                                🚀 Deploy to others using the <Link to="/maps">LevelImposter API</Link><br />
+                                👋 Join a community of other map makers<br />
+                                ⌨️ Completely <a href="https://github.com/DigiWorm0/LevelImposter">open source</a> under GNU GPLv3.0<br />
                             </h5>
                         </div>
                     </Col>
