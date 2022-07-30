@@ -5,17 +5,12 @@ import MainHeader from '../components/MainHeader';
 import MapThumbnail from '../components/map/MapThumbnail';
 import useMaps from '../hooks/useMaps';
 import useUser from '../hooks/useUser';
-import LIMetadata from '../types/LIMetadata';
 
 export default function Maps() {
     const userData = useUser();
-    const mapList = useMaps(undefined, userData?.isAdmin);
-    const [verifiedMaps, setVerifiedMaps] = React.useState<LIMetadata[]>([]);
-
-    React.useEffect(() => {
-        const verifiedMapList = mapList.filter((map) => map.isVerified);
-        setVerifiedMaps(verifiedMapList);
-    }, [mapList]);
+    const [page, setPage] = React.useState(0);
+    const mapList = useMaps(undefined, userData?.isAdmin, false, page);
+    const verifiedMaps = useMaps(undefined, false, true, page);
 
     return (
         <>
@@ -44,6 +39,22 @@ export default function Maps() {
                                 />
                             ))}
                         </ListGroup>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col style={{
+                        textAlign: "center",
+                        display: "flex",
+                        justifyContent: "center",
+                        padding: 20
+                    }}>
+                        {/*
+                        <Pagination>
+                            <Pagination.Prev onClick={() => setPage(page - 1)} disabled={page === 0} />
+                            <Pagination.Item active>{page + 1}</Pagination.Item>
+                            <Pagination.Next onClick={() => setPage(page + 1)} />
+                        </Pagination>
+                        */}
                     </Col>
                 </Row>
             </Container>
