@@ -1,5 +1,5 @@
 import { Col, Container, Row, Spinner } from 'react-bootstrap';
-import { Link, Navigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import BetaHeader from '../components/home/BetaHeader';
 import MainHeader from '../components/MainHeader';
 import MapDeleteBtn from '../components/map/MapDeleteBtn';
@@ -11,6 +11,40 @@ import { useMap } from '../hooks/useMaps';
 export default function Map() {
     const { id } = useParams();
     const map = useMap(id);
+    const navigate = useNavigate();
+
+    if (map === null) {
+        navigate('404');
+        return null;
+    }
+    else if (map === undefined) {
+        return (
+            <>
+                <MainHeader />
+                <BetaHeader />
+                <Spinner animation="border" />
+            </>
+        );
+    }
+
+    const getTimeAgoString = () => {
+        const diff = new Date().getTime() - map.createdAt;
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor(diff / (1000 * 60 * 60));
+        const minutes = Math.floor(diff / (1000 * 60));
+        const seconds = Math.floor(diff / 1000);
+
+        if (days > 0)
+            return `${days} days ago`;
+        else if (hours > 0)
+            return `${hours} hours ago`;
+        else if (minutes > 0)
+            return `${minutes} minutes ago`;
+        else if (seconds > 0)
+            return `${seconds} seconds ago`;
+        else
+            return 'just now';
+    }
 
     return (
         <>
@@ -25,35 +59,27 @@ export default function Map() {
                             title={"Editor Embed"} />
                     </Col>
                     <Col sm={6} style={{ padding: 30 }}>
-                        {map ? (
-                            <>
-                                <MapTags
-                                    isPublic={map.isPublic}
-                                    isVerified={map.isVerified}
-                                />
-                                <h1>{map.name}</h1>
-                                <Link
-                                    to={`/User/${map.authorID}`}
-                                    style={{ textDecoration: "none" }}>
-                                    <h5>by {map.authorName}</h5>
-                                </Link>
-                                <p>{map.description}</p>
-                                <MapDownloadBtn id={map.id} authorID={map.authorID} />
-                                <br />
-                                <MapVerifyButton id={map.id} isVerified={map.isVerified} />
-                                <br />
-                                <MapDeleteBtn id={map.id} authorID={map.authorID} />
-                            </>
-                        ) : (
-                            map === undefined ?
-                                (
-                                    <>
-                                        <Spinner animation="border" />
-                                    </>
-                                ) : (
-                                    <Navigate to="/404" replace />
-                                )
-                        )}
+                        <MapTags
+                            isPublic={map.isPublic}
+                            isVerified={map.isVerified}
+                        />
+                        <h1>{map.name}</h1>
+                        <Link
+                            to={`/User/${map.authorID}`}
+                            style={{ textDecoration: "none" }}>
+                            <h5>by {map.authorName}</h5>
+                        </Link>
+                        <p>
+                            {map.description}
+                        </p>
+                        <p style={{ fontSize: "0.8em" }}>
+                            Last updated {getTimeAgoString()}
+                        </p>
+                        <MapDownloadBtn id={map.id} authorID={map.authorID} />
+                        <br />
+                        <MapVerifyButton id={map.id} isVerified={map.isVerified} />
+                        <br />
+                        <MapDeleteBtn id={map.id} authorID={map.authorID} />
                     </Col>
                 </Row>
             </Container>
