@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, UserCredential } from 'firebase/auth';
+import { createUserWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, UserCredential } from 'firebase/auth';
 import { collection, doc, getDoc, setDoc } from 'firebase/firestore';
 import React from 'react';
 import { Button, Col, Container, Row } from 'react-bootstrap';
@@ -25,17 +25,20 @@ export default function Login() {
         if (error.code === 'auth/email-already-in-use') {
             setError('Email already in use');
         }
-        if (error.code === 'auth/invalid-email') {
+        else if (error.code === 'auth/invalid-email') {
             setError('Invalid email');
         }
-        if (error.code === 'auth/weak-password') {
+        else if (error.code === 'auth/weak-password') {
             setError('Password is too weak');
         }
-        if (error.code === 'auth/user-not-found') {
+        else if (error.code === 'auth/user-not-found') {
             setError('User not found');
         }
-        if (error.code === 'auth/wrong-password') {
+        else if (error.code === 'auth/wrong-password') {
             setError('Wrong password');
+        }
+        else {
+            setError(error.message);
         }
     }
 
@@ -81,13 +84,18 @@ export default function Login() {
             setError('Passwords do not match');
             return;
         }
-        createUserWithEmailAndPassword(auth, username, password).then(onSignUp).catch((e) => {
+        createUserWithEmailAndPassword(auth, username, password).then((cred) => {
+            sendEmailVerification(cred.user);
+            onSignUp(cred);
+        }).catch((e) => {
             handleFirebaseError(e);
         });
     }
 
     const forgotPassword = () => {
-        sendPasswordResetEmail(auth, username).catch((e) => {
+        sendPasswordResetEmail(auth, username).then(() => {
+            setError('Password reset email sent');
+        }).catch((e) => {
             handleFirebaseError(e);
         });
     }
