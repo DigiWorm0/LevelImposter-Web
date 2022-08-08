@@ -1,5 +1,5 @@
 import { useAuthState } from "react-firebase-hooks/auth";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { HashRouter, Route, Routes } from "react-router-dom";
 import { auth } from "../hooks/Firebase";
 import { UserContext, _useUser } from "../hooks/useUser";
 import Home from "./Home";
@@ -17,7 +17,7 @@ export default function Router() {
 
     return (
         <UserContext.Provider value={userData}>
-            <BrowserRouter>
+            <HashRouter>
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/login" element={<Login />} />
@@ -28,7 +28,7 @@ export default function Router() {
                     <Route path="/policy" element={<Policy />} />
                     <Route path="*" element={<NotFound />} />
                 </Routes>
-            </BrowserRouter>
+            </HashRouter>
         </UserContext.Provider>
     );
 }
