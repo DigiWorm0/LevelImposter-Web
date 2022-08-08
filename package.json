@@ -1,6 +1,7 @@
 {
     "name": "levelimposter-web",
     "description": "LevelImposter Website",
+    "homepage": "https://levelimposter.net/",
     "version": "0.1.0",
     "author": "DigiWorm",
     "license": "GNU GPLv3",
@@ -51,5 +52,8 @@
             "last 1 firefox version",
             "last 1 safari version"
         ]
+    },
+    "devDependencies": {
+        "gh-pages": "^4.0.0"
     }
 }
