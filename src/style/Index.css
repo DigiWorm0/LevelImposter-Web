@@ -1,0 +1,11 @@
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+@font-face {
+    font-family: Bahnschrift;
+    src: url(bahnschrift.ttf);
+}
+
+body,
+* {
+    font-family: Bahnschrift, sans-serif !important;
+}
