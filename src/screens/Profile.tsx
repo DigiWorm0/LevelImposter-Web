@@ -1,5 +1,5 @@
-import { Badge } from 'react-bootstrap';
-import { signOut, updateProfile } from 'firebase/auth';
+import { Alert, Badge } from 'react-bootstrap';
+import { sendEmailVerification, signOut, updateProfile } from 'firebase/auth';
 import React from 'react';
 import { Button, Col, Container, ListGroup, Row } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
@@ -16,12 +16,24 @@ export default function Profile() {
     const [user] = useAuthState(auth);
     const userData = useUser();
     const [isEditing, setIsEditing] = React.useState(false);
+    const [error, setError] = React.useState<string | undefined>(undefined);
     const [displayName, setDisplayName] = React.useState('');
     const mapList = useMaps(user?.uid, true);
 
     React.useEffect(() => {
         setDisplayName(user?.displayName || '');
     }, [user]);
+
+    const sendVerification = () => {
+        if (!user)
+            return;
+
+        sendEmailVerification(user).then(() => {
+            setError('Verification email sent to ' + user.email);
+        }).catch(error => {
+            setError(error.message);
+        });
+    }
 
     if (!user) {
         return <Navigate to="/login" />;
@@ -32,6 +44,19 @@ export default function Profile() {
             <MainHeader />
             <BetaHeader />
             <Container className="Profile">
+                <Row style={{ marginTop: 20 }}>
+                    <Col xs={12}>
+                        <Alert
+                            style={{ margin: 10 }}
+                            variant="danger"
+                            show={error !== undefined}
+                            onClose={() => setError(undefined)}>
+
+                            {error}
+
+                        </Alert>
+                    </Col>
+                </Row>
                 <Row>
                     <Col lg={12} style={{ textAlign: "center" }}>
                         <img
@@ -41,7 +66,6 @@ export default function Profile() {
                                 width: 200,
                                 height: 200,
                                 borderRadius: 20,
-                                marginTop: 10,
                             }}
                         />
                     </Col>
@@ -99,6 +123,20 @@ export default function Profile() {
                             Sign out
 
                         </Button>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col style={{ textAlign: "center" }}>
+                        {!user?.emailVerified && (
+                            <Button
+                                style={{ margin: 5 }}
+                                variant="secondary"
+                                onClick={sendVerification}>
+
+                                Re-send Verification Email
+
+                            </Button>
+                        )}
                     </Col>
                 </Row>
                 <Row>
