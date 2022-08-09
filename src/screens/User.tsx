@@ -23,7 +23,7 @@ export default function User() {
                         <Row>
                             <Col lg={12} style={{ textAlign: "center" }}>
                                 <img
-                                    src={author.photoURL ? author.photoURL : 'https://via.placeholder.com/150?text=Profile'}
+                                    src={author.photoURL ? author.photoURL : '/logo512.png'}
                                     alt={author.displayName ? author.displayName : 'New User'}
                                     style={{
                                         width: 200,
