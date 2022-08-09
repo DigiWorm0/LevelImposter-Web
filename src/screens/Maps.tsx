@@ -8,7 +8,7 @@ import useUser from '../hooks/useUser';
 
 export default function Maps() {
     const userData = useUser();
-    const [page, setPage] = React.useState(0);
+    const [page] = React.useState(0);
     const mapList = useMaps(undefined, userData?.isAdmin, false, page);
     const verifiedMaps = useMaps(undefined, false, true, page);
 

@@ -1,10 +1,10 @@
-import { collection, deleteDoc, doc, getDoc, getDocs, limit, orderBy, query, startAfter, where } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDoc, getDocs, limit, orderBy, query, where } from "firebase/firestore";
 import { deleteObject, ref } from "firebase/storage";
 import React from "react";
 import LIMetadata from "../types/LIMetadata";
 import { db, storage } from "./Firebase";
 
-const MAX_PER_PAGE = 20;
+const MAX_PER_PAGE = 50;
 
 export default function useMaps(userID?: string, includePrivate?: boolean, verifiedOnly?: boolean, page = 0) {
     const [mapList, setMapList] = React.useState<LIMetadata[]>([]);
@@ -19,9 +19,8 @@ export default function useMaps(userID?: string, includePrivate?: boolean, verif
         if (verifiedOnly)
             mapQueries.push(where("isVerified", "==", true));
         mapQueries.push(
-            orderBy("createdAt"),
+            orderBy("createdAt", "desc"),
             limit(MAX_PER_PAGE),
-            startAfter(MAX_PER_PAGE * page)
         );
         const mapsQuery = query(storeRef, ...mapQueries);
 
