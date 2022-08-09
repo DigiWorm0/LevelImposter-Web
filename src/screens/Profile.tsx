@@ -60,7 +60,7 @@ export default function Profile() {
                 <Row>
                     <Col lg={12} style={{ textAlign: "center" }}>
                         <img
-                            src={user.photoURL ? user.photoURL : 'https://via.placeholder.com/150?text=Profile'}
+                            src={user.photoURL ? user.photoURL : '/logo512.png'}
                             alt={user.displayName ? user.displayName : 'New User'}
                             style={{
                                 width: 200,
