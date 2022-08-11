@@ -21,6 +21,7 @@
         "react-dom": "^18.2.0",
         "react-firebase-hooks": "^5.0.3",
         "react-kofi-button": "^0.7.1",
+        "react-linkify": "^1.0.0-alpha",
         "react-router-dom": "^6.3.0",
         "react-scripts": "5.0.1",
         "sass": "^1.53.0",
@@ -54,6 +55,7 @@
         ]
     },
     "devDependencies": {
+        "@types/react-linkify": "^1.0.1",
         "gh-pages": "^4.0.0"
     }
 }

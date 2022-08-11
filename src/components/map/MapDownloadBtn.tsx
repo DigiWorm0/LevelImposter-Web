@@ -16,11 +16,14 @@ export default function MapDownloadBtn(props: { id: string, authorID: string }) 
     }
 
     return (
-        <Button
-            variant="primary"
-            onClick={onDownload}
-            style={{ marginBottom: 10 }}>
-            Download LIM
-        </Button>
+        <>
+            <Button
+                variant="primary"
+                onClick={onDownload}
+                style={{ marginBottom: 10 }}>
+                Download LIM
+            </Button>
+            <br />
+        </>
     );
 }

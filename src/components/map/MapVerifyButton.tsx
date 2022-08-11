@@ -45,6 +45,7 @@ export default function MapVerifyButton(props: { id: string, isVerified: boolean
                 {verifyText} Map
 
             </Button>
+            <br />
 
             <Modal
                 show={isModalOpen}

@@ -7,6 +7,7 @@ import MapDownloadBtn from '../components/map/MapDownloadBtn';
 import MapTags from '../components/map/MapTags';
 import MapVerifyButton from '../components/map/MapVerifyButton';
 import { useMap } from '../hooks/useMaps';
+import Linkify from 'react-linkify';
 
 export default function Map() {
     const { id } = useParams();
@@ -69,16 +70,16 @@ export default function Map() {
                             style={{ textDecoration: "none" }}>
                             <h5>by {map.authorName}</h5>
                         </Link>
-                        <p>
-                            {map.description}
-                        </p>
+                        <Linkify>
+                            <p style={{ whiteSpace: "pre-wrap" }}>
+                                {map.description}
+                            </p>
+                        </Linkify>
                         <p style={{ fontSize: "0.8em" }}>
                             Last updated {getTimeAgoString()}
                         </p>
                         <MapDownloadBtn id={map.id} authorID={map.authorID} />
-                        <br />
                         <MapVerifyButton id={map.id} isVerified={map.isVerified} />
-                        <br />
                         <MapDeleteBtn id={map.id} authorID={map.authorID} />
                     </Col>
                 </Row>
