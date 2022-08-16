@@ -37,6 +37,8 @@ export default function MapDeleteBtn(props: { id: string, authorID: string }) {
                 style={{ marginBottom: 10 }}>
                 Delete Map
             </Button>
+            <br />
+
             <Modal
                 show={isModalOpen}
                 onHide={() => setModalOpen(false)}

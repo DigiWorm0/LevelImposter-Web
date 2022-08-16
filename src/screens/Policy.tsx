@@ -1,4 +1,5 @@
 import { Col, Container, Row } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import BetaHeader from '../components/home/BetaHeader';
 import MainHeader from '../components/MainHeader';
 
@@ -27,6 +28,9 @@ export default function Policy() {
                                 Maps cannot state or suggest that your mod is official, licensed, or otherwise authorized by Innersloth.
                             </li>
                             <li style={{ margin: 5 }}>
+                                Maps cannot be in a broken or unusable state at time of publish.
+                            </li>
+                            <li style={{ margin: 5 }}>
                                 You cannot hack, flood, dos, or break the LevelImposter API in any way.
                             </li>
                             <li style={{ margin: 5 }}>
@@ -39,7 +43,7 @@ export default function Policy() {
                             <br /><br />
                             By utilizing the LevelImposter API, you are agreeing to abide by these rules and to be bound by the terms of the Among Us Mod Policy.
                             <br /><br />
-                            A copy of these rules can be found at <a href="https://levelimposter.net/policy" target={"_blank"} rel="noreferrer">LevelImposter.net/Policy</a>
+                            A copy of these rules can be found at <Link to="/policy" target={'_blank'} rel="noreferrer">LevelImposter.net/#/Policy</Link>
                         </p>
                     </Col>
                 </Row>

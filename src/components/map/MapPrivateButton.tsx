@@ -1,11 +1,12 @@
 import { collection, doc, getDoc, setDoc } from "firebase/firestore";
 import React from "react";
-import { Button, Modal } from "react-bootstrap";
+import { Button, Form, Modal } from "react-bootstrap";
 import { db } from "../../hooks/Firebase";
 import useUser from "../../hooks/useUser";
 
-export default function MapVerifyButton(props: { id: string, isVerified: boolean }) {
+export default function MapPrivateButton(props: { id: string, isPublic: boolean }) {
     const [isModalOpen, setModalOpen] = React.useState(false);
+    const [removalReason, setRemovalReason] = React.useState("");
     const userData = useUser();
 
     const onVerify = () => {
@@ -19,7 +20,8 @@ export default function MapVerifyButton(props: { id: string, isVerified: boolean
                 const data = doc.data();
                 setDoc(docRef, {
                     ...data,
-                    isVerified: !props.isVerified
+                    isPublic: !props.isPublic,
+                    removalReason: (removalReason.length > 0 && props.isPublic) ? removalReason : null
                 }).then(() => {
                     setModalOpen(false);
                     window.location.reload();
@@ -30,7 +32,7 @@ export default function MapVerifyButton(props: { id: string, isVerified: boolean
             }
         });
     }
-    const verifyText = props.isVerified ? "Unfeature" : "Feature";
+    const privateText = props.isPublic ? "Private" : "Public";
 
     if (!userData?.isAdmin)
         return null;
@@ -38,11 +40,11 @@ export default function MapVerifyButton(props: { id: string, isVerified: boolean
     return (
         <>
             <Button
-                variant="warning"
+                variant="secondary"
                 onClick={() => setModalOpen(true)}
                 style={{ marginBottom: 10 }}>
 
-                {verifyText} Map
+                Make {privateText}
 
             </Button>
             <br />
@@ -53,11 +55,19 @@ export default function MapVerifyButton(props: { id: string, isVerified: boolean
                 centered>
 
                 <Modal.Header closeButton>
-                    <Modal.Title>{verifyText} Map</Modal.Title>
+                    <Modal.Title>{privateText} Map</Modal.Title>
                 </Modal.Header>
 
                 <Modal.Body>
-                    <p>Are you <i>100% sure</i> you want to <b>{verifyText.toLowerCase()}</b> this map?</p>
+                    <p>Are you <i>100% sure</i> you want to make this map <b>{privateText.toLowerCase()}</b>?</p>
+                    {props.isPublic && (
+                        <Form.Control
+                            as="textarea"
+                            rows={3}
+                            placeholder="Reason for removal"
+                            value={removalReason}
+                            onChange={(e) => setRemovalReason(e.target.value)} />
+                    )}
                 </Modal.Body>
 
                 <Modal.Footer>
@@ -69,7 +79,7 @@ export default function MapVerifyButton(props: { id: string, isVerified: boolean
                     <Button
                         variant="warning"
                         onClick={onVerify}>
-                        {verifyText} Map
+                        Make {privateText}
                     </Button>
                 </Modal.Footer>
             </Modal>

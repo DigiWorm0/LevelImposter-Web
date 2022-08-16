@@ -1,4 +1,4 @@
-import { Col, Container, Row, Spinner } from 'react-bootstrap';
+import { Alert, Col, Container, Row, Spinner } from 'react-bootstrap';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import BetaHeader from '../components/home/BetaHeader';
 import MainHeader from '../components/MainHeader';
@@ -7,6 +7,8 @@ import MapDownloadBtn from '../components/map/MapDownloadBtn';
 import MapTags from '../components/map/MapTags';
 import MapVerifyButton from '../components/map/MapVerifyButton';
 import { useMap } from '../hooks/useMaps';
+import Linkify from 'react-linkify';
+import MapPrivateButton from '../components/map/MapPrivateButton';
 
 export default function Map() {
     const { id } = useParams();
@@ -51,6 +53,21 @@ export default function Map() {
             <MainHeader />
             <BetaHeader />
             <Container className="Maps">
+                {map.removalReason && (
+                    <Row style={{ marginTop: 20 }}>
+                        <Col xs={12}>
+                            <Alert
+                                style={{ margin: 10 }}
+                                variant="danger">
+
+                                Map was made private due to a violation of the <Link to="/policy">Mapping Policy</Link>:
+                                <br />
+                                {map.removalReason}
+
+                            </Alert>
+                        </Col>
+                    </Row>
+                )}
                 <Row>
                     <Col sm={6} style={{ padding: 10 }}>
                         <iframe
@@ -69,16 +86,17 @@ export default function Map() {
                             style={{ textDecoration: "none" }}>
                             <h5>by {map.authorName}</h5>
                         </Link>
-                        <p>
-                            {map.description}
-                        </p>
+                        <Linkify>
+                            <p style={{ whiteSpace: "pre-wrap" }}>
+                                {map.description}
+                            </p>
+                        </Linkify>
                         <p style={{ fontSize: "0.8em" }}>
                             Last updated {getTimeAgoString()}
                         </p>
                         <MapDownloadBtn id={map.id} authorID={map.authorID} />
-                        <br />
                         <MapVerifyButton id={map.id} isVerified={map.isVerified} />
-                        <br />
+                        <MapPrivateButton id={map.id} isPublic={map.isPublic} />
                         <MapDeleteBtn id={map.id} authorID={map.authorID} />
                     </Col>
                 </Row>
