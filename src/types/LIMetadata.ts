@@ -10,4 +10,6 @@ export default interface LIMetadata {
     isVerified: boolean;
     createdAt: number;
     storageURL: string;
+
+    removalReason?: string;
 }
