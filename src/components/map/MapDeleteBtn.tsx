@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, Modal } from "react-bootstrap";
+import { TrashFill } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
 import { deleteMap } from "../../hooks/useMaps";
 import useUser from "../../hooks/useUser";
@@ -34,10 +35,11 @@ export default function MapDeleteBtn(props: { id: string, authorID: string }) {
                 variant="danger"
                 onClick={() => setModalOpen(true)}
                 disabled={isDeleting}
-                style={{ marginBottom: 10 }}>
-                Delete Map
+                style={{ marginBottom: 10, marginRight: 10 }}>
+
+                <TrashFill size={20} />
+
             </Button>
-            <br />
 
             <Modal
                 show={isModalOpen}

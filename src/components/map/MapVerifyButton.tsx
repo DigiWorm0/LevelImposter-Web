@@ -1,6 +1,7 @@
 import { collection, doc, getDoc, setDoc } from "firebase/firestore";
 import React from "react";
 import { Button, Modal } from "react-bootstrap";
+import { Star, StarFill } from "react-bootstrap-icons";
 import { db } from "../../hooks/Firebase";
 import useUser from "../../hooks/useUser";
 
@@ -40,12 +41,15 @@ export default function MapVerifyButton(props: { id: string, isVerified: boolean
             <Button
                 variant="warning"
                 onClick={() => setModalOpen(true)}
-                style={{ marginBottom: 10 }}>
+                style={{ marginBottom: 10, marginRight: 10 }}>
 
-                {verifyText} Map
+                {props.isVerified ? (
+                    <Star size={18} />
+                ) : (
+                    <StarFill size={18} />
+                )}
 
             </Button>
-            <br />
 
             <Modal
                 show={isModalOpen}

@@ -98,9 +98,9 @@ export default function Map() {
                         <p style={{ fontSize: "0.8em" }}>
                             Last updated {getTimeAgoString()}
                         </p>
-                        <MapDownloadBtn id={map.id} authorID={map.authorID} />
                         <MapVerifyButton id={map.id} isVerified={map.isVerified} isPublic={map.isPublic} />
                         <MapPrivateButton id={map.id} isPublic={map.isPublic} />
+                        <MapDownloadBtn id={map.id} authorID={map.authorID} />
                         <MapDeleteBtn id={map.id} authorID={map.authorID} />
                     </Col>
                 </Row>

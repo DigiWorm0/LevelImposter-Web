@@ -1,4 +1,5 @@
 import { Col, Container, ListGroup, Row } from 'react-bootstrap';
+import { Clock, HeartFill, StarFill } from 'react-bootstrap-icons';
 import BetaHeader from '../components/home/BetaHeader';
 import MainHeader from '../components/MainHeader';
 import MapBanner from '../components/map/MapBanner';
@@ -17,7 +18,10 @@ export default function Maps() {
             <Container className="Maps" style={{ padding: 30 }}>
                 <Row>
                     <Col>
-                        <h3 style={{ textAlign: "center", marginTop: 5 }}>Featured Maps</h3>
+                        <h3 style={{ textAlign: "center", marginTop: 5 }}>
+                            <StarFill color='gold' size={26} style={{ marginRight: 8, marginBottom: 5 }} />
+                            Featured Maps
+                        </h3>
                         <ListGroup horizontal>
                             {featuredMaps.map((map, index) => (
                                 <>
@@ -33,7 +37,10 @@ export default function Maps() {
                 </Row>
                 <Row>
                     <Col sm={7}>
-                        <h3 style={{ textAlign: "center", marginTop: 15 }}>Most Liked</h3>
+                        <h3 style={{ textAlign: "center", marginTop: 15 }}>
+                            <HeartFill color='red' size={26} style={{ marginRight: 8, marginBottom: 5 }} />
+                            Most Liked
+                        </h3>
                         <ListGroup>
                             {topMaps.map((map) => (
                                 <MapBanner
@@ -44,7 +51,10 @@ export default function Maps() {
                         </ListGroup>
                     </Col>
                     <Col sm={5}>
-                        <h3 style={{ textAlign: "center", marginTop: 15 }}>Recent</h3>
+                        <h3 style={{ textAlign: "center", marginTop: 15 }}>
+                            <Clock color='#0d6efd' size={26} style={{ marginRight: 8, marginBottom: 5 }} />
+                            Recent
+                        </h3>
                         <ListGroup>
                             {recentMaps.map((map) => (
                                 <MapBanner
