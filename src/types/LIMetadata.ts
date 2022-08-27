@@ -9,6 +9,7 @@ export default interface LIMetadata {
     isPublic: boolean;
     isVerified: boolean;
     createdAt: number;
+    likeCount: number;
     storageURL: string;
 
     removalReason?: string;

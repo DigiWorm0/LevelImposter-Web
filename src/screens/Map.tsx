@@ -1,19 +1,23 @@
 import { Alert, Col, Container, Row, Spinner } from 'react-bootstrap';
+import Linkify from 'react-linkify';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import BetaHeader from '../components/home/BetaHeader';
 import MainHeader from '../components/MainHeader';
 import MapDeleteBtn from '../components/map/MapDeleteBtn';
 import MapDownloadBtn from '../components/map/MapDownloadBtn';
+import MapEmbed from '../components/map/MapEmbed';
+import MapLikeBtn from '../components/map/MapLikeBtn';
+import MapPrivateButton from '../components/map/MapPrivateButton';
 import MapTags from '../components/map/MapTags';
 import MapVerifyButton from '../components/map/MapVerifyButton';
 import { useMap } from '../hooks/useMaps';
-import Linkify from 'react-linkify';
-import MapPrivateButton from '../components/map/MapPrivateButton';
 
 export default function Map() {
     const { id } = useParams();
     const map = useMap(id);
     const navigate = useNavigate();
+
+    const likeCount = map?.likeCount ?? 0;
 
     if (map === null) {
         navigate('404');
@@ -70,17 +74,17 @@ export default function Map() {
                 )}
                 <Row>
                     <Col sm={6} style={{ padding: 10 }}>
-                        <iframe
-                            src={`https://editor.levelimposter.net/?id=${id}&embed`}
-                            style={{ width: '100%', aspectRatio: "1", borderRadius: 10 }}
-                            title={"Editor Embed"} />
+                        <MapEmbed id={map.id} />
                     </Col>
                     <Col sm={6} style={{ padding: 30 }}>
                         <MapTags
                             isPublic={map.isPublic}
                             isVerified={map.isVerified}
                         />
-                        <h1>{map.name}</h1>
+                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <h1>{map.name}</h1>
+                            <MapLikeBtn id={id} likeCount={likeCount} />
+                        </div>
                         <Link
                             to={`/User/${map.authorID}`}
                             style={{ textDecoration: "none" }}>
@@ -94,9 +98,9 @@ export default function Map() {
                         <p style={{ fontSize: "0.8em" }}>
                             Last updated {getTimeAgoString()}
                         </p>
-                        <MapDownloadBtn id={map.id} authorID={map.authorID} />
-                        <MapVerifyButton id={map.id} isVerified={map.isVerified} />
+                        <MapVerifyButton id={map.id} isVerified={map.isVerified} isPublic={map.isPublic} />
                         <MapPrivateButton id={map.id} isPublic={map.isPublic} />
+                        <MapDownloadBtn id={map.id} authorID={map.authorID} />
                         <MapDeleteBtn id={map.id} authorID={map.authorID} />
                     </Col>
                 </Row>

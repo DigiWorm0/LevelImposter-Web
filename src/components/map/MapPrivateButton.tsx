@@ -1,6 +1,7 @@
 import { collection, doc, getDoc, setDoc } from "firebase/firestore";
 import React from "react";
 import { Button, Form, Modal } from "react-bootstrap";
+import { EyeFill, EyeSlashFill } from "react-bootstrap-icons";
 import { db } from "../../hooks/Firebase";
 import useUser from "../../hooks/useUser";
 
@@ -42,12 +43,15 @@ export default function MapPrivateButton(props: { id: string, isPublic: boolean 
             <Button
                 variant="secondary"
                 onClick={() => setModalOpen(true)}
-                style={{ marginBottom: 10 }}>
+                style={{ marginBottom: 10, marginRight: 10 }}>
 
-                Make {privateText}
+                {props.isPublic ? (
+                    <EyeSlashFill size={20} />
+                ) : (
+                    <EyeFill size={20} />
+                )}
 
             </Button>
-            <br />
 
             <Modal
                 show={isModalOpen}
