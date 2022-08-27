@@ -4,14 +4,13 @@ import { useParams } from 'react-router-dom';
 import BetaHeader from '../components/home/BetaHeader';
 import MainHeader from '../components/MainHeader';
 import MapThumbnail from '../components/map/MapThumbnail';
-import useMaps from '../hooks/useMaps';
-import useUser, { _useUser } from '../hooks/useUser';
+import { useUserMaps } from '../hooks/useMaps';
+import { _useUser } from '../hooks/useUser';
 
 export default function User() {
     const { id } = useParams();
-    const userData = useUser();
-    const mapList = useMaps(id, userData?.isAdmin);
     const author = _useUser(id);
+    const authorMaps = useUserMaps(author?.uid);
 
     return (
         <>
@@ -44,15 +43,15 @@ export default function User() {
                         <Row>
                             <Col lg={{ offset: 3, span: 6 }} style={{ textAlign: "center" }}>
                                 <ListGroup>
-                                    {mapList.map((map) => (
+                                    {authorMaps.map((map) => (
                                         <MapThumbnail
                                             key={map.id}
                                             map={map}
                                         />
                                     ))}
-                                    {mapList.length === 0 && (
+                                    {authorMaps.length === 0 && (
                                         <p>
-                                            No maps by this user.
+                                            No maps by this author.
                                         </p>
                                     )}
                                 </ListGroup>

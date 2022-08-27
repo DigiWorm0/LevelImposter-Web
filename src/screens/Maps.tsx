@@ -1,16 +1,13 @@
-import React from 'react';
 import { Col, Container, ListGroup, Row } from 'react-bootstrap';
 import BetaHeader from '../components/home/BetaHeader';
 import MainHeader from '../components/MainHeader';
 import MapThumbnail from '../components/map/MapThumbnail';
-import useMaps from '../hooks/useMaps';
-import useUser from '../hooks/useUser';
+import { useRecentMaps, useTopMaps, useVerifiedMaps } from '../hooks/useMaps';
 
 export default function Maps() {
-    const userData = useUser();
-    const [page] = React.useState(0);
-    const mapList = useMaps(undefined, userData?.isAdmin, false, page);
-    const verifiedMaps = useMaps(undefined, false, true, page);
+    const recentMaps = useRecentMaps();
+    const topMaps = useTopMaps();
+    const featuredMaps = useVerifiedMaps();
 
     return (
         <>
@@ -18,10 +15,19 @@ export default function Maps() {
             <BetaHeader />
             <Container className="Maps" style={{ padding: 30 }}>
                 <Row>
-                    <Col sm={6}>
+                    <Col sm={7}>
                         <h3 style={{ textAlign: "center", marginTop: 5 }}>Featured Maps</h3>
                         <ListGroup>
-                            {verifiedMaps.map((map) => (
+                            {featuredMaps.map((map) => (
+                                <MapThumbnail
+                                    key={map.id}
+                                    map={map}
+                                />
+                            ))}
+                        </ListGroup>
+                        <h3 style={{ textAlign: "center", marginTop: 5 }}>Most Liked</h3>
+                        <ListGroup>
+                            {topMaps.map((map) => (
                                 <MapThumbnail
                                     key={map.id}
                                     map={map}
@@ -29,10 +35,10 @@ export default function Maps() {
                             ))}
                         </ListGroup>
                     </Col>
-                    <Col sm={6}>
-                        <h3 style={{ textAlign: "center", marginTop: 5 }}>Most Liked</h3>
+                    <Col sm={5}>
+                        <h3 style={{ textAlign: "center", marginTop: 5 }}>Recent</h3>
                         <ListGroup>
-                            {mapList.map((map) => (
+                            {recentMaps.map((map) => (
                                 <MapThumbnail
                                     key={map.id}
                                     map={map}

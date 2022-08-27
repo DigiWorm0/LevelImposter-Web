@@ -9,8 +9,8 @@ import BetaHeader from '../components/home/BetaHeader';
 import MainHeader from '../components/MainHeader';
 import MapThumbnail from '../components/map/MapThumbnail';
 import { auth } from '../hooks/Firebase';
-import useMaps from '../hooks/useMaps';
 import useUser from '../hooks/useUser';
+import { useUserMaps } from '../hooks/useMaps';
 
 export default function Profile() {
     const [user] = useAuthState(auth);
@@ -18,7 +18,7 @@ export default function Profile() {
     const [isEditing, setIsEditing] = React.useState(false);
     const [error, setError] = React.useState<string | undefined>(undefined);
     const [displayName, setDisplayName] = React.useState('');
-    const mapList = useMaps(user?.uid, true);
+    const userMaps = useUserMaps(user?.uid);
 
     React.useEffect(() => {
         setDisplayName(user?.displayName || '');
@@ -149,7 +149,7 @@ export default function Profile() {
                         <h3>Your Maps:</h3>
 
                         <ListGroup>
-                            {mapList.map((map) => (
+                            {userMaps.map((map) => (
                                 <MapThumbnail
                                     key={map.id}
                                     map={map}
@@ -157,7 +157,7 @@ export default function Profile() {
                             ))}
                         </ListGroup>
 
-                        {mapList.length === 0 && (
+                        {userMaps.length === 0 && (
                             <p>You haven't uploaded a map yet! You can make and upload maps using our <a href="https://editor.levelimposter.net/">editor</a>.</p>
                         )}
                     </Col>

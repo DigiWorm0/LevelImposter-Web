@@ -1,15 +1,15 @@
 import { Alert, Col, Container, Row, Spinner } from 'react-bootstrap';
+import Linkify from 'react-linkify';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import BetaHeader from '../components/home/BetaHeader';
 import MainHeader from '../components/MainHeader';
 import MapDeleteBtn from '../components/map/MapDeleteBtn';
 import MapDownloadBtn from '../components/map/MapDownloadBtn';
+import MapLikeBtn from '../components/map/MapLikeBtn';
+import MapPrivateButton from '../components/map/MapPrivateButton';
 import MapTags from '../components/map/MapTags';
 import MapVerifyButton from '../components/map/MapVerifyButton';
 import { useMap } from '../hooks/useMaps';
-import Linkify from 'react-linkify';
-import MapPrivateButton from '../components/map/MapPrivateButton';
-import MapLikeBtn from '../components/map/MapLikeBtn';
 
 export default function Map() {
     const { id } = useParams();
@@ -101,7 +101,7 @@ export default function Map() {
                             Last updated {getTimeAgoString()}
                         </p>
                         <MapDownloadBtn id={map.id} authorID={map.authorID} />
-                        <MapVerifyButton id={map.id} isVerified={map.isVerified} />
+                        <MapVerifyButton id={map.id} isVerified={map.isVerified} isPublic={map.isPublic} />
                         <MapPrivateButton id={map.id} isPublic={map.isPublic} />
                         <MapDeleteBtn id={map.id} authorID={map.authorID} />
                     </Col>

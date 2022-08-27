@@ -4,7 +4,7 @@ import { Button, Modal } from "react-bootstrap";
 import { db } from "../../hooks/Firebase";
 import useUser from "../../hooks/useUser";
 
-export default function MapVerifyButton(props: { id: string, isVerified: boolean }) {
+export default function MapVerifyButton(props: { id: string, isVerified: boolean, isPublic: boolean }) {
     const [isModalOpen, setModalOpen] = React.useState(false);
     const userData = useUser();
 
@@ -32,7 +32,7 @@ export default function MapVerifyButton(props: { id: string, isVerified: boolean
     }
     const verifyText = props.isVerified ? "Unfeature" : "Feature";
 
-    if (!userData?.isAdmin)
+    if (!userData?.isAdmin || !props.isPublic)
         return null;
 
     return (

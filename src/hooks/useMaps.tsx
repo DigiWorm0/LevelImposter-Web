@@ -1,4 +1,4 @@
-import { collection, deleteDoc, doc, getDoc, getDocs, limit, orderBy, query, setDoc, where } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDoc, getDocs, limit, orderBy, query, QueryConstraint, setDoc, where } from "firebase/firestore";
 import { deleteObject, ref } from "firebase/storage";
 import React from "react";
 import LIMetadata from "../types/LIMetadata";
@@ -7,32 +7,91 @@ import useUser from "./useUser";
 
 const MAX_PER_PAGE = 100;
 
-export default function useMaps(userID?: string, includePrivate?: boolean, verifiedOnly?: boolean, page = 0) {
+export function useUserMaps(userID?: string) {
+    const [mapList, setMapList] = React.useState<LIMetadata[]>([]);
+    const user = useUser();
+
+    React.useEffect(() => {
+        const mapQueries = [];
+        if (!user?.isAdmin)
+            mapQueries.push(where("isPublic", "==", true));
+        mapQueries.push(
+            where("authorID", "==", userID),
+            orderBy("createdAt", "desc"),
+            limit(MAX_PER_PAGE),
+        );
+        _getMaps(mapQueries).then(maps => {
+            setMapList(maps);
+        });
+    }, [userID, user]);
+
+    return mapList;
+}
+
+export function useVerifiedMaps() {
     const [mapList, setMapList] = React.useState<LIMetadata[]>([]);
 
     React.useEffect(() => {
-        const storeRef = collection(db, "maps");
+        const mapQueries = [
+            where("isPublic", "==", true),
+            where("isVerified", "==", true),
+            orderBy("createdAt", "desc"),
+            limit(MAX_PER_PAGE),
+        ];
+        _getMaps(mapQueries).then(maps => {
+            setMapList(maps);
+        });
+    }, []);
+
+    return mapList;
+}
+
+export function useRecentMaps() {
+    const [mapList, setMapList] = React.useState<LIMetadata[]>([]);
+    const user = useUser();
+
+    React.useEffect(() => {
         const mapQueries = [];
-        if (userID)
-            mapQueries.push(where("authorID", "==", userID));
-        if (!includePrivate)
+        if (!user?.isAdmin)
             mapQueries.push(where("isPublic", "==", true));
-        if (verifiedOnly)
-            mapQueries.push(where("isVerified", "==", true));
-        else
-            mapQueries.push(orderBy("likeCount", "desc"));
         mapQueries.push(
             orderBy("createdAt", "desc"),
             limit(MAX_PER_PAGE),
         );
-        const mapsQuery = query(storeRef, ...mapQueries);
-
-        getDocs(mapsQuery).then(docs => {
-            setMapList(docs.docs.map(doc => doc.data() as LIMetadata));
+        _getMaps(mapQueries).then(maps => {
+            setMapList(maps);
         });
-    }, [userID, includePrivate, verifiedOnly, page]);
+    }, [user]);
 
     return mapList;
+}
+
+export function useTopMaps() {
+    const [mapList, setMapList] = React.useState<LIMetadata[]>([]);
+    const user = useUser();
+
+    React.useEffect(() => {
+        const mapQueries = [];
+        if (!user?.isAdmin)
+            mapQueries.push(where("isPublic", "==", true));
+        mapQueries.push(
+            orderBy("likeCount", "desc"),
+            orderBy("createdAt", "desc"),
+            limit(MAX_PER_PAGE),
+        );
+        _getMaps(mapQueries).then(maps => {
+            setMapList(maps);
+        });
+    }, [user]);
+
+    return mapList;
+}
+
+async function _getMaps(contraints: QueryConstraint[]) {
+    const storeRef = collection(db, "maps");
+    const mapsQuery = query(storeRef, ...contraints);
+    const docs = await getDocs(mapsQuery);
+    return docs.docs.map(doc => doc.data() as LIMetadata);
 }
 
 export function useMap(mapID?: string) {
