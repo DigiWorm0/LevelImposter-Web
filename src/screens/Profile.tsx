@@ -7,7 +7,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { Navigate } from 'react-router-dom';
 import BetaHeader from '../components/home/BetaHeader';
 import MainHeader from '../components/MainHeader';
-import MapThumbnail from '../components/map/MapThumbnail';
+import MapBanner from '../components/map/MapBanner';
 import { auth } from '../hooks/Firebase';
 import useUser from '../hooks/useUser';
 import { useUserMaps } from '../hooks/useMaps';
@@ -150,7 +150,7 @@ export default function Profile() {
 
                         <ListGroup>
                             {userMaps.map((map) => (
-                                <MapThumbnail
+                                <MapBanner
                                     key={map.id}
                                     map={map}
                                 />

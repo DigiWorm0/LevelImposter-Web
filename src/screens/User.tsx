@@ -3,7 +3,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import { useParams } from 'react-router-dom';
 import BetaHeader from '../components/home/BetaHeader';
 import MainHeader from '../components/MainHeader';
-import MapThumbnail from '../components/map/MapThumbnail';
+import MapBanner from '../components/map/MapBanner';
 import { useUserMaps } from '../hooks/useMaps';
 import { _useUser } from '../hooks/useUser';
 
@@ -44,7 +44,7 @@ export default function User() {
                             <Col lg={{ offset: 3, span: 6 }} style={{ textAlign: "center" }}>
                                 <ListGroup>
                                     {authorMaps.map((map) => (
-                                        <MapThumbnail
+                                        <MapBanner
                                             key={map.id}
                                             map={map}
                                         />

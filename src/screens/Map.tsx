@@ -5,6 +5,7 @@ import BetaHeader from '../components/home/BetaHeader';
 import MainHeader from '../components/MainHeader';
 import MapDeleteBtn from '../components/map/MapDeleteBtn';
 import MapDownloadBtn from '../components/map/MapDownloadBtn';
+import MapEmbed from '../components/map/MapEmbed';
 import MapLikeBtn from '../components/map/MapLikeBtn';
 import MapPrivateButton from '../components/map/MapPrivateButton';
 import MapTags from '../components/map/MapTags';
@@ -73,10 +74,7 @@ export default function Map() {
                 )}
                 <Row>
                     <Col sm={6} style={{ padding: 10 }}>
-                        <iframe
-                            src={`https://editor.levelimposter.net/?id=${id}&embed`}
-                            style={{ width: '100%', aspectRatio: "1", borderRadius: 10 }}
-                            title={"Editor Embed"} />
+                        <MapEmbed id={map.id} />
                     </Col>
                     <Col sm={6} style={{ padding: 30 }}>
                         <MapTags
