@@ -1,5 +1,5 @@
 import { collection, deleteDoc, doc, getDoc, getDocs, limit, orderBy, query, QueryConstraint, setDoc, where } from "firebase/firestore";
-import { deleteObject, ref } from "firebase/storage";
+import { deleteObject, getDownloadURL, ref } from "firebase/storage";
 import React from "react";
 import LIMetadata from "../types/LIMetadata";
 import { db, storage } from "./Firebase";
@@ -168,4 +168,18 @@ export function useLiked(mapID?: string) {
 
 
     return [isLiked, toggleLike, canLike] as const;
+}
+
+export function useThumbnail(authorID?: string, mapID?: string) {
+    const [thumbnail, setThumbnail] = React.useState<string | undefined>(undefined);
+
+    React.useEffect(() => {
+        const storageURL = `maps/${authorID}/${mapID}.png`;
+        const storageRef = ref(storage, storageURL);
+        getDownloadURL(storageRef).then(url => {
+            setThumbnail(url);
+        });
+    }, [authorID, mapID]);
+
+    return thumbnail;
 }
