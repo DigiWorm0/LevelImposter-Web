@@ -1,10 +1,11 @@
-import { collection, deleteDoc, doc, getDoc, getDocs, limit, orderBy, query, where } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDoc, getDocs, limit, orderBy, query, setDoc, where } from "firebase/firestore";
 import { deleteObject, ref } from "firebase/storage";
 import React from "react";
 import LIMetadata from "../types/LIMetadata";
 import { db, storage } from "./Firebase";
+import useUser from "./useUser";
 
-const MAX_PER_PAGE = 50;
+const MAX_PER_PAGE = 100;
 
 export default function useMaps(userID?: string, includePrivate?: boolean, verifiedOnly?: boolean, page = 0) {
     const [mapList, setMapList] = React.useState<LIMetadata[]>([]);
@@ -18,6 +19,8 @@ export default function useMaps(userID?: string, includePrivate?: boolean, verif
             mapQueries.push(where("isPublic", "==", true));
         if (verifiedOnly)
             mapQueries.push(where("isVerified", "==", true));
+        else
+            mapQueries.push(orderBy("likeCount", "desc"));
         mapQueries.push(
             orderBy("createdAt", "desc"),
             limit(MAX_PER_PAGE),
@@ -64,4 +67,46 @@ export async function deleteMap(mapID: string, authorID: string, userID: string)
     await Promise.all(promises).catch((e) => {
         console.error(e);
     });
+}
+
+export function useLiked(mapID?: string) {
+    const [isLiked, setLiked] = React.useState(false);
+    const user = useUser();
+
+    const canLike = !!mapID && !!user;
+
+    const getLikeRef = React.useCallback(() => {
+        if (!canLike)
+            return null;
+
+        const storeRef = collection(db, "maps");
+        const docRef = doc(storeRef, mapID);
+        const likesRef = collection(docRef, "likes");
+        const likeRef = doc(likesRef, user?.uid);
+        return likeRef;
+    }, [canLike, mapID, user]);
+
+    React.useEffect(() => {
+        const likeRef = getLikeRef();
+        if (likeRef) {
+            getDoc(likeRef).then(doc => {
+                setLiked(doc.exists());
+            });
+        }
+    }, [getLikeRef]);
+
+    const toggleLike = async () => {
+        setLiked(liked => !liked);
+        const likeRef = getLikeRef();
+        if (likeRef) {
+            if (isLiked) {
+                await deleteDoc(likeRef);
+            } else {
+                await setDoc(likeRef, {});
+            }
+        }
+    }
+
+
+    return [isLiked, toggleLike, canLike] as const;
 }

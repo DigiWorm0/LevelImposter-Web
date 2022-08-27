@@ -18,7 +18,7 @@ export default function Maps() {
             <BetaHeader />
             <Container className="Maps" style={{ padding: 30 }}>
                 <Row>
-                    <Col sm={7}>
+                    <Col sm={6}>
                         <h3 style={{ textAlign: "center", marginTop: 5 }}>Featured Maps</h3>
                         <ListGroup>
                             {verifiedMaps.map((map) => (
@@ -29,8 +29,8 @@ export default function Maps() {
                             ))}
                         </ListGroup>
                     </Col>
-                    <Col sm={5}>
-                        <h3 style={{ textAlign: "center", marginTop: 5 }}>Recent Uploads</h3>
+                    <Col sm={6}>
+                        <h3 style={{ textAlign: "center", marginTop: 5 }}>Most Liked</h3>
                         <ListGroup>
                             {mapList.map((map) => (
                                 <MapThumbnail

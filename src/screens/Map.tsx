@@ -9,11 +9,14 @@ import MapVerifyButton from '../components/map/MapVerifyButton';
 import { useMap } from '../hooks/useMaps';
 import Linkify from 'react-linkify';
 import MapPrivateButton from '../components/map/MapPrivateButton';
+import MapLikeBtn from '../components/map/MapLikeBtn';
 
 export default function Map() {
     const { id } = useParams();
     const map = useMap(id);
     const navigate = useNavigate();
+
+    const likeCount = map?.likeCount ?? 0;
 
     if (map === null) {
         navigate('404');
@@ -80,7 +83,10 @@ export default function Map() {
                             isPublic={map.isPublic}
                             isVerified={map.isVerified}
                         />
-                        <h1>{map.name}</h1>
+                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <h1>{map.name}</h1>
+                            <MapLikeBtn id={id} likeCount={likeCount} />
+                        </div>
                         <Link
                             to={`/User/${map.authorID}`}
                             style={{ textDecoration: "none" }}>

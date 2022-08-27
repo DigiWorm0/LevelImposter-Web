@@ -12,4 +12,5 @@ export default interface LIMetadata {
     storageURL: string;
 
     removalReason?: string;
+    likeCount?: number;
 }
