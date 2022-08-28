@@ -1,29 +1,46 @@
+import { Button, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import getTimeAgoString from "../../hooks/getTimeAgoString";
 import { useThumbnail } from "../../hooks/useMaps";
 import LIMetadata from "../../types/LIMetadata";
+import MapDownloadBtn from "./MapDownloadBtn";
 
 export default function MapThumbnail(props: { map: LIMetadata }) {
     const thumbnail = useThumbnail(props.map.authorID, props.map.id);
-    const map = props.map;
 
+    const map = props.map;
     const thumbnailURL = thumbnail ? thumbnail : "/DefaultThumbnail.png";
+    const ellipseStyle: React.CSSProperties = {
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+        whiteSpace: "nowrap"
+    };
 
     return (
-        <Link
-            to={`/map/${map.id}`}
-            className={"list-group-item list-group-item-action" + (map.isPublic ? "" : " list-group-item-danger")}>
+        <Card
+            style={{ width: 350 }}
+            className={map.isPublic ? "" : " bg-dark text-light"}>
 
-            <img
-                src={thumbnailURL}
-                alt={"Thumbnail for " + map.name}
-                style={{ width: 412, height: 144, objectFit: "cover", margin: 10, borderRadius: 5, marginBottom: 20 }}
-            />
-
-            <h4>{map.name}</h4>
-            <h5>by {map.authorName}</h5>
-            <p>
-                {map.description === "" ? <i>No Description</i> : map.description}
-            </p>
-        </Link>
+            <Card.Img variant="top" src={thumbnailURL} />
+            <Card.Body>
+                <Card.Title style={ellipseStyle}>{map.name}</Card.Title>
+                <Card.Subtitle style={ellipseStyle}>
+                    by <Link to={`/user/${map.authorID}`}>{map.authorName}</Link>
+                </Card.Subtitle>
+                <Card.Text style={ellipseStyle}>
+                    {map.description || (<i>No Description</i>)}
+                </Card.Text>
+                <MapDownloadBtn id={map.id} authorID={map.authorID} />
+                <Link to={`/map/${map.id}`}>
+                    <Button variant="danger" style={{ float: "right" }}>
+                        More Details
+                    </Button>
+                </Link>
+                <br />
+                <small className="text-muted mt-3">
+                    Last updated {getTimeAgoString(map.createdAt)}
+                </small>
+            </Card.Body>
+        </Card>
     );
 }
