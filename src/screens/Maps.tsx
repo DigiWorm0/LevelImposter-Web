@@ -1,6 +1,6 @@
 import React from "react";
 import { Col, Container, Nav, Row } from 'react-bootstrap';
-import { Clock, HeartFill, StarFill } from 'react-bootstrap-icons';
+import { StarFill } from 'react-bootstrap-icons';
 import BetaHeader from '../components/home/BetaHeader';
 import MainHeader from '../components/MainHeader';
 import MapBanners from '../components/map/MapBanners';
