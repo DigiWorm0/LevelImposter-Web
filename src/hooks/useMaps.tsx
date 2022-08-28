@@ -48,37 +48,51 @@ export function useVerifiedMaps() {
 
 export function useRecentMaps() {
     const [mapList, setMapList] = React.useState<LIMetadata[]>([]);
-    const user = useUser();
 
     React.useEffect(() => {
-        const mapQueries = [];
-        if (!user?.isAdmin)
-            mapQueries.push(where("isPublic", "==", true));
-        mapQueries.push(
+        const mapQueries = [
+            where("isPublic", "==", true),
             orderBy("createdAt", "desc"),
             limit(MAX_PER_PAGE),
-        );
+        ];
         _getMaps(mapQueries).then(maps => {
             setMapList(maps);
         });
-    }, [user]);
+    }, []);
 
     return mapList;
 }
 
 export function useTopMaps() {
     const [mapList, setMapList] = React.useState<LIMetadata[]>([]);
-    const user = useUser();
 
     React.useEffect(() => {
-        const mapQueries = [];
-        if (!user?.isAdmin)
-            mapQueries.push(where("isPublic", "==", true));
-        mapQueries.push(
+        const mapQueries = [
+            where("isPublic", "==", true),
             orderBy("likeCount", "desc"),
             orderBy("createdAt", "desc"),
             limit(MAX_PER_PAGE),
-        );
+        ];
+        _getMaps(mapQueries).then(maps => {
+            setMapList(maps);
+        });
+    }, []);
+
+    return mapList;
+}
+
+export function usePrivateMaps() {
+    const [mapList, setMapList] = React.useState<LIMetadata[]>([]);
+    const user = useUser();
+
+    React.useEffect(() => {
+        if (!user?.isAdmin) return setMapList([]);
+
+        const mapQueries = [
+            where("isPublic", "==", false),
+            orderBy("createdAt", "desc"),
+            limit(MAX_PER_PAGE),
+        ];
         _getMaps(mapQueries).then(maps => {
             setMapList(maps);
         });

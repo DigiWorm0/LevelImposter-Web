@@ -10,6 +10,7 @@ import MapLikeBtn from '../components/map/MapLikeBtn';
 import MapPrivateButton from '../components/map/MapPrivateButton';
 import MapTags from '../components/map/MapTags';
 import MapVerifyButton from '../components/map/MapVerifyButton';
+import getTimeAgoString from '../hooks/getTimeAgoString';
 import { useMap } from '../hooks/useMaps';
 
 export default function Map() {
@@ -31,25 +32,6 @@ export default function Map() {
                 <Spinner animation="border" />
             </>
         );
-    }
-
-    const getTimeAgoString = () => {
-        const diff = new Date().getTime() - map.createdAt;
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const hours = Math.floor(diff / (1000 * 60 * 60));
-        const minutes = Math.floor(diff / (1000 * 60));
-        const seconds = Math.floor(diff / 1000);
-
-        if (days > 0)
-            return `${days} day${days > 1 ? 's' : ''} ago`;
-        else if (hours > 0)
-            return `${hours} hour${hours > 1 ? 's' : ''} ago`;
-        else if (minutes > 0)
-            return `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
-        else if (seconds > 0)
-            return `${seconds} second${seconds > 1 ? 's' : ''} ago`;
-        else
-            return 'just now';
     }
 
     return (
@@ -96,7 +78,7 @@ export default function Map() {
                             </p>
                         </Linkify>
                         <p style={{ fontSize: "0.8em" }}>
-                            Last updated {getTimeAgoString()}
+                            Last updated {getTimeAgoString(map.createdAt)}
                         </p>
                         <MapVerifyButton id={map.id} isVerified={map.isVerified} isPublic={map.isPublic} />
                         <MapPrivateButton id={map.id} isPublic={map.isPublic} />

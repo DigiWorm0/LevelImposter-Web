@@ -9,6 +9,7 @@ export default function MapBanner(props: { map: LIMetadata }) {
         <Link
             to={`/map/${map.id}`}
             className={"list-group-item list-group-item-action" + (map.isPublic ? "" : " list-group-item-dark")}>
+
             <MapTags
                 isPublic={map.isPublic}
                 isVerified={map.isVerified}
