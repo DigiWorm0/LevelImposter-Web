@@ -1,14 +1,17 @@
-import { Col, Container, Row } from 'react-bootstrap';
+import React from "react";
+import { Col, Container, Nav, Row } from 'react-bootstrap';
 import { Clock, HeartFill, StarFill } from 'react-bootstrap-icons';
 import BetaHeader from '../components/home/BetaHeader';
 import MainHeader from '../components/MainHeader';
 import MapBanners from '../components/map/MapBanners';
-import { useRecentMaps, useTopMaps, useVerifiedMaps } from '../hooks/useMaps';
+import { usePrivateMaps, useRecentMaps, useTopMaps, useVerifiedMaps } from '../hooks/useMaps';
 
 export default function Maps() {
-    const recentMaps = useRecentMaps();
+    const [tab, setTab] = React.useState<string | null>('top');
     const topMaps = useTopMaps();
     const featuredMaps = useVerifiedMaps();
+    const recentMaps = useRecentMaps();
+    const privateMaps = usePrivateMaps();
 
     return (
         <>
@@ -24,25 +27,35 @@ export default function Maps() {
                         <MapBanners maps={featuredMaps} />
                     </Col>
                 </Row>
-
                 <Row>
                     <Col>
-                        <h3 style={{ textAlign: "center", marginTop: 20 }}>
-                            <HeartFill color='red' size={26} style={{ marginRight: 8, marginBottom: 5 }} />
-                            Most Liked
-                        </h3>
-                        <MapBanners maps={topMaps} />
+                        <Nav
+                            variant="tabs"
+                            defaultActiveKey="top"
+                            onSelect={setTab}>
+
+                            <Nav.Item>
+                                <Nav.Link eventKey="top">Most Liked</Nav.Link>
+                            </Nav.Item>
+                            <Nav.Item>
+                                <Nav.Link eventKey="new">Most Recent</Nav.Link>
+                            </Nav.Item>
+                            {privateMaps.length > 0 && (
+                                <Nav.Item>
+                                    <Nav.Link eventKey="private" className={"text-secondary"}>Private Maps</Nav.Link>
+                                </Nav.Item>
+                            )}
+                        </Nav>
                     </Col>
                 </Row>
-
-
                 <Row>
                     <Col>
-                        <h3 style={{ textAlign: "center", marginTop: 20 }}>
-                            <Clock color='#0d6efd' size={26} style={{ marginRight: 8, marginBottom: 5 }} />
-                            Recent
-                        </h3>
-                        <MapBanners maps={recentMaps} />
+                        <MapBanners maps={
+                            tab === 'top' ? topMaps :
+                                tab === 'new' ? recentMaps :
+                                    tab === 'private' ? privateMaps :
+                                        []
+                        } />
                     </Col>
                 </Row>
                 <Row>

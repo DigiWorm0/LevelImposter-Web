@@ -17,30 +17,33 @@ export default function MapThumbnail(props: { map: LIMetadata }) {
     };
 
     return (
-        <Card
-            style={{ width: 350 }}
-            className={map.isPublic ? "" : " bg-dark text-light"}>
+        <Link
+            to={`/map/${map.id}`}
+            style={{
+                textDecoration: "none",
+                color: "inherit"
+            }}
+        >
+            <Card
+                style={{ width: 350 }}
+                className={map.isPublic ? "" : " bg-dark text-light"}>
 
-            <Card.Img variant="top" src={thumbnailURL} />
-            <Card.Body>
-                <Card.Title style={ellipseStyle}>{map.name}</Card.Title>
-                <Card.Subtitle style={ellipseStyle}>
-                    by <Link to={`/user/${map.authorID}`}>{map.authorName}</Link>
-                </Card.Subtitle>
-                <Card.Text style={ellipseStyle}>
-                    {map.description || (<i>No Description</i>)}
-                </Card.Text>
-                <MapDownloadBtn id={map.id} authorID={map.authorID} />
-                <Link to={`/map/${map.id}`}>
-                    <Button variant="danger" style={{ float: "right" }}>
-                        More Details
-                    </Button>
-                </Link>
-                <br />
-                <small className="text-muted mt-3">
-                    Last updated {getTimeAgoString(map.createdAt)}
-                </small>
-            </Card.Body>
-        </Card>
+                <Card.Img variant="top" src={thumbnailURL} />
+                <Card.Body>
+                    <Card.Title style={ellipseStyle}>{map.name}</Card.Title>
+                    <Card.Subtitle style={ellipseStyle}>
+                        by <Link to={`/user/${map.authorID}`}>{map.authorName}</Link>
+                    </Card.Subtitle>
+                    <Card.Text style={ellipseStyle}>
+                        {map.description || (<i>No Description</i>)}
+                    </Card.Text>
+                    <MapDownloadBtn id={map.id} authorID={map.authorID} />
+                    <br />
+                    <small className="text-muted mt-3">
+                        Last updated {getTimeAgoString(map.createdAt)}
+                    </small>
+                </Card.Body>
+            </Card>
+        </Link>
     );
 }
