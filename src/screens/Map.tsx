@@ -1,4 +1,4 @@
-import { Alert, Col, Container, Row, Spinner } from 'react-bootstrap';
+import { Alert, Card, Col, Container, Row, Spinner } from 'react-bootstrap';
 import Linkify from 'react-linkify';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import BetaHeader from '../components/home/BetaHeader';
@@ -84,6 +84,69 @@ export default function Map() {
                         <MapPrivateButton id={map.id} isPublic={map.isPublic} />
                         <MapDownloadBtn id={map.id} authorID={map.authorID} />
                         <MapDeleteBtn id={map.id} authorID={map.authorID} />
+
+                        <Card>
+                            <Card.Header>
+                                How to Install
+                            </Card.Header>
+                            <Card.Body>
+                                <ol>
+                                    <li>
+                                        Download and install the <a href="https://github.com/DigiWorm0/LevelImposter/releases">LevelImposter Mod</a> <i>(If you haven't already)</i>
+                                    </li>
+                                    <li>
+                                        Download the map LIM file above
+                                    </li>
+                                    <li>
+                                        Open Among Us
+                                    </li>
+                                    <li>
+                                        Go to Maps {'>>>'} Open Folder
+                                    </li>
+                                    <li>
+                                        Save the map LIM file in the folder
+                                    </li>
+                                    <li>
+                                        Go back to Among Us and re-open the Maps menu
+                                    </li>
+                                </ol>
+                            </Card.Body>
+                        </Card>
+                        <Card style={{ marginTop: 10 }}>
+                            <Card.Header>
+                                How to Play
+                            </Card.Header>
+                            <Card.Body>
+                                <p>Freeplay</p>
+                                <ol>
+                                    <li>
+                                        Open Among Us
+                                    </li>
+                                    <li>
+                                        Go to Maps {'>>>'} <code>{map.name}</code>
+                                    </li>
+                                    <li>
+                                        Click on the play button
+                                    </li>
+                                </ol>
+                                <p>Multiplayer</p>
+                                <ol>
+                                    <li>
+                                        Start an Among Us lobby
+                                    </li>
+                                    <li>
+                                        Open the game settings
+                                    </li>
+                                    <li>
+                                        Scroll the map list at the top until you find <code>{map.name}</code>
+                                    </li>
+                                </ol>
+                                <p>
+                                    All players must have the LevelImposter mod installed to play the map.
+                                    The map will automatically sync to all lobby members.
+                                </p>
+                            </Card.Body>
+                        </Card>
                     </Col>
                 </Row>
             </Container>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from "react-bootstrap";
+import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { Heart, HeartFill } from "react-bootstrap-icons";
 import { useLiked } from "../../hooks/useMaps";
 
@@ -18,23 +18,33 @@ export default function MapLikeBtn(props: { id: string | undefined, likeCount: n
 
     return (
         <>
-            <Button
-                variant={isLiked ? "danger" : "outline-danger"}
-                onClick={onClick}
-                disabled={!canLike}
-                style={{ marginLeft: 10, marginTop: 5, height: 40 }}>
+            <OverlayTrigger
+                placement="top"
+                overlay={
+                    <Tooltip>
+                        {!canLike ? "Must be logged in to like a map" : isLiked ? "Unlike" : "Like"}
+                    </Tooltip>
+                }>
+                <span className='d-inline-block'>
+                    <Button
+                        variant={isLiked ? "danger" : "outline-danger"}
+                        onClick={onClick}
+                        disabled={!canLike}
+                        style={{ marginLeft: 10, marginTop: 5, height: 40 }}>
 
-                <div style={{ display: "flex", alignItems: "center" }}>
-                    <h5 style={{ margin: 0, marginRight: 6 }}>{likeCount}</h5>
-                    {isLiked ?
-                        <HeartFill size={16} />
-                        :
-                        <Heart size={16} />
-                    }
-                </div>
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                            <h5 style={{ margin: 0, marginRight: 6 }}>{likeCount}</h5>
+                            {isLiked ?
+                                <HeartFill size={16} />
+                                :
+                                <Heart size={16} />
+                            }
+                        </div>
 
-            </Button>
-            <br />
+                    </Button>
+                    <br />
+                </span>
+            </OverlayTrigger>
         </>
     );
 }
