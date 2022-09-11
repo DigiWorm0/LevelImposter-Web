@@ -101,7 +101,7 @@ export default function Map() {
                                         Open Among Us
                                     </li>
                                     <li>
-                                        Go to Maps {'>>>'} Open Folder
+                                        Go to <code>Maps {'>>>'} Open Folder</code>
                                     </li>
                                     <li>
                                         Save the map LIM file in the folder
@@ -123,22 +123,22 @@ export default function Map() {
                                         Open Among Us
                                     </li>
                                     <li>
-                                        Go to Maps {'>>>'} <code>{map.name}</code>
+                                        Go to <code>Maps {'>>>'} {map.name}</code>
                                     </li>
                                     <li>
-                                        Click on the play button
+                                        Select the map's play button
                                     </li>
                                 </ol>
                                 <p>Multiplayer</p>
                                 <ol>
                                     <li>
-                                        Start an Among Us lobby
+                                        Start an Among Us lobby under any map
                                     </li>
                                     <li>
-                                        Open the game settings
+                                        Open lobby settings
                                     </li>
                                     <li>
-                                        Scroll the map list at the top until you find <code>{map.name}</code>
+                                        Select the map from the selector
                                     </li>
                                 </ol>
                                 <p>
