@@ -2,6 +2,7 @@ import { Alert, Card, Col, Container, Row, Spinner } from 'react-bootstrap';
 import Linkify from 'react-linkify';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import BetaHeader from '../components/home/BetaHeader';
+import LIHelment from '../components/LIHelmet';
 import MainHeader from '../components/MainHeader';
 import MapDeleteBtn from '../components/map/MapDeleteBtn';
 import MapDownloadBtn from '../components/map/MapDownloadBtn';
@@ -36,6 +37,12 @@ export default function Map() {
 
     return (
         <>
+            <LIHelment
+                title={map.name}
+                description={map.description}
+                URL={`https://LevelImposter.net/#/Map/${map.id}`}
+                imageURL={map.thumbnailURL}
+            />
             <MainHeader />
             <BetaHeader />
             <Container className="Maps">

@@ -2,6 +2,7 @@ import React from "react";
 import { Col, Container, Nav, Row } from 'react-bootstrap';
 import { StarFill } from 'react-bootstrap-icons';
 import BetaHeader from '../components/home/BetaHeader';
+import LIHelment from "../components/LIHelmet";
 import MainHeader from '../components/MainHeader';
 import MapBanners from '../components/map/MapBanners';
 import { usePrivateMaps, useRecentMaps, useTopMaps, useVerifiedMaps } from '../hooks/useMaps';
@@ -15,6 +16,10 @@ export default function Maps() {
 
     return (
         <>
+            <LIHelment
+                title="LevelImposter - Maps"
+                URL="https://LevelImposter.net/#/Maps"
+            />
             <MainHeader />
             <BetaHeader />
             <Container className="Maps" style={{ padding: 30 }}>

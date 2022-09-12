@@ -11,6 +11,7 @@ import MapBanner from '../components/map/MapBanner';
 import { auth } from '../hooks/Firebase';
 import useUser from '../hooks/useUser';
 import { useUserMaps } from '../hooks/useMaps';
+import LIHelment from '../components/LIHelmet';
 
 export default function Profile() {
     const [user] = useAuthState(auth);
@@ -41,6 +42,11 @@ export default function Profile() {
 
     return (
         <>
+            <LIHelment
+                title={`${user ? user.displayName : "LevelImposter"} - Profile`}
+                description="View your profile and maps."
+                URL={`https://LevelImposter.net/#/Profile`}
+            />
             <MainHeader />
             <BetaHeader />
             <Container className="Profile">

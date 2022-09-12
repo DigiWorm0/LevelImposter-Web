@@ -1,10 +1,14 @@
 import { Col, Container, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import LIHelment from '../components/LIHelmet';
 import MainHeader from '../components/MainHeader';
 
 export default function NotFound() {
     return (
         <>
+            <LIHelment
+                title="LevelImposter - 404"
+            />
             <MainHeader />
             <Container>
                 <Row>

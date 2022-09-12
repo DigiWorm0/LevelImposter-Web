@@ -1,11 +1,17 @@
 import { Col, Container, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import BetaHeader from '../components/home/BetaHeader';
+import LIHelment from '../components/LIHelmet';
 import MainHeader from '../components/MainHeader';
 
 export default function Policy() {
     return (
         <>
+            <LIHelment
+                title="LevelImposter - API Policy"
+                description='The LevelImposter API is a free service provided by LevelImposter. It is intended to be used by the community to create tools and services for the game Among Us. The API is provided "as is" and without warranty of any kind. LevelImposter reserves the right to change the API at any time without notice.'
+                URL='https://LevelImposter.net/#/Policy'
+            />
             <MainHeader />
             <BetaHeader />
             <Container className="Maps">
