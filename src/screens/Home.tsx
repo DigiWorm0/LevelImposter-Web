@@ -1,12 +1,14 @@
 import { Col, Container, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import DownloadHeader from '../components/home/DownloadHeader';
+import LIHelment from '../components/LIHelmet';
 import MainFooter from '../components/MainFooter';
 import MainHeader from '../components/MainHeader';
 
 export default function Home() {
     return (
         <>
+            <LIHelment />
             <MainHeader />
             <DownloadHeader />
 

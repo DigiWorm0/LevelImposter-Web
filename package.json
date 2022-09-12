@@ -21,6 +21,7 @@
         "react-bootstrap-icons": "^1.8.4",
         "react-dom": "^18.2.0",
         "react-firebase-hooks": "^5.0.3",
+        "react-helmet": "^6.1.0",
         "react-kofi-button": "^0.7.1",
         "react-linkify": "^1.0.0-alpha",
         "react-router-dom": "^6.3.0",
@@ -56,6 +57,7 @@
         ]
     },
     "devDependencies": {
+        "@types/react-helmet": "^6.1.5",
         "@types/react-linkify": "^1.0.1",
         "gh-pages": "^4.0.0"
     }

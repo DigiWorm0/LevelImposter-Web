@@ -2,6 +2,7 @@ import { Badge, Col, Container, ListGroup, Row } from 'react-bootstrap';
 import Spinner from 'react-bootstrap/Spinner';
 import { useParams } from 'react-router-dom';
 import BetaHeader from '../components/home/BetaHeader';
+import LIHelment from '../components/LIHelmet';
 import MainHeader from '../components/MainHeader';
 import MapBanner from '../components/map/MapBanner';
 import { useUserMaps } from '../hooks/useMaps';
@@ -14,6 +15,11 @@ export default function User() {
 
     return (
         <>
+            <LIHelment
+                title={`${author?.displayName || "LevelImposter"} - User`}
+                description={`View ${(author?.displayName + "'s") || "your"} profile and maps.`}
+                URL={`https://LevelImposter.net/#/User/${id}`}
+            />
             <MainHeader />
             <BetaHeader />
             <Container className="Maps">
@@ -22,6 +28,7 @@ export default function User() {
                         <Row>
                             <Col lg={12} style={{ textAlign: "center" }}>
                                 <img
+                                    referrerPolicy="no-referrer"
                                     src={author.photoURL ? author.photoURL : '/logo512.png'}
                                     alt={author.displayName ? author.displayName : 'New User'}
                                     style={{
