@@ -35,7 +35,8 @@ export default function MainHeader() {
                         {user ?
                             <Link to="/profile" className='nav-link'>
                                 <img
-                                    src={user.photoURL ? user.photoURL : 'https://via.placeholder.com/150'}
+                                    referrerPolicy="no-referrer"
+                                    src={user.photoURL ? user.photoURL : '/#/logo512.png'}
                                     alt={user.displayName ? user.displayName : 'User'}
                                     style={{
                                         width: 40,

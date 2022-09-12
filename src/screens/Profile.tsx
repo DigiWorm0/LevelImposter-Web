@@ -60,6 +60,7 @@ export default function Profile() {
                 <Row>
                     <Col lg={12} style={{ textAlign: "center" }}>
                         <img
+                            referrerPolicy="no-referrer"
                             src={user.photoURL ? user.photoURL : '/logo512.png'}
                             alt={user.displayName ? user.displayName : 'New User'}
                             style={{

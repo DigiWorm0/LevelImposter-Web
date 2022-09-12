@@ -22,6 +22,7 @@ export default function User() {
                         <Row>
                             <Col lg={12} style={{ textAlign: "center" }}>
                                 <img
+                                    referrerPolicy="no-referrer"
                                     src={author.photoURL ? author.photoURL : '/logo512.png'}
                                     alt={author.displayName ? author.displayName : 'New User'}
                                     style={{
