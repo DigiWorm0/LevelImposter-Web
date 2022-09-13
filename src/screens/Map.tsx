@@ -1,4 +1,5 @@
-import { Alert, Card, Col, Container, Row, Spinner } from 'react-bootstrap';
+import React from 'react';
+import { Alert, Button, Card, Col, Container, Row, Spinner } from 'react-bootstrap';
 import Linkify from 'react-linkify';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import BetaHeader from '../components/home/BetaHeader';
@@ -14,12 +15,16 @@ import MapVerifyButton from '../components/map/MapVerifyButton';
 import getTimeAgoString from '../hooks/getTimeAgoString';
 import { useMap } from '../hooks/useMaps';
 
+const MAX_LENGTH = 500;
+
 export default function Map() {
     const { id } = useParams();
     const map = useMap(id);
     const navigate = useNavigate();
+    const [isExpanded, setIsExpanded] = React.useState(false);
 
     const likeCount = map?.likeCount ?? 0;
+    const isExpandable = (map?.description?.length || "") > MAX_LENGTH;
 
     if (map === null) {
         navigate('404');
@@ -80,11 +85,20 @@ export default function Map() {
                             <h5>by {map.authorName}</h5>
                         </Link>
                         <Linkify>
-                            <p style={{ whiteSpace: "pre-wrap" }}>
-                                {map.description}
+                            <p style={{ whiteSpace: "pre-wrap", marginBottom: 0 }}>
+                                {isExpandable && !isExpanded
+                                    ? map.description?.substring(0, MAX_LENGTH) + "..."
+                                    : map.description}
                             </p>
                         </Linkify>
-                        <p style={{ fontSize: "0.8em" }}>
+                        {isExpandable && (
+                            <Button
+                                variant="link"
+                                onClick={() => setIsExpanded(!isExpanded)}>
+                                {isExpanded ? "Show Less" : "Show More"}
+                            </Button>
+                        )}
+                        <p style={{ fontSize: "0.8em", marginTop: 10 }}>
                             Last updated {getTimeAgoString(map.createdAt)}
                         </p>
                         <MapVerifyButton id={map.id} isVerified={map.isVerified} isPublic={map.isPublic} />
