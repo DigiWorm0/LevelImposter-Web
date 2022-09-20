@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/static/css/main.a4cb6e8e.css",
-    "main.js": "/static/js/main.e349fbe6.js",
+    "main.css": "/static/css/main.02b223cc.css",
+    "main.js": "/static/js/main.078c64ab.js",
     "static/media/bahnschrift.ttf": "/static/media/bahnschrift.23b347dac5478c8b4500.ttf",
     "static/media/quicksand-all-700-normal.woff": "/static/media/quicksand-all-700-normal.020c54d8ff89b494b194.woff",
     "static/media/quicksand-latin-700-normal.woff2": "/static/media/quicksand-latin-700-normal.688d6ff6c206bcc14632.woff2",
     "static/media/quicksand-latin-ext-700-normal.woff2": "/static/media/quicksand-latin-ext-700-normal.ce3d99d374a38f69a3fa.woff2",
     "static/media/quicksand-vietnamese-700-normal.woff2": "/static/media/quicksand-vietnamese-700-normal.ec6f5f885fea28b1f115.woff2",
     "index.html": "/index.html",
-    "main.a4cb6e8e.css.map": "/static/css/main.a4cb6e8e.css.map",
-    "main.e349fbe6.js.map": "/static/js/main.e349fbe6.js.map"
+    "main.02b223cc.css.map": "/static/css/main.02b223cc.css.map",
+    "main.078c64ab.js.map": "/static/js/main.078c64ab.js.map"
   },
   "entrypoints": [
-    "static/css/main.a4cb6e8e.css",
-    "static/js/main.e349fbe6.js"
+    "static/css/main.02b223cc.css",
+    "static/js/main.078c64ab.js"
   ]
 }
