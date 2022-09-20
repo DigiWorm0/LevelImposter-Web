@@ -41,11 +41,6 @@ export default function User() {
                             </Col>
                         </Row>
                         <Row>
-                            <Col xs={{ span: 8, offset: 2 }}>
-                                <hr />
-                            </Col>
-                        </Row>
-                        <Row>
                             <Col lg={{ offset: 3, span: 6 }} style={{ textAlign: "center" }}>
                                 <ListGroup>
                                     {authorMaps.map((map) => (
@@ -60,11 +55,6 @@ export default function User() {
                                         </p>
                                     )}
                                 </ListGroup>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col xs={{ span: 8, offset: 2 }}>
-                                <hr />
                             </Col>
                         </Row>
                         <Row>

@@ -7,7 +7,6 @@ import Alert from 'react-bootstrap/Alert';
 import Form from 'react-bootstrap/Form';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Navigate } from 'react-router-dom';
-import BetaHeader from '../components/home/BetaHeader';
 import LIHelment from '../components/LIHelmet';
 import MainHeader from '../components/MainHeader';
 import { auth, db, githubProvider, googleProvider } from '../hooks/Firebase';

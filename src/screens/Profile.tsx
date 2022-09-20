@@ -82,6 +82,9 @@ export default function Profile() {
                                 type="text"
                                 placeholder="Display Name"
                                 value={displayName}
+                                className={"bg-dark text-white border-0"}
+                                autoFocus
+                                onFocus={(e) => e.target.select()}
                                 style={{ marginTop: 20, marginBottom: 20, textAlign: "center", fontSize: 32 }}
                                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                                     setDisplayName(e.target.value);
@@ -144,13 +147,10 @@ export default function Profile() {
                     </Col>
                 </Row>
                 <Row>
-                    <Col xs={{ span: 8, offset: 2 }}>
-                        <hr />
-                    </Col>
-                </Row>
-                <Row>
                     <Col xs={{ span: 6, offset: 3 }}>
-                        <h3>Your Maps:</h3>
+                        <h3>
+                            <b>Your Maps:</b>
+                        </h3>
 
                         <ListGroup>
                             {userMaps.map((map) => (
@@ -164,11 +164,6 @@ export default function Profile() {
                         {userMaps.length === 0 && (
                             <p>You haven't uploaded a map yet! You can make and upload maps using our <a href="https://editor.levelimposter.net/">editor</a>.</p>
                         )}
-                    </Col>
-                </Row>
-                <Row>
-                    <Col xs={{ span: 8, offset: 2 }}>
-                        <hr />
                     </Col>
                 </Row>
                 <Row>
