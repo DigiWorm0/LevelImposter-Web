@@ -5,7 +5,7 @@ export default function BetaHeader() {
         <Container
             fluid
             style={{
-                backgroundColor: "rgb(24, 27, 30)",
+                backgroundColor: "rgb(15, 17, 19)",
                 color: "#fff"
             }}>
 

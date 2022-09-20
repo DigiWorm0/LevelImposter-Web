@@ -4,3 +4,7 @@
     margin-right: 5px;
     font-size: 20px;
 }
+
+.bg-darker {
+    background-color: rgb(15, 17, 19) !important;
+}

@@ -1,6 +1,5 @@
 import { Col, Container, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import BetaHeader from '../components/home/BetaHeader';
 import LIHelment from '../components/LIHelmet';
 import MainHeader from '../components/MainHeader';
 
@@ -13,7 +12,6 @@ export default function Policy() {
                 URL='https://LevelImposter.net/#/Policy'
             />
             <MainHeader />
-            <BetaHeader />
             <Container className="Maps">
                 <Row>
                     <Col style={{ padding: 30 }}>

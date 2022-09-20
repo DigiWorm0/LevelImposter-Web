@@ -1,17 +1,15 @@
-import { Alert, Badge } from 'react-bootstrap';
 import { sendEmailVerification, signOut, updateProfile } from 'firebase/auth';
 import React from 'react';
-import { Button, Col, Container, ListGroup, Row } from 'react-bootstrap';
+import { Alert, Badge, Button, Col, Container, ListGroup, Row } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Navigate } from 'react-router-dom';
-import BetaHeader from '../components/home/BetaHeader';
+import LIHelment from '../components/LIHelmet';
 import MainHeader from '../components/MainHeader';
 import MapBanner from '../components/map/MapBanner';
 import { auth } from '../hooks/Firebase';
-import useUser from '../hooks/useUser';
 import { useUserMaps } from '../hooks/useMaps';
-import LIHelment from '../components/LIHelmet';
+import useUser from '../hooks/useUser';
 
 export default function Profile() {
     const [user] = useAuthState(auth);
@@ -48,7 +46,6 @@ export default function Profile() {
                 URL={`https://LevelImposter.net/#/Profile`}
             />
             <MainHeader />
-            <BetaHeader />
             <Container className="Profile">
                 <Row style={{ marginTop: 20 }}>
                     <Col xs={12}>
@@ -67,7 +64,7 @@ export default function Profile() {
                     <Col lg={12} style={{ textAlign: "center" }}>
                         <img
                             referrerPolicy="no-referrer"
-                            src={user.photoURL ? user.photoURL : '/logo512.png'}
+                            src={user.photoURL ? user.photoURL.replace("s96-c", "s200-c") : '/logo512.png'}
                             alt={user.displayName ? user.displayName : 'New User'}
                             style={{
                                 width: 200,
@@ -85,6 +82,9 @@ export default function Profile() {
                                 type="text"
                                 placeholder="Display Name"
                                 value={displayName}
+                                className={"bg-dark text-white border-0"}
+                                autoFocus
+                                onFocus={(e) => e.target.select()}
                                 style={{ marginTop: 20, marginBottom: 20, textAlign: "center", fontSize: 32 }}
                                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                                     setDisplayName(e.target.value);
@@ -147,13 +147,10 @@ export default function Profile() {
                     </Col>
                 </Row>
                 <Row>
-                    <Col xs={{ span: 8, offset: 2 }}>
-                        <hr />
-                    </Col>
-                </Row>
-                <Row>
                     <Col xs={{ span: 6, offset: 3 }}>
-                        <h3>Your Maps:</h3>
+                        <h3>
+                            <b>Your Maps:</b>
+                        </h3>
 
                         <ListGroup>
                             {userMaps.map((map) => (
@@ -167,11 +164,6 @@ export default function Profile() {
                         {userMaps.length === 0 && (
                             <p>You haven't uploaded a map yet! You can make and upload maps using our <a href="https://editor.levelimposter.net/">editor</a>.</p>
                         )}
-                    </Col>
-                </Row>
-                <Row>
-                    <Col xs={{ span: 8, offset: 2 }}>
-                        <hr />
                     </Col>
                 </Row>
                 <Row>

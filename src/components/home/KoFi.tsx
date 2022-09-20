@@ -6,8 +6,8 @@ export default function KoFi() {
             username="DigiWorm"
             label="i hate coffee"
             preset="skinny"
-            backgroundColor="kofiRed"
+            backgroundColor="#141719"
             animation="on_hover"
         />
     );
-} // e
+}

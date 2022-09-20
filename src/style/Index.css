@@ -9,3 +9,8 @@ body,
 * {
     font-family: Bahnschrift, sans-serif !important;
 }
+
+body {
+    background-color: rgb(26, 29, 32);
+    color: white;
+}

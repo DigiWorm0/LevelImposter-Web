@@ -1,4 +1,5 @@
-import { Alert, Card, Col, Container, Row, Spinner } from 'react-bootstrap';
+import React from 'react';
+import { Alert, Button, Card, Col, Container, Row, Spinner } from 'react-bootstrap';
 import Linkify from 'react-linkify';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import BetaHeader from '../components/home/BetaHeader';
@@ -14,12 +15,16 @@ import MapVerifyButton from '../components/map/MapVerifyButton';
 import getTimeAgoString from '../hooks/getTimeAgoString';
 import { useMap } from '../hooks/useMaps';
 
+const MAX_LENGTH = 500;
+
 export default function Map() {
     const { id } = useParams();
     const map = useMap(id);
     const navigate = useNavigate();
+    const [isExpanded, setIsExpanded] = React.useState(false);
 
     const likeCount = map?.likeCount ?? 0;
+    const isExpandable = (map?.description?.length || "") > MAX_LENGTH;
 
     if (map === null) {
         navigate('404');
@@ -44,7 +49,6 @@ export default function Map() {
                 imageURL={map.thumbnailURL}
             />
             <MainHeader />
-            <BetaHeader />
             <Container className="Maps">
                 {map.removalReason && (
                     <Row style={{ marginTop: 20 }}>
@@ -62,7 +66,7 @@ export default function Map() {
                     </Row>
                 )}
                 <Row>
-                    <Col sm={6} style={{ padding: 10 }}>
+                    <Col sm={6} style={{ padding: 10, marginTop: 30 }}>
                         <MapEmbed id={map.id} />
                     </Col>
                     <Col sm={6} style={{ padding: 30 }}>
@@ -71,7 +75,9 @@ export default function Map() {
                             isVerified={map.isVerified}
                         />
                         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                            <h1>{map.name}</h1>
+                            <h1>
+                                <b>{map.name}</b>
+                            </h1>
                             <MapLikeBtn id={id} likeCount={likeCount} />
                         </div>
                         <Link
@@ -80,11 +86,20 @@ export default function Map() {
                             <h5>by {map.authorName}</h5>
                         </Link>
                         <Linkify>
-                            <p style={{ whiteSpace: "pre-wrap" }}>
-                                {map.description}
+                            <p style={{ whiteSpace: "pre-wrap", marginBottom: 0 }}>
+                                {isExpandable && !isExpanded
+                                    ? map.description?.substring(0, MAX_LENGTH) + "..."
+                                    : map.description}
                             </p>
                         </Linkify>
-                        <p style={{ fontSize: "0.8em" }}>
+                        {isExpandable && (
+                            <Button
+                                variant="link"
+                                onClick={() => setIsExpanded(!isExpanded)}>
+                                {isExpanded ? "Show Less" : "Show More"}
+                            </Button>
+                        )}
+                        <p style={{ fontSize: "0.8em", marginTop: 10 }}>
                             Last updated {getTimeAgoString(map.createdAt)}
                         </p>
                         <MapVerifyButton id={map.id} isVerified={map.isVerified} isPublic={map.isPublic} />
@@ -92,7 +107,7 @@ export default function Map() {
                         <MapDownloadBtn id={map.id} authorID={map.authorID} />
                         <MapDeleteBtn id={map.id} authorID={map.authorID} />
 
-                        <Card>
+                        <Card className={"bg-dark text-white"}>
                             <Card.Header>
                                 How to Install
                             </Card.Header>
@@ -119,7 +134,7 @@ export default function Map() {
                                 </ol>
                             </Card.Body>
                         </Card>
-                        <Card style={{ marginTop: 10 }}>
+                        <Card className={"bg-dark text-white"} style={{ marginTop: 10 }}>
                             <Card.Header>
                                 How to Play
                             </Card.Header>

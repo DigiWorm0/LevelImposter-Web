@@ -1,7 +1,6 @@
 import { Badge, Col, Container, ListGroup, Row } from 'react-bootstrap';
 import Spinner from 'react-bootstrap/Spinner';
 import { useParams } from 'react-router-dom';
-import BetaHeader from '../components/home/BetaHeader';
 import LIHelment from '../components/LIHelmet';
 import MainHeader from '../components/MainHeader';
 import MapBanner from '../components/map/MapBanner';
@@ -21,7 +20,6 @@ export default function User() {
                 URL={`https://LevelImposter.net/#/User/${id}`}
             />
             <MainHeader />
-            <BetaHeader />
             <Container className="Maps">
                 {author ? (
                     <>
@@ -29,7 +27,7 @@ export default function User() {
                             <Col lg={12} style={{ textAlign: "center" }}>
                                 <img
                                     referrerPolicy="no-referrer"
-                                    src={author.photoURL ? author.photoURL : '/logo512.png'}
+                                    src={author.photoURL ? author.photoURL.replace("s96-c", "s200-c") : '/logo512.png'}
                                     alt={author.displayName ? author.displayName : 'New User'}
                                     style={{
                                         width: 200,
@@ -40,11 +38,6 @@ export default function User() {
                                 />
                                 <h5 style={{ textAlign: "center", marginTop: 20 }}>Maps by</h5>
                                 <h3 style={{ textAlign: "center", marginBottom: 10 }}>{author?.displayName}</h3>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col xs={{ span: 8, offset: 2 }}>
-                                <hr />
                             </Col>
                         </Row>
                         <Row>
@@ -62,11 +55,6 @@ export default function User() {
                                         </p>
                                     )}
                                 </ListGroup>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col xs={{ span: 8, offset: 2 }}>
-                                <hr />
                             </Col>
                         </Row>
                         <Row>
