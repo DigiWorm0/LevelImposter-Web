@@ -8,15 +8,19 @@ export default function MapBanner(props: { map: LIMetadata }) {
     return (
         <Link
             to={`/map/${map.id}`}
-            className={"list-group-item list-group-item-action" + (map.isPublic ? "" : " list-group-item-dark")}>
+            className={"list-group-item list-group-item-action bg-darker text-light"}>
 
             <MapTags
                 isPublic={map.isPublic}
                 isVerified={map.isVerified}
             />
-            <h4>{map.name}</h4>
-            <h5>by {map.authorName}</h5>
-            <p style={{
+            <h4>
+                <b>{map.name}</b>
+            </h4>
+            <h6>
+                by {map.authorName}
+            </h6>
+            <p className="text-muted" style={{
                 whiteSpace: "nowrap",
                 overflow: "hidden",
                 textOverflow: "ellipsis"

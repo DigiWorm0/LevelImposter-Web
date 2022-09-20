@@ -1,17 +1,15 @@
-import { Alert, Badge } from 'react-bootstrap';
 import { sendEmailVerification, signOut, updateProfile } from 'firebase/auth';
 import React from 'react';
-import { Button, Col, Container, ListGroup, Row } from 'react-bootstrap';
+import { Alert, Badge, Button, Col, Container, ListGroup, Row } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Navigate } from 'react-router-dom';
-import BetaHeader from '../components/home/BetaHeader';
+import LIHelment from '../components/LIHelmet';
 import MainHeader from '../components/MainHeader';
 import MapBanner from '../components/map/MapBanner';
 import { auth } from '../hooks/Firebase';
-import useUser from '../hooks/useUser';
 import { useUserMaps } from '../hooks/useMaps';
-import LIHelment from '../components/LIHelmet';
+import useUser from '../hooks/useUser';
 
 export default function Profile() {
     const [user] = useAuthState(auth);
@@ -48,7 +46,6 @@ export default function Profile() {
                 URL={`https://LevelImposter.net/#/Profile`}
             />
             <MainHeader />
-            <BetaHeader />
             <Container className="Profile">
                 <Row style={{ marginTop: 20 }}>
                     <Col xs={12}>

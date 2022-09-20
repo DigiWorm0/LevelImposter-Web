@@ -49,7 +49,6 @@ export default function Map() {
                 imageURL={map.thumbnailURL}
             />
             <MainHeader />
-            <BetaHeader />
             <Container className="Maps">
                 {map.removalReason && (
                     <Row style={{ marginTop: 20 }}>
@@ -67,7 +66,7 @@ export default function Map() {
                     </Row>
                 )}
                 <Row>
-                    <Col sm={6} style={{ padding: 10 }}>
+                    <Col sm={6} style={{ padding: 10, marginTop: 30 }}>
                         <MapEmbed id={map.id} />
                     </Col>
                     <Col sm={6} style={{ padding: 30 }}>
@@ -76,7 +75,9 @@ export default function Map() {
                             isVerified={map.isVerified}
                         />
                         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                            <h1>{map.name}</h1>
+                            <h1>
+                                <b>{map.name}</b>
+                            </h1>
                             <MapLikeBtn id={id} likeCount={likeCount} />
                         </div>
                         <Link
@@ -106,7 +107,7 @@ export default function Map() {
                         <MapDownloadBtn id={map.id} authorID={map.authorID} />
                         <MapDeleteBtn id={map.id} authorID={map.authorID} />
 
-                        <Card>
+                        <Card className={"bg-dark text-white"}>
                             <Card.Header>
                                 How to Install
                             </Card.Header>
@@ -133,7 +134,7 @@ export default function Map() {
                                 </ol>
                             </Card.Body>
                         </Card>
-                        <Card style={{ marginTop: 10 }}>
+                        <Card className={"bg-dark text-white"} style={{ marginTop: 10 }}>
                             <Card.Header>
                                 How to Play
                             </Card.Header>

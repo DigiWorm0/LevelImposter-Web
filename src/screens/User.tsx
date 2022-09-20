@@ -1,7 +1,6 @@
 import { Badge, Col, Container, ListGroup, Row } from 'react-bootstrap';
 import Spinner from 'react-bootstrap/Spinner';
 import { useParams } from 'react-router-dom';
-import BetaHeader from '../components/home/BetaHeader';
 import LIHelment from '../components/LIHelmet';
 import MainHeader from '../components/MainHeader';
 import MapBanner from '../components/map/MapBanner';
@@ -21,7 +20,6 @@ export default function User() {
                 URL={`https://LevelImposter.net/#/User/${id}`}
             />
             <MainHeader />
-            <BetaHeader />
             <Container className="Maps">
                 {author ? (
                     <>
