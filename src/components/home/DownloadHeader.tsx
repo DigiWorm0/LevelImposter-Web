@@ -4,7 +4,6 @@ import GHRelease from '../../types/GHRelease';
 
 export default function DownloadHeader() {
     const [releases, setReleases] = React.useState<GHRelease[]>([]);
-    const [scroll, setScroll] = React.useState(0);
 
     React.useEffect(() => {
         fetch('https://api.github.com/repos/DigiWorm0/LevelImposter/releases')
@@ -12,15 +11,6 @@ export default function DownloadHeader() {
             .then(releases => {
                 setReleases(releases);
             });
-    }, []);
-
-    React.useEffect(() => {
-        window.onscroll = () => {
-            setScroll(window.scrollY);
-        };
-        return () => {
-            window.onscroll = null;
-        };
     }, []);
 
     const isLoaded = releases.length > 0;
@@ -33,8 +23,8 @@ export default function DownloadHeader() {
 
     return (
         <Container style={{
-            height: 600 - scroll,
-            overflowY: "hidden"
+            overflowY: "hidden",
+            height: 600
         }}>
             <Row>
                 <Col
