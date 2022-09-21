@@ -26,7 +26,7 @@ export default function MainHeader(props: { children?: React.ReactNode }) {
                     </Link>
 
                     <Navbar.Toggle aria-controls="navbar-main" />
-                    <Navbar.Collapse id="navbar-main" className="justify-content-end" style={{ backgroundColor: "rgb(15, 17, 19)" }}>
+                    <Navbar.Collapse id="navbar-main" className="justify-content-end" style={{ backgroundColor: "rgb(15, 17, 19)", padding: 20 }}>
                         <Nav className="mr-auto">
                             <Nav.Link href="https://github.com/DigiWorm0/LevelImposter/releases">Download</Nav.Link>
                             <Nav.Link href="https://editor.levelimposter.net/">Editor</Nav.Link>

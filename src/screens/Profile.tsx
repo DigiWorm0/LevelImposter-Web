@@ -148,7 +148,7 @@ export default function Profile() {
                 </Row>
                 <Row>
                     <Col xs={{ span: 6, offset: 3 }}>
-                        <h3>
+                        <h3 style={{ marginTop: 20, textAlign: "center" }}>
                             <b>Your Maps:</b>
                         </h3>
 
