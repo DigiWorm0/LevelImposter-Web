@@ -15,7 +15,7 @@ export default function Home() {
             </MainHeader>
 
             <Container>
-                <Row>
+                <Row style={{ paddingTop: 30 }}>
                     <Col sm={{ span: 3, offset: 1 }} style={{ justifyContent: "center", alignItems: "center", display: "flex", flexDirection: "column", paddingTop: 20 }}>
                         <CodeSlash size={128} />
                     </Col>
@@ -38,7 +38,7 @@ export default function Home() {
                         </div>
                     </Col>
                 </Row>
-                <Row>
+                <Row style={{ paddingTop: 30 }}>
                     <Col sm={{ span: 3, order: "last" }} style={{ justifyContent: "center", alignItems: "center", display: "flex", flexDirection: "column", paddingTop: 20 }}>
                         <Book size={128} />
                     </Col>
@@ -58,7 +58,7 @@ export default function Home() {
                         </div>
                     </Col>
                 </Row>
-                <Row>
+                <Row style={{ paddingTop: 30 }}>
                     <Col sm={{ span: 3, offset: 1 }} style={{ justifyContent: "center", alignItems: "center", display: "flex", flexDirection: "column", paddingTop: 20 }}>
                         <Github size={128} />
                     </Col>

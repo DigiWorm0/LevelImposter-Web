@@ -8,3 +8,7 @@
 .bg-darker {
     background-color: rgb(15, 17, 19) !important;
 }
+
+.text-muted a {
+    color: #2f84d0 !important;
+}

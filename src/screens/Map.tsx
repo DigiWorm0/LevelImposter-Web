@@ -102,10 +102,12 @@ export default function Map() {
                         <p style={{ fontSize: "0.8em", marginTop: 10 }}>
                             Last updated {getTimeAgoString(map.createdAt)}
                         </p>
-                        <MapVerifyButton id={map.id} isVerified={map.isVerified} isPublic={map.isPublic} />
-                        <MapPrivateButton id={map.id} isPublic={map.isPublic} />
-                        <MapDownloadBtn id={map.id} authorID={map.authorID} />
-                        <MapDeleteBtn id={map.id} authorID={map.authorID} />
+                        <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', paddingBottom: 8 }}>
+                            <MapDownloadBtn id={map.id} authorID={map.authorID} />
+                            <MapDeleteBtn id={map.id} authorID={map.authorID} />
+                            <MapVerifyButton id={map.id} isVerified={map.isVerified} isPublic={map.isPublic} />
+                            <MapPrivateButton id={map.id} isPublic={map.isPublic} />
+                        </div>
 
                         <Card className={"bg-dark text-white"}>
                             <Card.Header>

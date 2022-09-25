@@ -35,9 +35,10 @@ export default function MapDeleteBtn(props: { id: string, authorID: string }) {
                 variant="danger"
                 onClick={() => setModalOpen(true)}
                 disabled={isDeleting}
-                style={{ marginBottom: 10, marginRight: 10 }}>
+                style={{ marginTop: 8, flex: "1 1 auto", width: "100%", display: "flex", justifyContent: "center" }}>
 
-                <TrashFill size={20} />
+                <TrashFill size={20} style={{ marginRight: 10 }} />
+                Delete
 
             </Button>
 
