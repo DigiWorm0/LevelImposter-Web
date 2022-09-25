@@ -1,16 +1,22 @@
 import { Badge, Col, Container, ListGroup, Row } from 'react-bootstrap';
 import Spinner from 'react-bootstrap/Spinner';
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import LIHelment from '../components/LIHelmet';
 import MainHeader from '../components/MainHeader';
 import MapBanner from '../components/map/MapBanner';
 import { useUserMaps } from '../hooks/useMaps';
-import { _useUser } from '../hooks/useUser';
+import useUser, { _useUser } from '../hooks/useUser';
 
 export default function User() {
     const { id } = useParams();
+    const user = useUser();
     const author = _useUser(id);
     const authorMaps = useUserMaps(author?.uid);
+
+
+    if (user?.uid === id) {
+        return <Navigate to="/profile" />;
+    }
 
     return (
         <>
@@ -33,7 +39,7 @@ export default function User() {
                                         width: 200,
                                         height: 200,
                                         borderRadius: 20,
-                                        marginTop: 10,
+                                        marginTop: 30,
                                     }}
                                 />
                                 <h5 style={{ textAlign: "center", marginTop: 20 }}>Maps by</h5>
@@ -57,12 +63,9 @@ export default function User() {
                                 </ListGroup>
                             </Col>
                         </Row>
-                        <Row>
+                        <Row style={{ marginBottom: 20 }}>
                             <Col>
                                 <div style={{ textAlign: "center" }}>
-                                    <p>
-                                        {id}
-                                    </p>
                                     {author?.isAdmin && (
                                         <Badge
                                             pill

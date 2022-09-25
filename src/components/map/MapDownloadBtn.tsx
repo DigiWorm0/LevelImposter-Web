@@ -20,7 +20,11 @@ export default function MapDownloadBtn(props: { id: string, authorID: string }) 
         <>
             <Button
                 variant="primary"
-                onClick={onDownload}
+                onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    onDownload();
+                }}
                 style={{ marginTop: 8, flex: "1 1 auto", width: "100%", display: "flex", justifyContent: "center" }}>
 
 

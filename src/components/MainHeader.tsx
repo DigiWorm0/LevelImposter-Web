@@ -1,11 +1,10 @@
 import React from 'react';
 import { Container, Nav, Navbar } from 'react-bootstrap';
-import { useAuthState } from 'react-firebase-hooks/auth';
 import { Link } from 'react-router-dom';
-import { auth } from '../hooks/Firebase';
+import useUser from '../hooks/useUser';
 
 export default function MainHeader(props: { children?: React.ReactNode }) {
-    const [user] = useAuthState(auth);
+    const user = useUser();
 
     return (
         <div style={{
