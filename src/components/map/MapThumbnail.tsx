@@ -44,12 +44,15 @@ export default function MapThumbnail(props: { map: LIMetadata }) {
                     </Card.Text>
                     <div className="d-flex justify-content-between">
                         <MapDownloadBtn id={map.id} authorID={map.authorID} />
-                        <small className="text-muted mt-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" className="bi bi-heart-fill" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
-                            </svg>
-                            <span style={{ marginLeft: 3 }}>{map.likeCount ? map.likeCount.toLocaleString() : 0}</span>
-                        </small>
+                        <div
+                            style={{ display: "flex", width: "100%", justifyContent: "flex-end" }}>
+                            <small className="text-muted mt-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" className="bi bi-heart-fill" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
+                                </svg>
+                                <span style={{ marginLeft: 3 }}>{map.likeCount ? map.likeCount.toLocaleString() : 0}</span>
+                            </small>
+                        </div>
                     </div>
                 </Card.Body>
             </Card>

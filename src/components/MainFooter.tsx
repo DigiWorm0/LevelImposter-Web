@@ -4,7 +4,7 @@ import KoFi from './home/KoFi';
 
 export default function MainFooter() {
     return (
-        <Navbar variant="dark" expand="lg" style={{ backgroundColor: "#111418" }}>
+        <Navbar variant="dark" expand="lg" style={{ backgroundColor: "#111418", boxShadow: "rgb(8, 8, 8) 0px 0px 10px 2px" }}>
             <Container>
                 <div style={{ textAlign: "center" }}>
                     <p style={{ margin: 5, color: "white" }}>

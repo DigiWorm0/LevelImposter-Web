@@ -1,6 +1,6 @@
 import { getDownloadURL, ref } from "firebase/storage";
 import { Button } from "react-bootstrap";
-import { CloudArrowDownFill } from "react-bootstrap-icons";
+import { Download } from "react-bootstrap-icons";
 import { storage } from "../../hooks/Firebase";
 
 export default function MapDownloadBtn(props: { id: string, authorID: string }) {
@@ -20,10 +20,16 @@ export default function MapDownloadBtn(props: { id: string, authorID: string }) 
         <>
             <Button
                 variant="primary"
-                onClick={onDownload}
-                style={{ marginBottom: 10, marginRight: 10 }}>
+                onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    onDownload();
+                }}
+                style={{ marginTop: 8, flex: "1 1 auto", width: "100%", display: "flex", justifyContent: "center" }}>
 
-                <CloudArrowDownFill size={24} />
+
+                <Download size={20} style={{ marginRight: 10 }} />
+                Download
 
             </Button>
         </>

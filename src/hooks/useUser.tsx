@@ -11,8 +11,10 @@ export function _useUser(uid?: string) {
     const [user, setUser] = React.useState<LIUser | undefined>(undefined);
 
     React.useEffect(() => {
-        if (!uid)
+        if (!uid) {
+            setUser(undefined);
             return;
+        }
         const usersRef = collection(db, 'users');
         const docRef = doc(usersRef, uid);
         getDoc(docRef).then((doc) => {

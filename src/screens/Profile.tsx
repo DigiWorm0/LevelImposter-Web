@@ -64,12 +64,13 @@ export default function Profile() {
                     <Col lg={12} style={{ textAlign: "center" }}>
                         <img
                             referrerPolicy="no-referrer"
-                            src={user.photoURL ? user.photoURL.replace("s96-c", "s200-c") : '/logo512.png'}
+                            src={userData?.photoURL ? userData.photoURL.replace("s96-c", "s200-c") : '/logo512.png'}
                             alt={user.displayName ? user.displayName : 'New User'}
                             style={{
                                 width: 200,
                                 height: 200,
                                 borderRadius: 20,
+                                marginTop: 30,
                             }}
                         />
                     </Col>
@@ -166,12 +167,9 @@ export default function Profile() {
                         )}
                     </Col>
                 </Row>
-                <Row>
+                <Row style={{ margin: 20 }}>
                     <Col>
                         <div style={{ textAlign: "center" }}>
-                            <p>
-                                {user.uid}
-                            </p>
                             {userData?.isAdmin && (
                                 <Badge
                                     pill
@@ -180,6 +178,7 @@ export default function Profile() {
                                     Admin
                                 </Badge>
                             )}
+                            <p><b>UID: </b>{user?.uid}</p>
                         </div>
                     </Col>
                 </Row>
