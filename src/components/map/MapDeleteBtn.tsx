@@ -43,6 +43,7 @@ export default function MapDeleteBtn(props: { id: string, authorID: string }) {
             </Button>
 
             <Modal
+                contentClassName="bg-dark text-light"
                 show={isModalOpen}
                 onHide={() => setModalOpen(false)}
                 centered>
