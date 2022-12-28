@@ -51,6 +51,7 @@ export default function MapPrivateButton(props: { id: string, isPublic: boolean 
             </Button>
 
             <Modal
+                contentClassName="bg-dark text-light"
                 show={isModalOpen}
                 onHide={() => setModalOpen(false)}
                 centered>
@@ -63,6 +64,7 @@ export default function MapPrivateButton(props: { id: string, isPublic: boolean 
                     <p>Are you <i>100% sure</i> you want to make this map <b>{privateText.toLowerCase()}</b>?</p>
                     {props.isPublic && (
                         <Form.Control
+                            className="bg-dark text-light"
                             as="textarea"
                             rows={3}
                             placeholder="Reason for removal"

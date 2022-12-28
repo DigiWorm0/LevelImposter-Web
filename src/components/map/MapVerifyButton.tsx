@@ -49,6 +49,7 @@ export default function MapVerifyButton(props: { id: string, isVerified: boolean
             </Button>
 
             <Modal
+                contentClassName="bg-dark text-light"
                 show={isModalOpen}
                 onHide={() => setModalOpen(false)}
                 centered>
