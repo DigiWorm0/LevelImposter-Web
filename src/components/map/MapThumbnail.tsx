@@ -1,12 +1,14 @@
 import React from "react";
 import { Card } from "react-bootstrap";
+import { HeartFill, Shuffle } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
+import { useMap } from "../../hooks/useMaps";
 import LIMetadata from "../../types/LIMetadata";
 import MapDownloadBtn from "./MapDownloadBtn";
 
 export default function MapThumbnail(props: { map: LIMetadata }) {
     const [isHovered, setIsHovered] = React.useState(false);
-
+    const remixOf = useMap(props.map.remixOf);
     const map = props.map;
     const thumbnailURL = map.thumbnailURL ? map.thumbnailURL : "/DefaultThumbnail.png";
     const ellipseStyle: React.CSSProperties = {
@@ -30,8 +32,20 @@ export default function MapThumbnail(props: { map: LIMetadata }) {
             <Card
                 style={{ width: 350 }}
                 className={"bg-dark text-light"}>
-
-                <Card.Img variant="top" src={thumbnailURL} />
+                {remixOf && (
+                    <Card.Header className={"d-flex align-items-center justify-content-center"}>
+                        <Shuffle
+                            style={{ marginRight: 5 }}
+                            size={14}
+                        />
+                        <div>
+                            Remix of <Link to={`/map/${remixOf.id}`}>{remixOf.name}</Link>
+                        </div>
+                    </Card.Header>
+                )}
+                <Card.Img
+                    variant="top"
+                    src={thumbnailURL} />
                 <Card.Body>
                     <Card.Title style={ellipseStyle}>
                         {map.name}
@@ -47,10 +61,11 @@ export default function MapThumbnail(props: { map: LIMetadata }) {
                         <div
                             style={{ display: "flex", width: "100%", justifyContent: "flex-end" }}>
                             <small className="text-muted mt-3">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" className="bi bi-heart-fill" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
-                                </svg>
-                                <span style={{ marginLeft: 3 }}>{map.likeCount ? map.likeCount.toLocaleString() : 0}</span>
+                                <HeartFill
+                                    style={{ marginRight: 3 }}
+                                    size={14}
+                                />
+                                {map.likeCount ? map.likeCount.toLocaleString() : 0}
                             </small>
                         </div>
                     </div>

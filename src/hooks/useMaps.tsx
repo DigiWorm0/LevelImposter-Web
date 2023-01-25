@@ -112,6 +112,7 @@ export function useMap(mapID?: string) {
     const [map, setMap] = React.useState<LIMetadata | undefined | null>(undefined);
 
     React.useEffect(() => {
+        if (!mapID) return setMap(null);
         const storeRef = collection(db, "maps");
         const docRef = doc(storeRef, mapID);
         getDoc(docRef).then(doc => {

@@ -13,4 +13,6 @@ export default interface LIMetadata {
     likeCount?: number;
     removalReason?: string;
     thumbnailURL?: string;
+
+    remixOf?: GUID;
 }
