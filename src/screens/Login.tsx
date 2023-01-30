@@ -55,6 +55,7 @@ export default function Login() {
                     photoURL,
                     uid,
                     isAdmin: false,
+                    isCreator: false,
                 });
             }
         });
