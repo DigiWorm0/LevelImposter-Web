@@ -74,6 +74,15 @@ export default function User() {
                                             Admin
                                         </Badge>
                                     )}
+
+                                    {author?.isCreator && (
+                                        <Badge
+                                            pill
+                                            bg="primary"
+                                            style={{ marginLeft: 5 }}>
+                                            Creator
+                                        </Badge>
+                                    )}
                                 </div>
                             </Col>
                         </Row>

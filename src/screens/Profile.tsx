@@ -178,6 +178,14 @@ export default function Profile() {
                                     Admin
                                 </Badge>
                             )}
+                            {userData?.isCreator && (
+                                <Badge
+                                    pill
+                                    bg="primary"
+                                    style={{ marginLeft: 5 }}>
+                                    Creator
+                                </Badge>
+                            )}
                             <p><b>UID: </b>{user?.uid}</p>
                         </div>
                     </Col>
