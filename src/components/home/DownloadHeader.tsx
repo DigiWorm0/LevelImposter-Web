@@ -37,8 +37,12 @@ export default function DownloadHeader() {
                         flexDirection: "column"
                     }}>
 
-                    <h1 style={{ fontWeight: "bold" }}>The Only Among Us Mapping Studio</h1>
-                    <p className="text-muted">Built for Makers, not Modders</p>
+                    <h1 style={{ fontWeight: "bold" }}>
+                        The Only Among Us Mapping Studio
+                    </h1>
+                    <p className="text-muted">
+                        Built for Makers, not Modders
+                    </p>
 
                     <div style={{ flexDirection: "row", display: "flex" }}>
                         <Button
