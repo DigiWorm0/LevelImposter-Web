@@ -26,7 +26,7 @@ export function _useMaps(contraints: QueryConstraint[]): MapList {
             setLastDoc(maps.docs[maps.docs.length - 1]);
             setHasMore(maps.docs.length === MAX_PER_PAGE);
         });
-    }, []);
+    }, [contraints]);
 
     const loadMore = React.useCallback(() => {
         if (!lastDoc) return;
