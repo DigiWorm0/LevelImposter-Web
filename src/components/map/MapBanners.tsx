@@ -1,6 +1,8 @@
 import LIMetadata from "../../types/LIMetadata";
 import MapThumbnail from "./MapThumbnail";
 
+const LOADING_MAPS_COUNT = 3 * 5;
+
 export default function MapBanners(props: { maps: LIMetadata[], scroll?: boolean }) {
     return (
         <div style={{
@@ -21,7 +23,7 @@ export default function MapBanners(props: { maps: LIMetadata[], scroll?: boolean
                     map={map}
                 />
             ))}
-            {props.maps.length <= 0 && Array(10).fill(0).map((_, i) => (
+            {props.maps.length <= 0 && Array(LOADING_MAPS_COUNT).fill(0).map((_, i) => (
                 <MapThumbnail
                     key={i}
                     map={undefined}
