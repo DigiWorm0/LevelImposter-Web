@@ -154,7 +154,7 @@ export default function Profile() {
                         </h3>
 
                         <ListGroup>
-                            {userMaps.map((map) => (
+                            {userMaps.maps.map((map) => (
                                 <MapBanner
                                     key={map.id}
                                     map={map}
@@ -162,7 +162,7 @@ export default function Profile() {
                             ))}
                         </ListGroup>
 
-                        {userMaps.length === 0 && (
+                        {userMaps.maps.length === 0 && (
                             <p>You haven't uploaded a map yet! You can make and upload maps using our <a href="https://editor.levelimposter.net/">editor</a>.</p>
                         )}
                     </Col>

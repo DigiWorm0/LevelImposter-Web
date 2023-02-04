@@ -35,7 +35,7 @@ export default function Home() {
                     <Row>
                         <Col sm>
                             <MapBanners
-                                maps={featuredMaps}
+                                maps={featuredMaps.maps}
                                 scroll
                             />
                         </Col>
@@ -151,7 +151,7 @@ export default function Home() {
                                 allowTransparency={true}
                                 frameBorder={0}
                                 sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
-                                style={{ flex: 1, width: "70%", marginTop: 20 }} />
+                                style={{ flex: 1, width: "70%", marginTop: 20, borderRadius: 8 }} />
                         </Col>
                     </Row>
                 </Container>

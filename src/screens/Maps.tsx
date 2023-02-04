@@ -1,16 +1,17 @@
 import React from "react";
-import { Col, Container, Dropdown, Form, InputGroup, Row } from 'react-bootstrap';
+import { Button, Col, Container, Dropdown, Form, InputGroup, Row } from 'react-bootstrap';
 import LIHelment from "../components/LIHelmet";
 import MainHeader from '../components/MainHeader';
 import MapBanners from '../components/map/MapBanners';
-import { usePrivateMaps, useRecentMaps, useTopMaps, useVerifiedMaps } from '../hooks/useMaps';
+import { MapList, usePrivateMaps, useRecentMaps, useTopMaps, useVerifiedMaps } from '../hooks/useMaps';
 
 export default function Maps() {
     const topMaps = useTopMaps();
     const featuredMaps = useVerifiedMaps();
     const recentMaps = useRecentMaps();
     const privateMaps = usePrivateMaps();
-    const [filteredMaps, setFilteredMaps] = React.useState(topMaps);
+    const [activeList, setActiveList] = React.useState<MapList>(topMaps);
+    const [filteredMaps, setFilteredMaps] = React.useState(topMaps.maps);
     const [filter, setFilter] = React.useState<undefined | string>(undefined);
     const [search, setSearch] = React.useState('');
 
@@ -20,8 +21,19 @@ export default function Maps() {
                 filter === 'recent' ? recentMaps :
                     filter === 'private' ? privateMaps :
                         topMaps;
-        setFilteredMaps(mapList.filter(map => map.name.toLowerCase().includes(search.toLowerCase())));
-    }, [filter, search, topMaps, featuredMaps, recentMaps, privateMaps]);
+        setActiveList(mapList);
+    }, [filter, topMaps, featuredMaps, recentMaps, privateMaps]);
+
+    React.useEffect(() => {
+        if (search === '') {
+            setFilteredMaps(activeList.maps);
+            return;
+        }
+        const filtered = activeList.maps.filter(map => {
+            return map.name.toLowerCase().includes(search.toLowerCase());
+        });
+        setFilteredMaps(filtered);
+    }, [search, activeList]);
 
     return (
         <>
@@ -69,7 +81,7 @@ export default function Maps() {
                                     <Dropdown.Item onClick={() => setFilter('top')} active={filter === 'top'}>Top</Dropdown.Item>
                                     <Dropdown.Item onClick={() => setFilter('featured')} active={filter === 'featured'}>Featured</Dropdown.Item>
                                     <Dropdown.Item onClick={() => setFilter('recent')} active={filter === 'recent'}>Recent</Dropdown.Item>
-                                    {privateMaps.length > 0 && <Dropdown.Item onClick={() => setFilter('private')} active={filter === 'private'}>Private</Dropdown.Item>}
+                                    {privateMaps.maps.length > 0 && <Dropdown.Item onClick={() => setFilter('private')} active={filter === 'private'}>Private</Dropdown.Item>}
                                 </Dropdown.Menu>
                             </Dropdown>
                         </InputGroup>
@@ -82,6 +94,26 @@ export default function Maps() {
                 <Row>
                     <Col>
                         <MapBanners maps={filteredMaps} />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col style={{
+                        justifyContent: "center",
+                        alignItems: "center",
+                        display: "flex",
+                    }}>
+                        {activeList.hasMore && (
+                            <Button
+                                variant="primary"
+                                onClick={() => activeList.loadMore()}
+                                style={{
+                                    marginBottom: 20,
+                                    minWidth: 200,
+                                }}
+                            >
+                                Load More
+                            </Button>
+                        )}
                     </Col>
                 </Row>
             </Container>

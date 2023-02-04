@@ -5,6 +5,10 @@
     src: url(bahnschrift.ttf);
 }
 
+:root {
+    color-scheme: dark;
+}
+
 body,
 * {
     font-family: Bahnschrift, sans-serif !important;

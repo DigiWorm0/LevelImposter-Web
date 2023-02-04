@@ -1,111 +1,112 @@
-import { collection, deleteDoc, doc, getDoc, getDocs, limit, orderBy, query, QueryConstraint, setDoc, where } from "firebase/firestore";
+import { collection, deleteDoc, doc, DocumentData, DocumentSnapshot, getDoc, getDocs, limit, orderBy, query, QueryConstraint, setDoc, startAfter, startAt, where } from "firebase/firestore";
 import { deleteObject, ref } from "firebase/storage";
 import React from "react";
 import LIMetadata from "../types/LIMetadata";
 import { db, storage } from "./Firebase";
 import useUser from "./useUser";
 
-const MAX_PER_PAGE = 100;
+const MAX_PER_PAGE = 3 * 30;
 
-export function useUserMaps(userID?: string) {
+export interface MapList {
+    maps: LIMetadata[];
+    loadMore: () => void;
+    hasMore: boolean;
+}
+
+export function _useMaps(contraints: QueryConstraint[]): MapList {
     const [mapList, setMapList] = React.useState<LIMetadata[]>([]);
-    const user = useUser();
+    const [lastDoc, setLastDoc] = React.useState<DocumentSnapshot<DocumentData> | undefined>(undefined);
+    const [hasMore, setHasMore] = React.useState(true);
 
     React.useEffect(() => {
+        const storeRef = collection(db, "maps");
+        const mapsQuery = query(storeRef, ...contraints, limit(MAX_PER_PAGE));
+        getDocs(mapsQuery).then(maps => {
+            setMapList(maps.docs.map(doc => doc.data() as LIMetadata));
+            setLastDoc(maps.docs[maps.docs.length - 1]);
+            setHasMore(maps.docs.length === MAX_PER_PAGE);
+        });
+    }, []);
+
+    const loadMore = React.useCallback(() => {
+        if (!lastDoc) return;
+        const storeRef = collection(db, "maps");
+        const mapsQuery = query(storeRef, ...contraints, startAfter(lastDoc), limit(MAX_PER_PAGE));
+        getDocs(mapsQuery).then(maps => {
+            const liMaps = maps.docs.map(doc => doc.data() as LIMetadata);
+            setMapList(mapList.concat(liMaps));
+            setLastDoc(maps.docs[maps.docs.length - 1]);
+            setHasMore(maps.docs.length === MAX_PER_PAGE);
+        });
+    }, [lastDoc, mapList, contraints]);
+
+    return { maps: mapList, loadMore, hasMore };
+}
+
+export function useUserMaps(userID?: string) {
+    const user = useUser();
+    const contrains = React.useMemo(() => {
         const mapQueries = [];
         if (!user?.isAdmin)
             mapQueries.push(where("isPublic", "==", true));
-        mapQueries.push(
-            where("authorID", "==", userID),
-            orderBy("createdAt", "desc"),
-            limit(MAX_PER_PAGE),
-        );
-        _getMaps(mapQueries).then(maps => {
-            setMapList(maps);
-        });
+        if (userID)
+            mapQueries.push(where("authorID", "==", userID));
+        mapQueries.push(orderBy("createdAt", "desc"));
+        return mapQueries;
     }, [userID, user]);
-
-    return mapList;
+    return _useMaps(contrains);
 }
 
 export function useVerifiedMaps() {
-    const [mapList, setMapList] = React.useState<LIMetadata[]>([]);
-
-    React.useEffect(() => {
+    const constaints = React.useMemo(() => {
         const mapQueries = [
             where("isPublic", "==", true),
             where("isVerified", "==", true),
             orderBy("createdAt", "desc"),
-            limit(MAX_PER_PAGE),
         ];
-        _getMaps(mapQueries).then(maps => {
-            setMapList(maps);
-        });
+        return mapQueries;
     }, []);
-
-    return mapList;
+    return _useMaps(constaints);
 }
 
 export function useRecentMaps() {
-    const [mapList, setMapList] = React.useState<LIMetadata[]>([]);
-
-    React.useEffect(() => {
+    const constaints = React.useMemo(() => {
         const mapQueries = [
             where("isPublic", "==", true),
             orderBy("createdAt", "desc"),
-            limit(MAX_PER_PAGE),
         ];
-        _getMaps(mapQueries).then(maps => {
-            setMapList(maps);
-        });
+        return mapQueries;
     }, []);
-
-    return mapList;
+    return _useMaps(constaints);
 }
 
 export function useTopMaps() {
-    const [mapList, setMapList] = React.useState<LIMetadata[]>([]);
-
-    React.useEffect(() => {
+    const constaints = React.useMemo(() => {
         const mapQueries = [
             where("isPublic", "==", true),
             orderBy("likeCount", "desc"),
             orderBy("createdAt", "desc"),
-            limit(MAX_PER_PAGE),
         ];
-        _getMaps(mapQueries).then(maps => {
-            setMapList(maps);
-        });
+        return mapQueries;
     }, []);
-
-    return mapList;
+    return _useMaps(constaints);
 }
 
 export function usePrivateMaps() {
-    const [mapList, setMapList] = React.useState<LIMetadata[]>([]);
     const user = useUser();
-
-    React.useEffect(() => {
-        if (!user?.isAdmin) return setMapList([]);
-
+    const constaints = React.useMemo(() => {
         const mapQueries = [
-            where("isPublic", "==", false),
+            where("isPublic", "==", user?.isAdmin != true),
             orderBy("createdAt", "desc"),
-            limit(MAX_PER_PAGE),
         ];
-        _getMaps(mapQueries).then(maps => {
-            setMapList(maps);
-        });
+        return mapQueries;
     }, [user]);
+    const maps = _useMaps(constaints);
 
-    return mapList;
-}
-
-async function _getMaps(contraints: QueryConstraint[]) {
-    const storeRef = collection(db, "maps");
-    const mapsQuery = query(storeRef, ...contraints);
-    const docs = await getDocs(mapsQuery);
-    return docs.docs.map(doc => doc.data() as LIMetadata);
+    if (user?.isAdmin)
+        return maps;
+    else
+        return { maps: [], loadMore: () => { }, hasMore: false };
 }
 
 export function useMap(mapID?: string) {

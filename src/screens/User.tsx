@@ -49,13 +49,13 @@ export default function User() {
                         <Row>
                             <Col lg={{ offset: 3, span: 6 }} style={{ textAlign: "center" }}>
                                 <ListGroup>
-                                    {authorMaps.map((map) => (
+                                    {authorMaps.maps.map((map) => (
                                         <MapBanner
                                             key={map.id}
                                             map={map}
                                         />
                                     ))}
-                                    {authorMaps.length === 0 && (
+                                    {authorMaps.maps.length === 0 && (
                                         <p>
                                             No maps by this author.
                                         </p>
