@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import GHRelease from '../../types/GHRelease';
+import RainbowText from '../RainbowText';
 
 export default function DownloadHeader() {
     const [releases, setReleases] = React.useState<GHRelease[]>([]);
@@ -22,10 +23,7 @@ export default function DownloadHeader() {
     const downloadLink = isLoaded ? releases[0].html_url : "https://github.com/DigiWorm0/LevelImposter/releases";
 
     return (
-        <Container style={{
-            overflowY: "hidden",
-            height: 600
-        }}>
+        <Container>
             <Row>
                 <Col
                     style={{
@@ -37,11 +35,11 @@ export default function DownloadHeader() {
                         flexDirection: "column"
                     }}>
 
-                    <h1 style={{ fontWeight: "bold" }}>
-                        The Only Among Us Mapping Studio
+                    <h1 className="fw-bold">
+                        Custom Maps for Among Us
                     </h1>
                     <p className="text-muted">
-                        Built for Makers, not Modders
+                        Editor Tool &middot; Among Us Mod &middot; Community Workshop
                     </p>
 
                     <div style={{ flexDirection: "row", display: "flex" }}>
@@ -50,18 +48,18 @@ export default function DownloadHeader() {
                             size="lg"
                             href={downloadLink}
                             style={{ margin: 5 }}>
-                            Download Mod {releases[0]?.tag_name.split("-")[0]}
+                            Download Mod
                         </Button>
                         <Button
                             variant="danger"
                             size="lg"
                             href="https://editor.levelimposter.net/"
                             style={{ margin: 5 }}>
-                            Launch Editor
+                            Map Editor
                         </Button>
                     </div>
 
-                    <p className="text-muted" style={{ marginTop: 20 }}>
+                    <p className="text-muted mt-3">
                         <b>{downloadCount.toLocaleString()}</b> downloads
                     </p>
 
@@ -70,15 +68,24 @@ export default function DownloadHeader() {
             </Row>
             <Row>
                 <Col
+                    sm={{ span: 8, offset: 2 }}
                     style={{
                         paddingTop: 30,
                         textAlign: "center",
                         justifyContent: "flex-start",
                         alignItems: "center",
                         display: "flex",
-                        flexDirection: "column",
+                        flexDirection: "column"
                     }}>
-                    <img alt="screenshot" src="/editor-3.png" style={{ width: "70%", borderRadius: 10 }} />
+                    <img
+                        alt="screenshot"
+                        src="/editor-3.png"
+                        style={{
+                            width: "100%",
+                            borderTopLeftRadius: 10,
+                            borderTopRightRadius: 10,
+                        }}
+                    />
                 </Col>
             </Row>
         </Container>

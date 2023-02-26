@@ -43,10 +43,8 @@ export default function Maps() {
             />
             <MainHeader />
 
-            <Container fluid style={{
-                boxShadow: "black 0px 20px 20px -20px",
-            }}>
-                <Row style={{ padding: 50 }}>
+            <Container>
+                <Row style={{ paddingTop: 50 }}>
                     <Col lg={{ offset: 1, span: 5 }}>
                         <h2>
                             <b>Map Workshop</b>
@@ -88,9 +86,6 @@ export default function Maps() {
 
                     </Col>
                 </Row>
-            </Container>
-
-            <Container>
                 <Row>
                     <Col>
                         <MapBanners maps={filteredMaps} />
