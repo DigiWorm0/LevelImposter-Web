@@ -23,7 +23,7 @@ export default function Home() {
                     <Row style={{ paddingTop: 70 }}>
                         <Col lg={{ offset: 1, span: 5 }}>
                             <h2>
-                                <b>Community Maps</b>
+                                <b>Map Workshop</b>
                             </h2>
                             <p className="text-muted" style={{ paddingBottom: 0 }}>
                                 Browse and play maps created by the community.
@@ -78,7 +78,7 @@ export default function Home() {
                                     You can download maps directly from the game, or browse the library on our website.
                                     You can also create your own maps using our editor and share them with the community.
                                 </h6>
-                                <Link to="/maps" className="btn btn-primary" style={{ margin: 20 }}>
+                                <Link to="/maps" className="btn btn-primary" style={{ marginTop: 20 }}>
                                     Browse Maps
                                 </Link>
                             </div>
