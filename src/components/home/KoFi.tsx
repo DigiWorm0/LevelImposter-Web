@@ -4,9 +4,9 @@ export default function KoFi() {
     return (
         <KofiButton
             username="DigiWorm"
-            label="i hate coffee"
+            label="Sponsor me on Ko-fi"
             preset="skinny"
-            backgroundColor="#141719"
+            backgroundColor="#FF5E5B"
             animation="on_hover"
         />
     );
