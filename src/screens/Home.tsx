@@ -1,5 +1,5 @@
 import { Col, Container, Row } from 'react-bootstrap';
-import { Book, CodeSlash, Github, Hammer, Pencil } from 'react-bootstrap-icons';
+import { Book, Github, Pencil } from 'react-bootstrap-icons';
 import { Link } from 'react-router-dom';
 import DownloadHeader from '../components/home/DownloadHeader';
 import LIHelment from '../components/LIHelmet';
