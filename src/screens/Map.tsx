@@ -25,7 +25,7 @@ export default function Map() {
     const [isExpanded, setIsExpanded] = React.useState(false);
 
     const likeCount = map?.likeCount ?? 0;
-    const isExpandable = (map?.description?.length || "") > MAX_LENGTH;
+    const isExpandable = (map?.description?.length ?? 0) > MAX_LENGTH;
 
     if (map === null) {
         navigate('404');
