@@ -11,12 +11,17 @@ import LIHelment from '../components/LIHelmet';
 import MainHeader from '../components/MainHeader';
 import { auth, db, githubProvider, googleProvider } from '../hooks/Firebase';
 
+const MIN_PASSWORD_LENGTH = 6;
+const MIN_AGE = 13;
+const MAX_AGE = 122;
+
 export default function Login() {
     const [user] = useAuthState(auth);
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
     const [confirmPassword, setConfirmPassword] = React.useState('');
     const [error, setError] = React.useState<string | undefined>(undefined);
+    const [dob, setDob] = React.useState('');
 
     if (user) {
         return <Navigate to="/profile" />;
@@ -86,6 +91,24 @@ export default function Login() {
             setError('Passwords do not match');
             return;
         }
+        if (password.length < MIN_PASSWORD_LENGTH) {
+            setError(`Get a better password, this isn't your luggage combination. It must be at least ${MIN_PASSWORD_LENGTH} characters long.`);
+            return;
+        }
+        if (dob === undefined || dob === null || dob === '') {
+            setError('Unless you\'re an unborn child, please enter your date of birth.');
+            return;
+        }
+        const age = new Date().getFullYear() - new Date(dob).getFullYear();
+        if (age < MIN_AGE) {
+            setError(`Sorry, Uncle Sam requires you must be at least ${MIN_AGE} years old to use LevelImposter.`);
+            return;
+        }
+        if (age > MAX_AGE) {
+            setError(`Ha ha, nice try. The oldest person to ever live was ${MAX_AGE} years old. You're not ${age} years old.`);
+            return;
+        }
+
         createUserWithEmailAndPassword(auth, username, password).then((cred) => {
             sendEmailVerification(cred.user);
             onSignUp(cred);
@@ -132,6 +155,7 @@ export default function Login() {
                             <Form.Group className="mb-3" controlId="formBasicEmail">
                                 <Form.Label>Email address</Form.Label>
                                 <Form.Control
+                                    required
                                     type="email"
                                     placeholder="Enter email"
                                     value={username}
@@ -141,6 +165,7 @@ export default function Login() {
                             <Form.Group className="mb-3" controlId="formBasicPassword">
                                 <Form.Label>Password</Form.Label>
                                 <Form.Control
+                                    required
                                     type="password"
                                     placeholder="Password"
                                     value={password}
@@ -178,6 +203,7 @@ export default function Login() {
                             <Form.Group className="mb-3" controlId="formBasicEmail">
                                 <Form.Label>Email address</Form.Label>
                                 <Form.Control
+                                    required
                                     type="email"
                                     placeholder="Enter email"
                                     value={username}
@@ -187,6 +213,7 @@ export default function Login() {
                             <Form.Group className="mb-3" controlId="formBasicPassword">
                                 <Form.Label>Password</Form.Label>
                                 <Form.Control
+                                    required
                                     type="password"
                                     placeholder="Password"
                                     value={password}
@@ -196,11 +223,22 @@ export default function Login() {
                             <Form.Group className="mb-3" controlId="formBasicPassword">
                                 <Form.Label>Confirm Password</Form.Label>
                                 <Form.Control
+                                    required
                                     type="password"
                                     placeholder="Password"
                                     value={confirmPassword}
                                     className={"bg-dark text-white border-0"}
                                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => setConfirmPassword(e.target.value)} />
+                            </Form.Group>
+                            <Form.Group className="mb-3" controlId="formBasicDob">
+                                <Form.Label>Date of Birth</Form.Label>
+                                <Form.Control
+                                    required
+                                    type="date"
+                                    placeholder="Date of Birth"
+                                    value={dob}
+                                    className={"bg-dark text-white border-0"}
+                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDob(e.target.value)} />
                             </Form.Group>
                             <Button className="mb-3" variant="primary" type="submit">
                                 Sign Up

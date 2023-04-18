@@ -1,11 +1,11 @@
 import React from "react";
 import { Button, Modal } from "react-bootstrap";
-import { TrashFill } from "react-bootstrap-icons";
+import { ShieldFillX } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
-import useUser from "../../hooks/useUser";
 import useAdminTools from "../../hooks/useAdminTools";
+import useUser from "../../hooks/useUser";
 
-export default function UserDeleteBtn(props: { id: string }) {
+export default function UserBanBtn(props: { id: string }) {
     const [isDeleting, setIsDeleting] = React.useState(false);
     const [isModalOpen, setModalOpen] = React.useState(false);
     const userData = useUser();
@@ -17,10 +17,10 @@ export default function UserDeleteBtn(props: { id: string }) {
             return;
 
         setIsDeleting(true);
-        adminTools.deleteUser(props.id).then(() => {
+        adminTools.banUser(props.id).then(() => {
             setIsDeleting(false);
             navigate("/maps");
-            console.log(`Deleted user ${props.id}`);
+            console.log(`Banned user ${props.id}`);
         }).catch((err: any) => {
             console.error(err);
             alert(err);
@@ -28,22 +28,22 @@ export default function UserDeleteBtn(props: { id: string }) {
         });
     }, [props.id, userData, adminTools, navigate]);
 
-    if (!userData?.isAdmin && userData?.uid !== props.id)
+    if (!userData?.isAdmin)
         return null;
 
     return (
         <>
             <Button
-                variant="danger"
+                variant="warning"
                 onClick={() => setModalOpen(true)}
                 disabled={isDeleting}
                 style={{ marginTop: 8, flex: "1 1 auto", width: "100%", display: "flex", justifyContent: "center" }}
             >
-                <TrashFill
+                <ShieldFillX
                     size={20}
                     style={{ marginRight: 10 }}
                 />
-                Delete Account
+                Ban Account
             </Button>
 
             <Modal
@@ -53,11 +53,11 @@ export default function UserDeleteBtn(props: { id: string }) {
                 centered>
 
                 <Modal.Header closeButton>
-                    <Modal.Title>Delete Account</Modal.Title>
+                    <Modal.Title>Ban User</Modal.Title>
                 </Modal.Header>
 
                 <Modal.Body>
-                    <p>Are you <i>100% sure</i> you want to <b>delete</b> this account? This will delete all stored user data including any uploaded maps. This action is permanent and irreversible.</p>
+                    <p>Are you <i>100% sure</i> you want to <b>b-b-ban</b> this account? This will delete any uploaded maps and prevent the user from logging in.</p>
                 </Modal.Body>
 
                 <Modal.Footer>
@@ -71,7 +71,7 @@ export default function UserDeleteBtn(props: { id: string }) {
                         variant="danger"
                         onClick={onDelete}
                     >
-                        Delete
+                        Ban
                     </Button>
                 </Modal.Footer>
             </Modal>

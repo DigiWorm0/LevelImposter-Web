@@ -5,6 +5,6 @@ export interface LIUser {
     displayName?: string;
     photoURL?: string;
 
-    banned?: boolean;
-    deleted?: boolean;
+    isBanned?: boolean;
+    isDeleted?: boolean;
 }

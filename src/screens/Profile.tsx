@@ -10,6 +10,7 @@ import MapBanner from '../components/map/MapBanner';
 import { auth } from '../hooks/Firebase';
 import { useUserMaps } from '../hooks/useMaps';
 import useUser from '../hooks/useUser';
+import UserDeleteBtn from '../components/map/UserDeleteBtn';
 
 export default function Profile() {
     const [user] = useAuthState(auth);
@@ -23,7 +24,7 @@ export default function Profile() {
         setDisplayName(user?.displayName || '');
     }, [user]);
 
-    const sendVerification = () => {
+    const sendVerification = React.useCallback(() => {
         if (!user)
             return;
 
@@ -32,7 +33,7 @@ export default function Profile() {
         }).catch(error => {
             setError(error.message);
         });
-    }
+    }, [user]);
 
     if (!user) {
         return <Navigate to="/login" />;
@@ -41,7 +42,7 @@ export default function Profile() {
     return (
         <>
             <LIHelment
-                title={`${user ? user.displayName : "LevelImposter"} - Profile`}
+                title={`${user?.displayName ? user.displayName : "LevelImposter"} - Profile`}
                 description="View your profile and maps."
                 URL={`https://LevelImposter.net/#/Profile`}
             />
@@ -163,30 +164,46 @@ export default function Profile() {
                         </ListGroup>
 
                         {userMaps.maps.length === 0 && (
-                            <p>You haven't uploaded a map yet! You can make and upload maps using our <a href="https://editor.levelimposter.net/">editor</a>.</p>
+                            <p className="text-center text-muted">
+                                You haven't uploaded a map yet! You can make and upload maps using our <a href="https://editor.levelimposter.net/">editor</a>.
+                            </p>
                         )}
                     </Col>
                 </Row>
                 <Row style={{ margin: 20 }}>
-                    <Col>
+                    <Col xs={{ span: 6, offset: 3 }}>
                         <div style={{ textAlign: "center" }}>
-                            {userData?.isAdmin && (
-                                <Badge
-                                    pill
-                                    bg="danger"
-                                    style={{ marginLeft: 5 }}>
-                                    Admin
-                                </Badge>
-                            )}
-                            {userData?.isCreator && (
-                                <Badge
-                                    pill
-                                    bg="primary"
-                                    style={{ marginLeft: 5 }}>
-                                    Creator
-                                </Badge>
-                            )}
-                            <p><b>UID: </b>{user?.uid}</p>
+                            <UserDeleteBtn id={user.uid} />
+
+                            <div style={{ marginTop: 10 }}>
+                                {userData?.isAdmin && (
+                                    <Badge
+                                        pill
+                                        bg="danger"
+                                        style={{ marginLeft: 5 }}>
+                                        Admin
+                                    </Badge>
+                                )}
+                                {userData?.isCreator && (
+                                    <Badge
+                                        pill
+                                        bg="primary"
+                                        style={{ marginLeft: 5 }}>
+                                        Creator
+                                    </Badge>
+                                )}
+                                {!user?.emailVerified && (
+                                    <Badge
+                                        pill
+                                        bg="secondary"
+                                        style={{ marginLeft: 5 }}>
+                                        Unverified
+                                    </Badge>
+                                )}
+                            </div>
+                            <p className="fs-6 text-muted">
+                                {user?.uid}
+                            </p>
                         </div>
                     </Col>
                 </Row>

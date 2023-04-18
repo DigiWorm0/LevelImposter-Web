@@ -4,14 +4,14 @@ import { LIUser } from "../types/LIUser";
 import { db } from "./Firebase";
 
 export default function useAdminTools() {
-    const setUserBanned = React.useCallback((uid: string, isBanned: boolean) => {
+    const banUser = React.useCallback((uid: string) => {
         return new Promise((resolve, reject) => {
             const usersRef = collection(db, 'users');
             const docRef = doc(usersRef, uid);
             getDoc(docRef).then((doc) => {
                 if (doc.exists()) {
                     const data = doc.data() as LIUser;
-                    data.banned = isBanned;
+                    data.isBanned = true;
                     setDoc(docRef, data);
                     resolve("Done");
                 }
@@ -31,7 +31,7 @@ export default function useAdminTools() {
             getDoc(docRef).then((doc) => {
                 if (doc.exists()) {
                     const data = doc.data() as LIUser;
-                    data.deleted = true;
+                    data.isDeleted = true;
                     setDoc(docRef, data);
                     resolve("Done");
                 }
@@ -44,5 +44,5 @@ export default function useAdminTools() {
         });
     }, []);
 
-    return { setUserBanned, deleteUser };
+    return { banUser, deleteUser };
 }
