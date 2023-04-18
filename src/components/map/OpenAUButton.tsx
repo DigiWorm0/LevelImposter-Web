@@ -15,7 +15,8 @@ export default function OpenAUButton(props: { id: GUID }) {
                 <Tooltip id='tooltip-right'>
                     <strong>Coming Soon</strong>
                 </Tooltip>
-            }>
+            }
+        >
             <div style={{ display: "inline" }}>
                 <Button
                     variant="primary"
@@ -23,7 +24,8 @@ export default function OpenAUButton(props: { id: GUID }) {
                     style={{ marginBottom: 10 }}
                     onClick={() => {
                         alert("To Be Implemented");
-                    }}>
+                    }}
+                >
                     Launch in Among Us
                 </Button>
             </div>

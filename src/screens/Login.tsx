@@ -141,10 +141,9 @@ export default function Login() {
                             style={{ margin: 10 }}
                             variant="danger"
                             show={error !== undefined}
-                            onClose={() => setError(undefined)}>
-
+                            onClose={() => setError(undefined)}
+                        >
                             {error}
-
                         </Alert>
                     </Col>
                 </Row>
@@ -160,7 +159,8 @@ export default function Login() {
                                     placeholder="Enter email"
                                     value={username}
                                     className={"bg-dark text-white border-0"}
-                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value)} />
+                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value)}
+                                />
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="formBasicPassword">
                                 <Form.Label>Password</Form.Label>
@@ -170,7 +170,8 @@ export default function Login() {
                                     placeholder="Password"
                                     value={password}
                                     className={"bg-dark text-white border-0"}
-                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)} />
+                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+                                />
                             </Form.Group>
                             <Button className="mb-3" variant="primary" type="submit">
                                 Sign In
@@ -186,14 +187,16 @@ export default function Login() {
                             style={{ margin: 5 }}
                             variant="dark"
                             size="lg"
-                            onClick={signInWithGoogle}>
+                            onClick={signInWithGoogle}
+                        >
                             <Google size={24} />
                         </Button>
                         <Button
                             style={{ margin: 5 }}
                             variant="dark"
                             size="lg"
-                            onClick={signInWithGithub}>
+                            onClick={signInWithGithub}
+                        >
                             <Github size={24} />
                         </Button>
                     </Col>
@@ -208,7 +211,8 @@ export default function Login() {
                                     placeholder="Enter email"
                                     value={username}
                                     className={"bg-dark text-white border-0"}
-                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value)} />
+                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value)}
+                                />
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="formBasicPassword">
                                 <Form.Label>Password</Form.Label>
@@ -218,7 +222,8 @@ export default function Login() {
                                     placeholder="Password"
                                     value={password}
                                     className={"bg-dark text-white border-0"}
-                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)} />
+                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+                                />
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="formBasicPassword">
                                 <Form.Label>Confirm Password</Form.Label>
@@ -228,7 +233,8 @@ export default function Login() {
                                     placeholder="Password"
                                     value={confirmPassword}
                                     className={"bg-dark text-white border-0"}
-                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setConfirmPassword(e.target.value)} />
+                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setConfirmPassword(e.target.value)}
+                                />
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="formBasicDob">
                                 <Form.Label>Date of Birth</Form.Label>
@@ -238,17 +244,13 @@ export default function Login() {
                                     placeholder="Date of Birth"
                                     value={dob}
                                     className={"bg-dark text-white border-0"}
-                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDob(e.target.value)} />
+                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDob(e.target.value)}
+                                />
                             </Form.Group>
                             <Button className="mb-3" variant="primary" type="submit">
                                 Sign Up
                             </Button>
                         </Form>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col>
-
                     </Col>
                 </Row>
             </Container>

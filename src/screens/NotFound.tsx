@@ -23,7 +23,8 @@ export default function NotFound() {
                         <Link
                             to="/"
                             className={"btn btn-primary"}
-                            style={{ marginTop: 15 }}>
+                            style={{ marginTop: 15 }}
+                        >
                             Back to Home
                         </Link>
                     </Col>

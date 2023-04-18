@@ -43,12 +43,14 @@ export default function Home() {
                 </Container>
                 <Container>
                     <Row>
-                        <Col style={{
-                            justifyContent: "center",
-                            alignItems: "center",
-                            display: "flex",
-                            flexDirection: "column"
-                        }}>
+                        <Col
+                            style={{
+                                justifyContent: "center",
+                                alignItems: "center",
+                                display: "flex",
+                                flexDirection: "column"
+                            }}
+                        >
                             <Link to="/maps" className="btn btn-danger" style={{ marginBottom: 40, marginTop: 20 }}>
                                 View All Maps
                             </Link>
@@ -57,15 +59,20 @@ export default function Home() {
                 </Container>
             </div>
 
-            <div style={{
-                backgroundColor: "rgb(15, 17, 19)",
-                padding: 40,
-                paddingBottom: 70
-            }}>
+            <div
+                style={{
+                    backgroundColor: "rgb(15, 17, 19)",
+                    padding: 40,
+                    paddingBottom: 70
+                }}
+            >
 
                 <Container>
                     <Row>
-                        <Col sm={{ span: 3, offset: 1 }} style={{ justifyContent: "center", alignItems: "center", display: "flex", flexDirection: "column", paddingTop: 20 }}>
+                        <Col
+                            sm={{ span: 3, offset: 1 }}
+                            style={{ justifyContent: "center", alignItems: "center", display: "flex", flexDirection: "column", paddingTop: 20 }}
+                        >
                             <Book size={128} />
                         </Col>
                         <Col sm={5}>
@@ -85,7 +92,10 @@ export default function Home() {
                         </Col>
                     </Row>
                     <Row>
-                        <Col sm={{ span: 3, order: "last" }} style={{ justifyContent: "center", alignItems: "center", display: "flex", flexDirection: "column", paddingTop: 20 }}>
+                        <Col
+                            sm={{ span: 3, order: "last" }}
+                            style={{ justifyContent: "center", alignItems: "center", display: "flex", flexDirection: "column", paddingTop: 20 }}
+                        >
                             <Pencil size={128} />
                         </Col>
                         <Col sm={{ span: 5, offset: 2, order: "first" }}>
@@ -108,7 +118,10 @@ export default function Home() {
                         </Col>
                     </Row>
                     <Row>
-                        <Col sm={{ span: 3, offset: 1 }} style={{ justifyContent: "center", alignItems: "center", display: "flex", flexDirection: "column", paddingTop: 20 }}>
+                        <Col
+                            sm={{ span: 3, offset: 1 }}
+                            style={{ justifyContent: "center", alignItems: "center", display: "flex", flexDirection: "column", paddingTop: 20 }}
+                        >
                             <Github size={128} />
                         </Col>
                         <Col sm={5}>
@@ -151,7 +164,8 @@ export default function Home() {
                                 allowTransparency={true}
                                 frameBorder={0}
                                 sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
-                                style={{ flex: 1, width: "70%", marginTop: 20, borderRadius: 8 }} />
+                                style={{ flex: 1, width: "70%", marginTop: 20, borderRadius: 8 }}
+                            />
                         </Col>
                     </Row>
                 </Container>

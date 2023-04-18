@@ -7,8 +7,8 @@ export default function BetaHeader() {
             style={{
                 backgroundColor: "rgb(15, 17, 19)",
                 color: "#fff"
-            }}>
-
+            }}
+        >
             <Row>
                 <Col
                     style={{
@@ -18,8 +18,11 @@ export default function BetaHeader() {
                         alignItems: "center",
                         display: "flex",
                         flexDirection: "column"
-                    }}>
-                    <p><b>Note:</b> LevelImposter is in early access and subject to frequent changes.</p>
+                    }}
+                >
+                    <p>
+                        <b>Note:</b> LevelImposter is in early access and subject to frequent changes.
+                    </p>
                 </Col>
             </Row>
         </Container>

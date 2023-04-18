@@ -54,10 +54,9 @@ export default function Profile() {
                             style={{ margin: 10 }}
                             variant="danger"
                             show={error !== undefined}
-                            onClose={() => setError(undefined)}>
-
+                            onClose={() => setError(undefined)}
+                        >
                             {error}
-
                         </Alert>
                     </Col>
                 </Row>
@@ -105,7 +104,8 @@ export default function Profile() {
                             variant={'primary'}
                             onClick={() => {
                                 setIsEditing(e => !e);
-                            }}>
+                            }}
+                        >
                             {isEditing ? 'Cancel' : 'Edit Name'}
                         </Button>
                         {isEditing && (
@@ -118,7 +118,8 @@ export default function Profile() {
                                     }).then(() => {
                                         setIsEditing(e => !e);
                                     });
-                                }}>
+                                }}
+                            >
                                 Save
                             </Button>
                         )}
@@ -127,10 +128,9 @@ export default function Profile() {
                             variant="danger"
                             onClick={() => {
                                 signOut(auth);
-                            }}>
-
+                            }}
+                        >
                             Sign out
-
                         </Button>
                     </Col>
                 </Row>
@@ -140,10 +140,9 @@ export default function Profile() {
                             <Button
                                 style={{ margin: 5 }}
                                 variant="secondary"
-                                onClick={sendVerification}>
-
+                                onClick={sendVerification}
+                            >
                                 Re-send Verification Email
-
                             </Button>
                         )}
                     </Col>

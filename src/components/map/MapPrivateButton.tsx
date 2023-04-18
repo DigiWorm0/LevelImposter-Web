@@ -43,25 +43,26 @@ export default function MapPrivateButton(props: { id: string, isPublic: boolean 
             <Button
                 variant="secondary"
                 onClick={() => setModalOpen(true)}
-                style={{ marginTop: 8, flex: "1 1 auto", width: "100%", display: "flex", justifyContent: "center" }}>
-
+                style={{ marginTop: 8, flex: "1 1 auto", width: "100%", display: "flex", justifyContent: "center" }}
+            >
                 <EyeFill size={20} style={{ marginRight: 10 }} />
                 {privateText}
-
             </Button>
 
             <Modal
                 contentClassName="bg-dark text-light"
                 show={isModalOpen}
                 onHide={() => setModalOpen(false)}
-                centered>
-
+                centered
+            >
                 <Modal.Header closeButton>
                     <Modal.Title>{privateText} Map</Modal.Title>
                 </Modal.Header>
 
                 <Modal.Body>
-                    <p>Are you <i>100% sure</i> you want to make this map <b>{privateText.toLowerCase()}</b>?</p>
+                    <p>
+                        Are you <i>100% sure</i> you want to make this map <b>{privateText.toLowerCase()}</b>?
+                    </p>
                     {props.isPublic && (
                         <Form.Control
                             className="bg-dark text-light"
@@ -69,19 +70,22 @@ export default function MapPrivateButton(props: { id: string, isPublic: boolean 
                             rows={3}
                             placeholder="Reason for removal"
                             value={removalReason}
-                            onChange={(e) => setRemovalReason(e.target.value)} />
+                            onChange={(e) => setRemovalReason(e.target.value)}
+                        />
                     )}
                 </Modal.Body>
 
                 <Modal.Footer>
                     <Button
                         variant="secondary"
-                        onClick={() => setModalOpen(false)}>
+                        onClick={() => setModalOpen(false)}
+                    >
                         Close
                     </Button>
                     <Button
                         variant="warning"
-                        onClick={onVerify}>
+                        onClick={onVerify}
+                    >
                         Make {privateText}
                     </Button>
                 </Modal.Footer>

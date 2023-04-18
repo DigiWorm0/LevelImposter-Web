@@ -50,8 +50,8 @@ export default function UserDeleteBtn(props: { id: string }) {
                 contentClassName="bg-dark text-light"
                 show={isModalOpen}
                 onHide={() => setModalOpen(false)}
-                centered>
-
+                centered
+            >
                 <Modal.Header closeButton>
                     <Modal.Title>Delete Account</Modal.Title>
                 </Modal.Header>

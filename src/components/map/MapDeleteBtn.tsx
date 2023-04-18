@@ -35,36 +35,39 @@ export default function MapDeleteBtn(props: { id: string, authorID: string }) {
                 variant="danger"
                 onClick={() => setModalOpen(true)}
                 disabled={isDeleting}
-                style={{ marginTop: 8, flex: "1 1 auto", width: "100%", display: "flex", justifyContent: "center" }}>
-
+                style={{ marginTop: 8, flex: "1 1 auto", width: "100%", display: "flex", justifyContent: "center" }}
+            >
                 <TrashFill size={20} style={{ marginRight: 10 }} />
                 Delete
-
             </Button>
 
             <Modal
                 contentClassName="bg-dark text-light"
                 show={isModalOpen}
                 onHide={() => setModalOpen(false)}
-                centered>
-
+                centered
+            >
                 <Modal.Header closeButton>
                     <Modal.Title>Delete Map</Modal.Title>
                 </Modal.Header>
 
                 <Modal.Body>
-                    <p>Are you <i>100% sure</i> you want to <b>delete</b> this map? This action is permanent and irreversible.</p>
+                    <p>
+                        Are you <i>100% sure</i> you want to <b>delete</b> this map? This action is permanent and irreversible.
+                    </p>
                 </Modal.Body>
 
                 <Modal.Footer>
                     <Button
                         variant="secondary"
-                        onClick={() => setModalOpen(false)}>
+                        onClick={() => setModalOpen(false)}
+                    >
                         Close
                     </Button>
                     <Button
                         variant="danger"
-                        onClick={onDelete}>
+                        onClick={onDelete}
+                    >
                         Delete
                     </Button>
                 </Modal.Footer>
