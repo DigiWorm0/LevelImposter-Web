@@ -3,7 +3,7 @@ import { Button, Modal } from "react-bootstrap";
 import { TrashFill } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
 import useUser from "../../hooks/useUser";
-import useAdminTools from "../../hooks/useAdmin";
+import useAdminTools from "../../hooks/useAdminTools";
 
 export default function UserDeleteBtn(props: { id: string }) {
     const [isDeleting, setIsDeleting] = React.useState(false);

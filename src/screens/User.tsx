@@ -69,7 +69,8 @@ export default function User() {
                             <Badge
                                 pill
                                 bg="danger"
-                                style={{ marginLeft: 5 }}>
+                                style={{ marginLeft: 5 }}
+                            >
                                 Admin
                             </Badge>
                         )}
@@ -78,7 +79,8 @@ export default function User() {
                             <Badge
                                 pill
                                 bg="primary"
-                                style={{ marginLeft: 5 }}>
+                                style={{ marginLeft: 5 }}
+                            >
                                 Creator
                             </Badge>
                         )}
@@ -87,7 +89,8 @@ export default function User() {
                             <Badge
                                 pill
                                 bg="danger"
-                                style={{ marginLeft: 5 }}>
+                                style={{ marginLeft: 5 }}
+                            >
                                 Banned
                             </Badge>
                         )}
