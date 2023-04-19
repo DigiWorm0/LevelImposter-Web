@@ -1,9 +1,8 @@
 import React from "react";
 import { Button, Modal } from "react-bootstrap";
-import { TrashFill } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
-import useUser from "../../hooks/useUser";
 import useAdminTools from "../../hooks/useAdminTools";
+import useUser from "../../hooks/useUser";
 
 export default function UserDeleteBtn(props: { id: string }) {
     const [isDeleting, setIsDeleting] = React.useState(false);
@@ -39,10 +38,6 @@ export default function UserDeleteBtn(props: { id: string }) {
                 disabled={isDeleting}
                 style={{ marginTop: 8, flex: "1 1 auto", width: "100%", display: "flex", justifyContent: "center" }}
             >
-                <TrashFill
-                    size={20}
-                    style={{ marginRight: 10 }}
-                />
                 Delete Account
             </Button>
 

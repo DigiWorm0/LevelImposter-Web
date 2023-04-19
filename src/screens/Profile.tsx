@@ -7,10 +7,12 @@ import { Navigate } from 'react-router-dom';
 import LIHelment from '../components/LIHelmet';
 import MainHeader from '../components/MainHeader';
 import MapBanner from '../components/map/MapBanner';
+import UserDeleteBtn from '../components/map/UserDeleteBtn';
 import { auth } from '../hooks/Firebase';
 import { useUserMaps } from '../hooks/useMaps';
-import useUser from '../hooks/useUser';
-import UserDeleteBtn from '../components/map/UserDeleteBtn';
+import useUser, { useUpdateUser } from '../hooks/useUser';
+import useUploadProfile from '../hooks/useUploadProfile';
+import { DoorOpenFill, PencilFill, SaveFill } from 'react-bootstrap-icons';
 
 export default function Profile() {
     const [user] = useAuthState(auth);
@@ -18,11 +20,28 @@ export default function Profile() {
     const [isEditing, setIsEditing] = React.useState(false);
     const [error, setError] = React.useState<string | undefined>(undefined);
     const [displayName, setDisplayName] = React.useState('');
+    const [isHovering, setIsHovering] = React.useState(false);
     const userMaps = useUserMaps(user?.uid);
+    const updateUserData = useUpdateUser();
+    const uploadProfile = useUploadProfile();
 
     React.useEffect(() => {
         setDisplayName(user?.displayName || '');
     }, [user]);
+
+    const onSaveProfile = React.useCallback(() => {
+        if (!user || !displayName || !userData)
+            return;
+        updateUserData({
+            ...userData,
+            displayName: displayName,
+        }).then(() => {
+            setIsEditing(false);
+            setError(undefined);
+        }).catch(error => {
+            setError(error.message);
+        });
+    }, [user, displayName]);
 
     const sendVerification = React.useCallback(() => {
         if (!user)
@@ -62,17 +81,34 @@ export default function Profile() {
                 </Row>
                 <Row>
                     <Col lg={12} style={{ textAlign: "center" }}>
-                        <img
-                            referrerPolicy="no-referrer"
-                            src={userData?.photoURL ? userData.photoURL.replace("s96-c", "s200-c") : '/logo512.png'}
-                            alt={user.displayName ? user.displayName : 'New User'}
+                        <button
+                            onClick={() => uploadProfile(setError)}
+                            onMouseEnter={() => setIsHovering(true)}
+                            onMouseLeave={() => setIsHovering(false)}
                             style={{
                                 width: 200,
                                 height: 200,
                                 borderRadius: 20,
                                 marginTop: 30,
+                                transition: 'filter 0.2s',
+                                filter: isHovering ? 'brightness(0.2)' : 'brightness(1)',
+                                textDecoration: 'none',
+                                border: 'none',
+                                background: 'none',
                             }}
-                        />
+                        >
+                            <img
+                                referrerPolicy="no-referrer"
+                                src={userData?.photoURL ? userData.photoURL.replace("s96-c", "s200-c") : '/logo512.png'}
+                                alt={user.displayName ? user.displayName : 'New User'}
+                                style={{
+                                    width: 200,
+                                    height: 200,
+                                    borderRadius: 20,
+                                    objectFit: 'cover',
+                                }}
+                            />
+                        </button>
                     </Col>
                 </Row>
                 <Row>
@@ -112,13 +148,7 @@ export default function Profile() {
                             <Button
                                 style={{ marginLeft: 5 }}
                                 variant="success"
-                                onClick={() => {
-                                    updateProfile(user, {
-                                        displayName: displayName,
-                                    }).then(() => {
-                                        setIsEditing(e => !e);
-                                    });
-                                }}
+                                onClick={onSaveProfile}
                             >
                                 Save
                             </Button>

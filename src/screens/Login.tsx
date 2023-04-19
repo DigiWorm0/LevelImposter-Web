@@ -10,6 +10,8 @@ import { Navigate } from 'react-router-dom';
 import LIHelment from '../components/LIHelmet';
 import MainHeader from '../components/MainHeader';
 import { auth, db, githubProvider, googleProvider } from '../hooks/Firebase';
+import { useUpdateUser } from '../hooks/useUser';
+import { LIUser } from '../types/LIUser';
 
 const MIN_PASSWORD_LENGTH = 6;
 const MIN_AGE = 13;
@@ -21,7 +23,9 @@ export default function Login() {
     const [password, setPassword] = React.useState('');
     const [confirmPassword, setConfirmPassword] = React.useState('');
     const [error, setError] = React.useState<string | undefined>(undefined);
+    const [sentResetEmail, setSentResetEmail] = React.useState(false);
     const [dob, setDob] = React.useState('');
+    const updateUserData = useUpdateUser();
 
     if (user) {
         return <Navigate to="/profile" />;
@@ -58,9 +62,14 @@ export default function Login() {
                 setDoc(docRef, {
                     displayName,
                     photoURL,
-                    uid,
-                    isAdmin: false,
-                    isCreator: false,
+                    uid
+                });
+            } else {
+                const userData = doc.data() as LIUser;
+                updateUserData({
+                    ...userData,
+                    displayName: displayName ?? userData.displayName ?? undefined,
+                    photoURL: photoURL ?? userData.photoURL ?? undefined
                 });
             }
         });
@@ -118,6 +127,7 @@ export default function Login() {
     }
 
     const forgotPassword = () => {
+        setSentResetEmail(true);
         sendPasswordResetEmail(auth, username).then(() => {
             setError('Password reset email sent');
         }).catch((e) => {
@@ -176,7 +186,7 @@ export default function Login() {
                             <Button className="mb-3" variant="primary" type="submit">
                                 Sign In
                             </Button>
-                            <Button className="mb-3 ms-1" variant="danger" onClick={forgotPassword}>
+                            <Button className="mb-3 ms-1" variant="danger" onClick={forgotPassword} disabled={sentResetEmail}>
                                 Forgot Password
                             </Button>
                         </Form>
