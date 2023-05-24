@@ -82,9 +82,10 @@ export default function Profile() {
                 <Row>
                     <Col lg={12} style={{ textAlign: "center" }}>
                         <button
-                            onClick={() => uploadProfile(setError)}
+                            disabled
+                            /*onClick={() => uploadProfile(setError)}
                             onMouseEnter={() => setIsHovering(true)}
-                            onMouseLeave={() => setIsHovering(false)}
+                            onMouseLeave={() => setIsHovering(false)}*/
                             style={{
                                 width: 200,
                                 height: 200,

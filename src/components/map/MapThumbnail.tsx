@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Placeholder, PlaceholderButton } from "react-bootstrap";
-import { HeartFill, Shuffle } from "react-bootstrap-icons";
+import { HeartFill, Shuffle, TrashFill } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
 import { useMap } from "../../hooks/useMaps";
 import LIMetadata from "../../types/LIMetadata";
@@ -38,7 +38,7 @@ export default function MapThumbnail(props: { map: LIMetadata | undefined }) {
                     {remixOf && (
                         <Card.Header className={"d-flex align-items-center justify-content-center"}>
                             <Shuffle
-                                style={{ marginRight: 5 }}
+                                style={{ marginRight: 5, minWidth: 14 }}
                                 size={14}
                             />
                             <div>
@@ -46,9 +46,30 @@ export default function MapThumbnail(props: { map: LIMetadata | undefined }) {
                             </div>
                         </Card.Header>
                     )}
+                    {map.removalReason && (
+                        <Card.Header className={"d-flex align-items-center justify-content-center bg-danger text-light"}>
+                            <TrashFill
+                                style={{ marginRight: 5, minWidth: 14 }}
+                                size={14}
+                            />
+                            <div
+                                style={{
+                                    overflow: "hidden",
+                                    textOverflow: "ellipsis",
+                                    whiteSpace: "nowrap"
+                                }}
+                            >
+                                {map.removalReason}
+                            </div>
+                        </Card.Header>
+                    )}
                     <Card.Img
-                        variant="top"
+                        variant={"top"}
                         src={thumbnailURL}
+                        style={{
+                            borderTopLeftRadius: map.removalReason || remixOf ? 0 : undefined,
+                            borderTopRightRadius: map.removalReason || remixOf ? 0 : undefined
+                        }}
                     />
                     <Card.Body>
                         <Card.Title style={ellipseStyle}>
