@@ -38,14 +38,15 @@ export default function MainHeader(props: { children?: React.ReactNode }) {
                                     <img
                                         referrerPolicy="no-referrer"
                                         src={user.photoURL ? user.photoURL : '/#/logo512.png'}
-                                        alt={user.displayName ? user.displayName : 'User'}
+                                        alt={user.displayName ? user.displayName : 'Profile'}
                                         style={{
                                             width: 40,
                                             height: 40,
                                             borderRadius: 50,
                                             marginLeft: 10,
                                             marginRight: 10
-                                        }} />
+                                        }}
+                                    />
                                 </Link>
                                 :
                                 <Link to="/login" className='nav-link'>

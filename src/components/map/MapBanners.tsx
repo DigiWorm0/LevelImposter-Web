@@ -15,7 +15,8 @@ export default function MapBanners(props: { maps: LIMetadata[], scroll?: boolean
             paddingBottom: 20,
             paddingTop: 20,
             gap: 20
-        }}>
+        }}
+        >
             {props.scroll && <div style={{ width: 50, height: 20, flexShrink: 0 }} />}
             {props.maps.map((map) => (
                 <MapThumbnail

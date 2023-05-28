@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Placeholder, PlaceholderButton } from "react-bootstrap";
-import { HeartFill, Shuffle } from "react-bootstrap-icons";
+import { HeartFill, Shuffle, TrashFill } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
 import { useMap } from "../../hooks/useMaps";
 import LIMetadata from "../../types/LIMetadata";
@@ -33,11 +33,12 @@ export default function MapThumbnail(props: { map: LIMetadata | undefined }) {
             >
                 <Card
                     style={{ width: 350 }}
-                    className={"bg-dark text-light"}>
+                    className={"bg-dark text-light"}
+                >
                     {remixOf && (
                         <Card.Header className={"d-flex align-items-center justify-content-center"}>
                             <Shuffle
-                                style={{ marginRight: 5 }}
+                                style={{ marginRight: 5, minWidth: 14 }}
                                 size={14}
                             />
                             <div>
@@ -45,9 +46,31 @@ export default function MapThumbnail(props: { map: LIMetadata | undefined }) {
                             </div>
                         </Card.Header>
                     )}
+                    {map.removalReason && (
+                        <Card.Header className={"d-flex align-items-center justify-content-center bg-danger text-light"}>
+                            <TrashFill
+                                style={{ marginRight: 5, minWidth: 14 }}
+                                size={14}
+                            />
+                            <div
+                                style={{
+                                    overflow: "hidden",
+                                    textOverflow: "ellipsis",
+                                    whiteSpace: "nowrap"
+                                }}
+                            >
+                                {map.removalReason}
+                            </div>
+                        </Card.Header>
+                    )}
                     <Card.Img
-                        variant="top"
-                        src={thumbnailURL} />
+                        variant={"top"}
+                        src={thumbnailURL}
+                        style={{
+                            borderTopLeftRadius: map.removalReason || remixOf ? 0 : undefined,
+                            borderTopRightRadius: map.removalReason || remixOf ? 0 : undefined
+                        }}
+                    />
                     <Card.Body>
                         <Card.Title style={ellipseStyle}>
                             {map.name}
@@ -61,7 +84,12 @@ export default function MapThumbnail(props: { map: LIMetadata | undefined }) {
                         <div className="d-flex justify-content-between">
                             <MapDownloadBtn id={map.id} authorID={map.authorID} />
                             <div
-                                style={{ display: "flex", width: "100%", justifyContent: "flex-end" }}>
+                                style={{
+                                    display: "flex",
+                                    width: "100%",
+                                    justifyContent: "flex-end"
+                                }}
+                            >
                                 <small className="text-muted mt-3">
                                     <HeartFill
                                         style={{ marginRight: 3 }}
@@ -78,12 +106,15 @@ export default function MapThumbnail(props: { map: LIMetadata | undefined }) {
     }
     else {
         return (
-            <Placeholder style={{
-                borderRadius: 10,
-            }}>
+            <Placeholder
+                style={{
+                    borderRadius: 10,
+                }}
+            >
                 <Card
                     style={{ width: 350 }}
-                    className={"bg-dark text-light"}>
+                    className={"bg-dark text-light"}
+                >
                     <Card.Img
                         variant="top"
                         src={thumbnailURL}

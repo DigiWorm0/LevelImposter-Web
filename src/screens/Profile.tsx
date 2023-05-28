@@ -7,9 +7,12 @@ import { Navigate } from 'react-router-dom';
 import LIHelment from '../components/LIHelmet';
 import MainHeader from '../components/MainHeader';
 import MapBanner from '../components/map/MapBanner';
+import UserDeleteBtn from '../components/map/UserDeleteBtn';
 import { auth } from '../hooks/Firebase';
 import { useUserMaps } from '../hooks/useMaps';
-import useUser from '../hooks/useUser';
+import useUser, { useUpdateUser } from '../hooks/useUser';
+import useUploadProfile from '../hooks/useUploadProfile';
+import { DoorOpenFill, PencilFill, SaveFill } from 'react-bootstrap-icons';
 
 export default function Profile() {
     const [user] = useAuthState(auth);
@@ -17,13 +20,30 @@ export default function Profile() {
     const [isEditing, setIsEditing] = React.useState(false);
     const [error, setError] = React.useState<string | undefined>(undefined);
     const [displayName, setDisplayName] = React.useState('');
+    const [isHovering, setIsHovering] = React.useState(false);
     const userMaps = useUserMaps(user?.uid);
+    const updateUserData = useUpdateUser();
+    const uploadProfile = useUploadProfile();
 
     React.useEffect(() => {
         setDisplayName(user?.displayName || '');
     }, [user]);
 
-    const sendVerification = () => {
+    const onSaveProfile = React.useCallback(() => {
+        if (!user || !displayName || !userData)
+            return;
+        updateUserData({
+            ...userData,
+            displayName: displayName,
+        }).then(() => {
+            setIsEditing(false);
+            setError(undefined);
+        }).catch(error => {
+            setError(error.message);
+        });
+    }, [user, displayName]);
+
+    const sendVerification = React.useCallback(() => {
         if (!user)
             return;
 
@@ -32,7 +52,7 @@ export default function Profile() {
         }).catch(error => {
             setError(error.message);
         });
-    }
+    }, [user]);
 
     if (!user) {
         return <Navigate to="/login" />;
@@ -41,7 +61,7 @@ export default function Profile() {
     return (
         <>
             <LIHelment
-                title={`${user ? user.displayName : "LevelImposter"} - Profile`}
+                title={`${user?.displayName ? user.displayName : "LevelImposter"} - Profile`}
                 description="View your profile and maps."
                 URL={`https://LevelImposter.net/#/Profile`}
             />
@@ -53,26 +73,43 @@ export default function Profile() {
                             style={{ margin: 10 }}
                             variant="danger"
                             show={error !== undefined}
-                            onClose={() => setError(undefined)}>
-
+                            onClose={() => setError(undefined)}
+                        >
                             {error}
-
                         </Alert>
                     </Col>
                 </Row>
                 <Row>
                     <Col lg={12} style={{ textAlign: "center" }}>
-                        <img
-                            referrerPolicy="no-referrer"
-                            src={userData?.photoURL ? userData.photoURL.replace("s96-c", "s200-c") : '/logo512.png'}
-                            alt={user.displayName ? user.displayName : 'New User'}
+                        <button
+                            disabled
+                            /*onClick={() => uploadProfile(setError)}
+                            onMouseEnter={() => setIsHovering(true)}
+                            onMouseLeave={() => setIsHovering(false)}*/
                             style={{
                                 width: 200,
                                 height: 200,
                                 borderRadius: 20,
                                 marginTop: 30,
+                                transition: 'filter 0.2s',
+                                filter: isHovering ? 'brightness(0.2)' : 'brightness(1)',
+                                textDecoration: 'none',
+                                border: 'none',
+                                background: 'none',
                             }}
-                        />
+                        >
+                            <img
+                                referrerPolicy="no-referrer"
+                                src={userData?.photoURL ? userData.photoURL.replace("s96-c", "s200-c") : '/logo512.png'}
+                                alt={user.displayName ? user.displayName : 'New User'}
+                                style={{
+                                    width: 200,
+                                    height: 200,
+                                    borderRadius: 20,
+                                    objectFit: 'cover',
+                                }}
+                            />
+                        </button>
                     </Col>
                 </Row>
                 <Row>
@@ -104,20 +141,16 @@ export default function Profile() {
                             variant={'primary'}
                             onClick={() => {
                                 setIsEditing(e => !e);
-                            }}>
+                            }}
+                        >
                             {isEditing ? 'Cancel' : 'Edit Name'}
                         </Button>
                         {isEditing && (
                             <Button
                                 style={{ marginLeft: 5 }}
                                 variant="success"
-                                onClick={() => {
-                                    updateProfile(user, {
-                                        displayName: displayName,
-                                    }).then(() => {
-                                        setIsEditing(e => !e);
-                                    });
-                                }}>
+                                onClick={onSaveProfile}
+                            >
                                 Save
                             </Button>
                         )}
@@ -126,10 +159,9 @@ export default function Profile() {
                             variant="danger"
                             onClick={() => {
                                 signOut(auth);
-                            }}>
-
+                            }}
+                        >
                             Sign out
-
                         </Button>
                     </Col>
                 </Row>
@@ -139,10 +171,9 @@ export default function Profile() {
                             <Button
                                 style={{ margin: 5 }}
                                 variant="secondary"
-                                onClick={sendVerification}>
-
+                                onClick={sendVerification}
+                            >
                                 Re-send Verification Email
-
                             </Button>
                         )}
                     </Col>
@@ -163,30 +194,46 @@ export default function Profile() {
                         </ListGroup>
 
                         {userMaps.maps.length === 0 && (
-                            <p>You haven't uploaded a map yet! You can make and upload maps using our <a href="https://editor.levelimposter.net/">editor</a>.</p>
+                            <p className="text-center text-muted">
+                                You haven't uploaded a map yet! You can make and upload maps using our <a href="https://editor.levelimposter.net/">editor</a>.
+                            </p>
                         )}
                     </Col>
                 </Row>
                 <Row style={{ margin: 20 }}>
-                    <Col>
+                    <Col xs={{ span: 6, offset: 3 }}>
                         <div style={{ textAlign: "center" }}>
-                            {userData?.isAdmin && (
-                                <Badge
-                                    pill
-                                    bg="danger"
-                                    style={{ marginLeft: 5 }}>
-                                    Admin
-                                </Badge>
-                            )}
-                            {userData?.isCreator && (
-                                <Badge
-                                    pill
-                                    bg="primary"
-                                    style={{ marginLeft: 5 }}>
-                                    Creator
-                                </Badge>
-                            )}
-                            <p><b>UID: </b>{user?.uid}</p>
+                            <UserDeleteBtn id={user.uid} />
+
+                            <div style={{ marginTop: 10 }}>
+                                {userData?.isAdmin && (
+                                    <Badge
+                                        pill
+                                        bg="danger"
+                                        style={{ marginLeft: 5 }}>
+                                        Admin
+                                    </Badge>
+                                )}
+                                {userData?.isCreator && (
+                                    <Badge
+                                        pill
+                                        bg="primary"
+                                        style={{ marginLeft: 5 }}>
+                                        Creator
+                                    </Badge>
+                                )}
+                                {!user?.emailVerified && (
+                                    <Badge
+                                        pill
+                                        bg="secondary"
+                                        style={{ marginLeft: 5 }}>
+                                        Unverified
+                                    </Badge>
+                                )}
+                            </div>
+                            <p className="fs-6 text-muted">
+                                {user?.uid}
+                            </p>
                         </div>
                     </Col>
                 </Row>

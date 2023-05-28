@@ -59,7 +59,8 @@ export default function Map() {
                                 <Alert
                                     data-bs-theme="dark"
                                     className='d-flex align-items-center'
-                                    variant="primary">
+                                    variant="primary"
+                                >
                                     <Shuffle
                                         size={20}
                                         style={{ marginRight: 10 }}
@@ -70,8 +71,7 @@ export default function Map() {
                                 </Alert>
                             )}
                             {map.removalReason && (
-                                <Alert
-                                    variant="danger">
+                                <Alert variant="danger">
                                     Map was made private due to a violation of the <Link to="/policy">Mapping Policy</Link>:
                                     <br />
                                     {map.removalReason}
@@ -96,7 +96,8 @@ export default function Map() {
                             </div>
                             <Link
                                 to={`/User/${map.authorID}`}
-                                style={{ textDecoration: "none" }}>
+                                style={{ textDecoration: "none" }}
+                            >
                                 <h5>by {map.authorName}</h5>
                             </Link>
                             <Linkify>
@@ -109,7 +110,8 @@ export default function Map() {
                             {isExpandable && (
                                 <Button
                                     variant="link"
-                                    onClick={() => setIsExpanded(!isExpanded)}>
+                                    onClick={() => setIsExpanded(!isExpanded)}
+                                >
                                     {isExpanded ? "Show Less" : "Show More"}
                                 </Button>
                             )}

@@ -53,11 +53,14 @@ export default function Maps() {
                             Browse and play maps created by the community.
                         </p>
                     </Col>
-                    <Col lg={5} style={{
-                        justifyContent: "center",
-                        alignItems: "center",
-                        display: "flex",
-                    }}>
+                    <Col
+                        lg={5}
+                        style={{
+                            justifyContent: "center",
+                            alignItems: "center",
+                            display: "flex",
+                        }}
+                    >
                         <InputGroup>
                             <Form.Control
                                 as="input"
@@ -92,11 +95,13 @@ export default function Maps() {
                     </Col>
                 </Row>
                 <Row>
-                    <Col style={{
-                        justifyContent: "center",
-                        alignItems: "center",
-                        display: "flex",
-                    }}>
+                    <Col
+                        style={{
+                            justifyContent: "center",
+                            alignItems: "center",
+                            display: "flex",
+                        }}
+                    >
                         {activeList.hasMore && (
                             <Button
                                 variant="primary"

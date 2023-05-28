@@ -41,19 +41,18 @@ export default function MapVerifyButton(props: { id: string, isVerified: boolean
             <Button
                 variant="warning"
                 onClick={() => setModalOpen(true)}
-                style={{ marginTop: 8, flex: "1 1 auto", width: "100%", display: "flex", justifyContent: "center" }}>
-
+                style={{ marginTop: 8, flex: "1 1 auto", width: "100%", display: "flex", justifyContent: "center" }}
+            >
                 <StarFill size={20} style={{ marginRight: 10 }} />
                 {verifyText}
-
             </Button>
 
             <Modal
                 contentClassName="bg-dark text-light"
                 show={isModalOpen}
                 onHide={() => setModalOpen(false)}
-                centered>
-
+                centered
+            >
                 <Modal.Header closeButton>
                     <Modal.Title>{verifyText} Map</Modal.Title>
                 </Modal.Header>
@@ -65,12 +64,14 @@ export default function MapVerifyButton(props: { id: string, isVerified: boolean
                 <Modal.Footer>
                     <Button
                         variant="secondary"
-                        onClick={() => setModalOpen(false)}>
+                        onClick={() => setModalOpen(false)}
+                    >
                         Close
                     </Button>
                     <Button
                         variant="warning"
-                        onClick={onVerify}>
+                        onClick={onVerify}
+                    >
                         {verifyText} Map
                     </Button>
                 </Modal.Footer>

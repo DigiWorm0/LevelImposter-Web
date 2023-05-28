@@ -7,6 +7,7 @@ import MapBanner from '../components/map/MapBanner';
 import { useUserMaps } from '../hooks/useMaps';
 import useUser, { _useUser } from '../hooks/useUser';
 import UserDeleteBtn from '../components/map/UserDeleteBtn';
+import UserBanBtn from '../components/map/UserBanBtn';
 
 export default function User() {
     const { id } = useParams();
@@ -65,36 +66,44 @@ export default function User() {
                 </Row>
                 <Row style={{ marginBottom: 20 }}>
                     <Col lg={{ offset: 3, span: 6 }} style={{ textAlign: "center" }}>
-                        {author?.isAdmin && (
-                            <Badge
-                                pill
-                                bg="danger"
-                                style={{ marginLeft: 5 }}>
-                                Admin
-                            </Badge>
+                        {id && (
+                            <UserBanBtn id={id} />
                         )}
-
-                        {author?.isCreator && (
-                            <Badge
-                                pill
-                                bg="primary"
-                                style={{ marginLeft: 5 }}>
-                                Creator
-                            </Badge>
-                        )}
-
-                        {author?.banned && (
-                            <Badge
-                                pill
-                                bg="danger"
-                                style={{ marginLeft: 5 }}>
-                                Banned
-                            </Badge>
-                        )}
-
                         {id && (
                             <UserDeleteBtn id={id} />
                         )}
+
+                        <div style={{ marginTop: 10 }}>
+                            {author?.isAdmin && (
+                                <Badge
+                                    pill
+                                    bg="danger"
+                                    style={{ marginLeft: 5 }}
+                                >
+                                    Admin
+                                </Badge>
+                            )}
+
+                            {author?.isCreator && (
+                                <Badge
+                                    pill
+                                    bg="primary"
+                                    style={{ marginLeft: 5 }}
+                                >
+                                    Creator
+                                </Badge>
+                            )}
+
+                            {author?.isBanned && (
+                                <Badge
+                                    pill
+                                    bg="danger"
+                                    style={{ marginLeft: 5 }}
+                                >
+                                    Banned
+                                </Badge>
+                            )}
+                        </div>
                     </Col>
                 </Row>
             </Container>

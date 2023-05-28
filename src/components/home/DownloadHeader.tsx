@@ -33,8 +33,8 @@ export default function DownloadHeader() {
                         alignItems: "center",
                         display: "flex",
                         flexDirection: "column"
-                    }}>
-
+                    }}
+                >
                     <h1 className="fw-bold">
                         Custom Maps for Among Us
                     </h1>
@@ -47,24 +47,23 @@ export default function DownloadHeader() {
                             variant="primary"
                             size="lg"
                             href={downloadLink}
-                            style={{ margin: 5 }}>
+                            style={{ margin: 5 }}
+                        >
                             Download Mod
                         </Button>
                         <Button
                             variant="danger"
                             size="lg"
                             href="https://editor.levelimposter.net/"
-                            style={{ margin: 5 }}>
+                            style={{ margin: 5 }}
+                        >
                             Map Editor
                         </Button>
                     </div>
-
                     <p className="text-muted mt-3">
                         <b>{downloadCount.toLocaleString()}</b> downloads
                     </p>
-
                 </Col>
-
             </Row>
             <Row>
                 <Col
@@ -76,9 +75,10 @@ export default function DownloadHeader() {
                         alignItems: "center",
                         display: "flex",
                         flexDirection: "column"
-                    }}>
+                    }}
+                >
                     <img
-                        alt="screenshot"
+                        alt=""
                         src="/editor-3.png"
                         style={{
                             width: "100%",

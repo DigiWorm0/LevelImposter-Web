@@ -25,12 +25,10 @@ export default function MapDownloadBtn(props: { id: string, authorID: string }) 
                     e.stopPropagation();
                     onDownload();
                 }}
-                style={{ marginTop: 8, flex: "1 1 auto", width: "100%", display: "flex", justifyContent: "center" }}>
-
-
+                style={{ marginTop: 8, flex: "1 1 auto", width: "100%", display: "flex", justifyContent: "center" }}
+            >
                 <Download size={20} style={{ marginRight: 10 }} />
                 Download
-
             </Button>
         </>
     );

@@ -15,8 +15,8 @@ export default function MapBanner(props: { map: LIMetadata }) {
             style={{
                 transform: isHovering ? "scale(1.05)" : "scale(1)",
                 transition: "transform 0.2s ease-in-out",
-            }}>
-
+            }}
+        >
             <MapTags
                 isPublic={props.map.isPublic}
                 isVerified={props.map.isVerified}
@@ -27,11 +27,14 @@ export default function MapBanner(props: { map: LIMetadata }) {
             <h6>
                 by {props.map.authorName}
             </h6>
-            <p className="text-muted" style={{
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                textOverflow: "ellipsis"
-            }}>
+            <p
+                className="text-muted"
+                style={{
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis"
+                }}
+            >
                 {props.map.description === "" ? <i>No Description</i> : props.map.description}
             </p>
         </Link>

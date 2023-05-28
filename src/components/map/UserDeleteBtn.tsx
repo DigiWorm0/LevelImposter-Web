@@ -1,9 +1,8 @@
 import React from "react";
 import { Button, Modal } from "react-bootstrap";
-import { TrashFill } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
+import useAdminTools from "../../hooks/useAdminTools";
 import useUser from "../../hooks/useUser";
-import useAdminTools from "../../hooks/useAdmin";
 
 export default function UserDeleteBtn(props: { id: string }) {
     const [isDeleting, setIsDeleting] = React.useState(false);
@@ -28,7 +27,7 @@ export default function UserDeleteBtn(props: { id: string }) {
         });
     }, [props.id, userData, adminTools, navigate]);
 
-    if (!userData?.isAdmin)
+    if (!userData?.isAdmin && userData?.uid !== props.id)
         return null;
 
     return (
@@ -39,25 +38,21 @@ export default function UserDeleteBtn(props: { id: string }) {
                 disabled={isDeleting}
                 style={{ marginTop: 8, flex: "1 1 auto", width: "100%", display: "flex", justifyContent: "center" }}
             >
-                <TrashFill
-                    size={20}
-                    style={{ marginRight: 10 }}
-                />
-                Delete
+                Delete Account
             </Button>
 
             <Modal
                 contentClassName="bg-dark text-light"
                 show={isModalOpen}
                 onHide={() => setModalOpen(false)}
-                centered>
-
+                centered
+            >
                 <Modal.Header closeButton>
-                    <Modal.Title>Delete User</Modal.Title>
+                    <Modal.Title>Delete Account</Modal.Title>
                 </Modal.Header>
 
                 <Modal.Body>
-                    <p>Are you <i>100% sure</i> you want to <b>delete</b> this user? This action is permanent and irreversible.</p>
+                    <p>Are you <i>100% sure</i> you want to <b>delete</b> this account? This will delete all stored user data including any uploaded maps. This action is permanent and irreversible.</p>
                 </Modal.Body>
 
                 <Modal.Footer>

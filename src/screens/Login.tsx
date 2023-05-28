@@ -10,6 +10,12 @@ import { Navigate } from 'react-router-dom';
 import LIHelment from '../components/LIHelmet';
 import MainHeader from '../components/MainHeader';
 import { auth, db, githubProvider, googleProvider } from '../hooks/Firebase';
+import { useUpdateUser } from '../hooks/useUser';
+import { LIUser } from '../types/LIUser';
+
+const MIN_PASSWORD_LENGTH = 6;
+const MIN_AGE = 13;
+const MAX_AGE = 122;
 
 export default function Login() {
     const [user] = useAuthState(auth);
@@ -17,6 +23,9 @@ export default function Login() {
     const [password, setPassword] = React.useState('');
     const [confirmPassword, setConfirmPassword] = React.useState('');
     const [error, setError] = React.useState<string | undefined>(undefined);
+    const [sentResetEmail, setSentResetEmail] = React.useState(false);
+    const [dob, setDob] = React.useState('');
+    const updateUserData = useUpdateUser();
 
     if (user) {
         return <Navigate to="/profile" />;
@@ -53,9 +62,14 @@ export default function Login() {
                 setDoc(docRef, {
                     displayName,
                     photoURL,
-                    uid,
-                    isAdmin: false,
-                    isCreator: false,
+                    uid
+                });
+            } else {
+                const userData = doc.data() as LIUser;
+                updateUserData({
+                    ...userData,
+                    displayName: displayName ?? userData.displayName ?? undefined,
+                    photoURL: photoURL ?? userData.photoURL ?? undefined
                 });
             }
         });
@@ -86,6 +100,24 @@ export default function Login() {
             setError('Passwords do not match');
             return;
         }
+        if (password.length < MIN_PASSWORD_LENGTH) {
+            setError(`Get a better password, this isn't your luggage combination. It must be at least ${MIN_PASSWORD_LENGTH} characters long.`);
+            return;
+        }
+        if (dob === undefined || dob === null || dob === '') {
+            setError('Unless you\'re an unborn child, please enter your date of birth.');
+            return;
+        }
+        const age = new Date().getFullYear() - new Date(dob).getFullYear();
+        if (age < MIN_AGE) {
+            setError(`Sorry, Uncle Sam requires you must be at least ${MIN_AGE} years old to use LevelImposter.`);
+            return;
+        }
+        if (age > MAX_AGE) {
+            setError(`Ha ha, nice try. The oldest person to ever live was ${MAX_AGE} years old. You're not ${age} years old.`);
+            return;
+        }
+
         createUserWithEmailAndPassword(auth, username, password).then((cred) => {
             sendEmailVerification(cred.user);
             onSignUp(cred);
@@ -95,6 +127,7 @@ export default function Login() {
     }
 
     const forgotPassword = () => {
+        setSentResetEmail(true);
         sendPasswordResetEmail(auth, username).then(() => {
             setError('Password reset email sent');
         }).catch((e) => {
@@ -118,10 +151,9 @@ export default function Login() {
                             style={{ margin: 10 }}
                             variant="danger"
                             show={error !== undefined}
-                            onClose={() => setError(undefined)}>
-
+                            onClose={() => setError(undefined)}
+                        >
                             {error}
-
                         </Alert>
                     </Col>
                 </Row>
@@ -132,25 +164,29 @@ export default function Login() {
                             <Form.Group className="mb-3" controlId="formBasicEmail">
                                 <Form.Label>Email address</Form.Label>
                                 <Form.Control
+                                    required
                                     type="email"
                                     placeholder="Enter email"
                                     value={username}
                                     className={"bg-dark text-white border-0"}
-                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value)} />
+                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value)}
+                                />
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="formBasicPassword">
                                 <Form.Label>Password</Form.Label>
                                 <Form.Control
+                                    required
                                     type="password"
                                     placeholder="Password"
                                     value={password}
                                     className={"bg-dark text-white border-0"}
-                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)} />
+                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+                                />
                             </Form.Group>
                             <Button className="mb-3" variant="primary" type="submit">
                                 Sign In
                             </Button>
-                            <Button className="mb-3 ms-1" variant="danger" onClick={forgotPassword}>
+                            <Button className="mb-3 ms-1" variant="danger" onClick={forgotPassword} disabled={sentResetEmail}>
                                 Forgot Password
                             </Button>
                         </Form>
@@ -161,14 +197,16 @@ export default function Login() {
                             style={{ margin: 5 }}
                             variant="dark"
                             size="lg"
-                            onClick={signInWithGoogle}>
+                            onClick={signInWithGoogle}
+                        >
                             <Google size={24} />
                         </Button>
                         <Button
                             style={{ margin: 5 }}
                             variant="dark"
                             size="lg"
-                            onClick={signInWithGithub}>
+                            onClick={signInWithGithub}
+                        >
                             <Github size={24} />
                         </Button>
                     </Col>
@@ -178,39 +216,51 @@ export default function Login() {
                             <Form.Group className="mb-3" controlId="formBasicEmail">
                                 <Form.Label>Email address</Form.Label>
                                 <Form.Control
+                                    required
                                     type="email"
                                     placeholder="Enter email"
                                     value={username}
                                     className={"bg-dark text-white border-0"}
-                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value)} />
+                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value)}
+                                />
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="formBasicPassword">
                                 <Form.Label>Password</Form.Label>
                                 <Form.Control
+                                    required
                                     type="password"
                                     placeholder="Password"
                                     value={password}
                                     className={"bg-dark text-white border-0"}
-                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)} />
+                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+                                />
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="formBasicPassword">
                                 <Form.Label>Confirm Password</Form.Label>
                                 <Form.Control
+                                    required
                                     type="password"
                                     placeholder="Password"
                                     value={confirmPassword}
                                     className={"bg-dark text-white border-0"}
-                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setConfirmPassword(e.target.value)} />
+                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setConfirmPassword(e.target.value)}
+                                />
+                            </Form.Group>
+                            <Form.Group className="mb-3" controlId="formBasicDob">
+                                <Form.Label>Date of Birth</Form.Label>
+                                <Form.Control
+                                    required
+                                    type="date"
+                                    placeholder="Date of Birth"
+                                    value={dob}
+                                    className={"bg-dark text-white border-0"}
+                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDob(e.target.value)}
+                                />
                             </Form.Group>
                             <Button className="mb-3" variant="primary" type="submit">
                                 Sign Up
                             </Button>
                         </Form>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col>
-
                     </Col>
                 </Row>
             </Container>
