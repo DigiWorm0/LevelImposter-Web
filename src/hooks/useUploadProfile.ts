@@ -28,6 +28,9 @@ export default function useUploadProfile() {
                 ctx.drawImage(img, 0, 0, IMG_WIDTH, IMG_HEIGHT);
                 const dataURL = canvas.toDataURL("image/jpeg");
 
+                if (!userData)
+                    return;
+
                 updateUser({
                     ...userData,
                     photoURL: dataURL
