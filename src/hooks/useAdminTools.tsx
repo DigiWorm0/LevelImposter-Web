@@ -1,4 +1,4 @@
-import { collection, doc, getDoc, setDoc } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, setDoc } from "firebase/firestore";
 import React from "react";
 import { LIUser } from "../types/LIUser";
 import { db } from "./Firebase";
@@ -12,8 +12,11 @@ export default function useAdminTools() {
                 if (doc.exists()) {
                     const data = doc.data() as LIUser;
                     data.isBanned = true;
-                    setDoc(docRef, data);
-                    resolve("Done");
+                    setDoc(docRef, data).then(() => {
+                        resolve("Done");
+                    }).catch((error) => {
+                        reject(error);
+                    });
                 }
                 else {
                     reject("User does not exist");
