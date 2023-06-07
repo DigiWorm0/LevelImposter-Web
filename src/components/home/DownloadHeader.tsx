@@ -1,13 +1,16 @@
 import React from 'react';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import GHRelease from '../../types/GHRelease';
-import RainbowText from '../RainbowText';
+
+const RELEASE_COUNT = 100;
+const API_URL = `https://api.github.com/repos/DigiWorm0/LevelImposter/releases?per_page=${RELEASE_COUNT}`;
+const DOWNLOAD_LINK = "https://github.com/DigiWorm0/LevelImposter/releases";
 
 export default function DownloadHeader() {
     const [releases, setReleases] = React.useState<GHRelease[]>([]);
 
     React.useEffect(() => {
-        fetch('https://api.github.com/repos/DigiWorm0/LevelImposter/releases')
+        fetch(API_URL)
             .then(response => response.json())
             .then(releases => {
                 setReleases(releases);
@@ -20,7 +23,7 @@ export default function DownloadHeader() {
             return acc + asset.download_count;
         }, 0);
     }, 0) : 0;
-    const downloadLink = isLoaded ? releases[0].html_url : "https://github.com/DigiWorm0/LevelImposter/releases";
+    const downloadLink = isLoaded ? releases[0].html_url : DOWNLOAD_LINK;
 
     return (
         <Container>
