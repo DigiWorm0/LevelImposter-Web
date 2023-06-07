@@ -35,8 +35,11 @@ export default function useAdminTools() {
                 if (doc.exists()) {
                     const data = doc.data() as LIUser;
                     data.isDeleted = true;
-                    setDoc(docRef, data);
-                    resolve("Done");
+                    setDoc(docRef, data).then(() => {
+                        resolve("Done");
+                    }).catch((error) => {
+                        reject(error);
+                    });
                 }
                 else {
                     reject("User does not exist");
