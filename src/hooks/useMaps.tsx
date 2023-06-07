@@ -47,7 +47,7 @@ export function useUserMaps(userID?: string) {
     const user = useUser();
     const contrains = React.useMemo(() => {
         const mapQueries = [];
-        if (!user?.isAdmin)
+        if (!user?.isAdmin && userID !== user?.uid)
             mapQueries.push(where("isPublic", "==", true));
         if (userID)
             mapQueries.push(where("authorID", "==", userID));
