@@ -133,10 +133,17 @@ export async function deleteMap(mapID: string, authorID: string, userID: string)
     const docRef = doc(storeRef, mapID);
     promises.push(deleteDoc(docRef));
 
+    const urlList = [
+        `maps/${authorID}/${mapID}.png`,
+        `maps/${authorID}/${mapID}.lim`,
+        `maps/${authorID}/${mapID}.lim2`
+    ]
+
     if (authorID === userID) {
-        const storageURL = `maps/${authorID}/${mapID}.lim`;
-        const storageRef = ref(storage, storageURL);
-        promises.push(deleteObject(storageRef));
+        for (const url of urlList) {
+            const storageRef = ref(storage, url);
+            promises.push(deleteObject(storageRef));
+        }
     }
 
     await Promise.all(promises).catch((e) => {
