@@ -1,7 +1,7 @@
 import { getDownloadURL, ref } from "firebase/storage";
 import { Button } from "react-bootstrap";
-import { Download } from "react-bootstrap-icons";
 import { storage } from "../../hooks/utils/Firebase";
+import { Download } from "react-bootstrap-icons";
 
 export interface MapDownloadBtnProps {
     id: string;
@@ -35,19 +35,18 @@ export default function MapDownloadBtn(props: MapDownloadBtnProps) {
     }
 
     return (
-        <>
-            <Button
-                variant="primary"
-                onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    onDownload();
-                }}
-                style={{ marginTop: 8, flex: "1 1 auto", width: "100%", display: "flex", justifyContent: "center" }}
-            >
-                <Download size={20} style={{ marginRight: 10 }} />
-                Download
-            </Button>
-        </>
+        <Button
+            variant="primary"
+            size={"sm"}
+            onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                onDownload();
+            }}
+            style={{ marginTop: 8, flex: "1 1 auto", width: "100%", display: "flex", justifyContent: "center" }}
+        >
+            <Download size={20} style={{ marginRight: 10 }} />
+            Download
+        </Button>
     );
 }

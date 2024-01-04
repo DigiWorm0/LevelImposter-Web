@@ -12,7 +12,7 @@ export default function MapThumbnails(props: { maps: MaybeLIMetadata[], scroll?:
             alignContent: props.scroll ? "flex-start" : "center",
             paddingBottom: 20,
             paddingTop: 20,
-            gap: 20
+            gap: 12
         }}
         >
             {props.scroll && <div style={{ width: 50, height: 20, flexShrink: 0 }} />}

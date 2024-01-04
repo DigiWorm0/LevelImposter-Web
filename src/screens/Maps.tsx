@@ -8,8 +8,9 @@ import MapFilter from "../types/MapFilter";
 import useUser from "../hooks/useUser";
 
 export default function Maps() {
+    const [searchQuery, setSearchQuery] = React.useState<string>("");
     const [filter, setFilter] = React.useState<MapFilter>(MapFilter.Featured);
-    const mapList = useMaps(filter);
+    const mapList = useMaps(filter, searchQuery);
     const user = useUser();
 
     return (
@@ -44,6 +45,8 @@ export default function Maps() {
                                 size="lg"
                                 placeholder="Search maps..."
                                 className="bg-dark text-white border-0"
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
                             />
                             <Dropdown style={{ marginTop: 20, marginLeft: 20 }}>
                                 <Dropdown.Toggle variant="primary" id="dropdown-basic">
@@ -63,7 +66,7 @@ export default function Maps() {
                                                 onClick={() => setFilter(value)}
                                                 active={filter === value}
                                             >
-                                                {key}
+                                                {value}
                                             </Dropdown.Item>
                                         );
                                     })}
@@ -79,7 +82,12 @@ export default function Maps() {
                     </Col>
                 </Row>
                 <Row>
-                    <Col>
+                    <Col className={"text-center"}>
+                        {mapList.maps.length === 0 && (
+                            <p className={"text-muted"}>
+                                No maps found.
+                            </p>
+                        )}
                         {mapList.error?.message && (
                             <p className={"text-danger"}>
                                 {mapList.error.message}

@@ -33,10 +33,10 @@ export default function UserDeleteBtn(props: { id: string }) {
     return (
         <>
             <Button
-                variant="danger"
+                variant="outline-danger"
                 onClick={() => setModalOpen(true)}
                 disabled={isDeleting}
-                style={{ marginTop: 8, flex: "1 1 auto", width: "100%", display: "flex", justifyContent: "center" }}
+                size={"sm"}
             >
                 Delete Account
             </Button>

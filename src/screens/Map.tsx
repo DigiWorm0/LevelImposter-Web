@@ -145,16 +145,16 @@ export default function Map() {
                                             Mod</a> <i>(If you haven't already)</i>
                                         </li>
                                         <li>
-                                            Download the map LIM file above
+                                            Download the map file above
                                         </li>
                                         <li>
                                             Open Among Us
                                         </li>
                                         <li>
-                                            Go to <code>Maps {'>>>'} Open Folder</code>
+                                            Go to <code>Maps {'>>>'} Folder Icon</code>
                                         </li>
                                         <li>
-                                            Save the map LIM file in the folder
+                                            Save the map file in the folder. <i>(Don't rename it)</i>
                                         </li>
                                         <li>
                                             Go back to Among Us and re-open the Maps menu
@@ -185,15 +185,15 @@ export default function Map() {
                                             Start an Among Us lobby under any map
                                         </li>
                                         <li>
-                                            Open lobby settings
+                                            Open the blue box below the computer
                                         </li>
                                         <li>
-                                            Select the map from the selector
+                                            Select the map from the maps menu
                                         </li>
                                     </ol>
                                     <p>
                                         All players must have the LevelImposter mod installed to play the map.
-                                        The map will automatically sync to all lobby members.
+                                        The map will automatically download & sync to all lobby members.
                                     </p>
                                 </Card.Body>
                             </Card>

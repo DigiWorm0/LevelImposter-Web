@@ -15,15 +15,10 @@ import LIMetadata, { MaybeLIMetadata } from "../types/LIMetadata";
 import { db } from "./utils/Firebase";
 import useUser from "./useUser";
 import MapFilter, { MAP_FILTER_CONSTRAINTS } from "../types/MapFilter";
+import useMapSearch from "./useMapSearch";
+import LIMapList from "../types/LIMapList";
 
 const MAX_PER_PAGE = 3 * 30;
-
-export interface LIMapList {
-    maps: MaybeLIMetadata[];
-    error?: any;
-    loadMore: () => void;
-    hasMore: boolean;
-}
 
 export function _useMaps(contraints: QueryConstraint[]): LIMapList {
     const [error, setError] = React.useState<any>(undefined);
@@ -86,11 +81,12 @@ export function _useMaps(contraints: QueryConstraint[]): LIMapList {
     };
 }
 
-export default function useMaps(filter?: MapFilter) {
-    const constraints = React.useMemo(() => {
-        return MAP_FILTER_CONSTRAINTS[filter ?? MapFilter.Featured];
-    }, [filter]);
-    return _useMaps(constraints);
+export default function useMaps(filter?: MapFilter, query?: string) {
+    const constraints = MAP_FILTER_CONSTRAINTS[filter ?? MapFilter.Featured]
+    const allMaps = _useMaps(constraints);
+    const searchedMaps = useMapSearch(query);
+
+    return query && query !== "" ? searchedMaps : allMaps;
 }
 
 export function useUserMaps(userID?: string) {

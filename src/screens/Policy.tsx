@@ -20,7 +20,7 @@ export default function Policy() {
                             In order to abide by local laws and regulations as well as InnerSloth's <a
                             href="https://www.innersloth.com/among-us-mod-policy/" target={"_blank"} rel="noreferrer">Among
                             Us Mod Policy</a>,
-                            you must agree upon a few rules before uploading a map to the LevelImposter API...
+                            you must agree upon a few rules before uploading a map to the LevelImposter workshop...
                         </p>
 
                         <ol>
@@ -51,7 +51,7 @@ export default function Policy() {
                             Both LevelImposter and InnerSloth reserve the right to modify or delete your map or account
                             at any time for any reason.
                             <br /><br />
-                            By utilizing the LevelImposter API, you are agreeing to abide by these rules and to be bound
+                            By utilizing the LevelImposter, you are agreeing to abide by these rules and to be bound
                             by the terms of the Among Us Mod Policy.
                             <br /><br />
                             A copy of these rules can be found at <Link to="/policy" target={'_blank'}

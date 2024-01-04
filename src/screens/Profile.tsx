@@ -12,6 +12,7 @@ import { useUserMaps } from '../hooks/useMaps';
 import useUser from '../hooks/useUser';
 import MapThumbnails from "../components/map/MapThumbnails";
 import useUpdateUser from "../hooks/useUpdateUser";
+import { Check, PencilFill, X } from "react-bootstrap-icons";
 
 export default function Profile() {
     const [user] = useAuthState(auth);
@@ -31,6 +32,7 @@ export default function Profile() {
             return;
         updateUserData({
             ...userData,
+            photoURL: undefined,
             displayName: displayName,
         }).then(() => {
             setIsEditing(false);
@@ -64,7 +66,7 @@ export default function Profile() {
             />
             <MainHeader />
             <Container className="Profile">
-                <Row style={{ marginTop: 20 }}>
+                <Row>
                     <Col xs={12}>
                         <Alert
                             style={{ margin: 10 }}
@@ -77,94 +79,82 @@ export default function Profile() {
                     </Col>
                 </Row>
                 <Row>
-                    <Col lg={12} style={{ textAlign: "center" }}>
-                        <button
-                            disabled
-                            style={{
-                                width: 200,
-                                height: 200,
-                                borderRadius: 20,
-                                marginTop: 30,
-                                transition: 'filter 0.2s',
-                                filter: 'brightness(1)',
-                                textDecoration: 'none',
-                                border: 'none',
-                                background: 'none',
-                            }}
-                        >
+                    <Col xs={8} className={"ms-lg-5 mt-5"}>
+                        <h3>
                             <img
                                 referrerPolicy="no-referrer"
-                                src={userData?.photoURL ? userData.photoURL.replace("s96-c", "s200-c") : '/logo512.png'}
-                                alt={user.displayName ? user.displayName : 'New User'}
+                                src={userData?.photoURL ?? '/logo512.png'}
+                                alt={user.displayName ?? 'New User'}
                                 style={{
-                                    width: 200,
-                                    height: 200,
-                                    borderRadius: 20,
+                                    width: 50,
+                                    height: 50,
+                                    marginRight: 14,
+                                    borderRadius: 10,
                                     objectFit: 'cover',
                                 }}
                             />
-                        </button>
+                            {isEditing && (
+                                <>
+                                    <Form.Control
+                                        size="lg"
+                                        type="text"
+                                        placeholder="Display Name"
+                                        value={displayName}
+                                        className={"bg-dark text-white border-0"}
+                                        style={{ maxWidth: 200, display: "inline" }}
+                                        autoFocus
+                                        onFocus={(e) => e.target.select()}
+                                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                            setDisplayName(e.target.value);
+                                        }}
+                                    />
+                                    <X
+                                        color={"#999"}
+                                        size={24}
+                                        style={{ marginLeft: 10, cursor: 'pointer' }}
+                                        onClick={() => {
+                                            setIsEditing(false);
+                                        }}
+                                    />
+                                    <Check
+                                        color={"#999"}
+                                        size={24}
+                                        style={{ marginLeft: 10, cursor: 'pointer' }}
+                                        onClick={onSaveProfile}
+                                    />
+                                </>
+                            )}
+                            {!isEditing && (
+                                <>
+                                    {user.displayName ?? 'New User'}
+                                    <PencilFill
+                                        color={"#999"}
+                                        size={14}
+                                        style={{ marginLeft: 10, cursor: 'pointer' }}
+                                        onClick={() => {
+                                            setIsEditing(true);
+                                        }}
+                                    />
+                                </>
+                            )}
+                        </h3>
                     </Col>
-                </Row>
-                <Row>
-                    <Col lg={12} style={{ textAlign: "center" }}>
-                        {isEditing ? (
-                            <Form.Control
-                                size="lg"
-                                type="text"
-                                placeholder="Display Name"
-                                value={displayName}
-                                className={"bg-dark text-white border-0"}
-                                autoFocus
-                                onFocus={(e) => e.target.select()}
-                                style={{ marginTop: 20, marginBottom: 20, textAlign: "center", fontSize: 32 }}
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                    setDisplayName(e.target.value);
-                                }}
-                            />
-
-                        ) : (
-                            <>
-                                <h2 style={{ marginTop: 20 }}>
-                                    {user.displayName ? user.displayName : 'New User'}
-                                </h2>
-                            </>
-                        )}
-                        <Button
-                            style={{ marginLeft: 5 }}
-                            variant={'primary'}
-                            onClick={() => {
-                                setIsEditing(e => !e);
-                            }}
-                        >
-                            {isEditing ? 'Cancel' : 'Edit Name'}
-                        </Button>
-                        {isEditing && (
-                            <Button
-                                style={{ marginLeft: 5 }}
-                                variant="success"
-                                onClick={onSaveProfile}
-                            >
-                                Save
-                            </Button>
-                        )}
+                    <Col className={"me-lg-5 mt-5"}>
                         <Button
                             style={{ marginLeft: 5 }}
                             variant="danger"
+                            className={"float-end"}
                             onClick={() => {
                                 signOut(auth);
                             }}
                         >
                             Sign out
                         </Button>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col style={{ textAlign: "center" }}>
                         {!user?.emailVerified && (
                             <Button
                                 style={{ margin: 5 }}
                                 variant="secondary"
+                                className={"float-end"}
                                 onClick={sendVerification}
                             >
                                 Re-send Verification Email
@@ -174,10 +164,6 @@ export default function Profile() {
                 </Row>
                 <Row>
                     <Col xs={{ span: 6, offset: 3 }}>
-                        <h3 style={{ marginTop: 20, textAlign: "center" }}>
-                            <b>Your Maps:</b>
-                        </h3>
-
                         <MapThumbnails
                             maps={userMaps.maps}
                         />
