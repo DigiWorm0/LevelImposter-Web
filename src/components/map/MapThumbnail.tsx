@@ -2,7 +2,7 @@ import React from "react";
 import { Card, Placeholder, PlaceholderButton } from "react-bootstrap";
 import { HeartFill, Shuffle, TrashFill } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
-import { useMap } from "../../hooks/useMaps";
+import useMap from "../../hooks/useMap";
 import LIMetadata from "../../types/LIMetadata";
 import MapDownloadBtn from "./MapDownloadBtn";
 
@@ -33,7 +33,7 @@ export default function MapThumbnail(props: { map: LIMetadata | undefined }) {
             >
                 <Card
                     style={{ width: 350 }}
-                    className={"bg-dark text-light"}
+                    className={"bg-dark text-light border-0"}
                 >
                     {remixOf && (
                         <Card.Header className={"d-flex align-items-center justify-content-center"}>
@@ -47,7 +47,8 @@ export default function MapThumbnail(props: { map: LIMetadata | undefined }) {
                         </Card.Header>
                     )}
                     {map.removalReason && (
-                        <Card.Header className={"d-flex align-items-center justify-content-center bg-danger text-light"}>
+                        <Card.Header
+                            className={"d-flex align-items-center justify-content-center bg-danger text-light"}>
                             <TrashFill
                                 style={{ marginRight: 5, minWidth: 14 }}
                                 size={14}
@@ -103,8 +104,7 @@ export default function MapThumbnail(props: { map: LIMetadata | undefined }) {
                 </Card>
             </Link>
         );
-    }
-    else {
+    } else {
         return (
             <Placeholder
                 style={{

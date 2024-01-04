@@ -1,10 +1,10 @@
 import React from 'react';
 import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { Heart, HeartFill } from "react-bootstrap-icons";
-import { useLiked } from "../../hooks/useMaps";
+import useMapLikes from "../../hooks/useMapLikes";
 
 export default function MapLikeBtn(props: { id: string | undefined, likeCount: number }) {
-    const [isLiked, toggleLike, canLike] = useLiked(props.id);
+    const [isLiked, toggleLike, canLike] = useMapLikes(props.id);
     const [likeOffset, setLikeOffset] = React.useState(0);
 
     const likeCount = props.likeCount + likeOffset;

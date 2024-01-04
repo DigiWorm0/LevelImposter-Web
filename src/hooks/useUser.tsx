@@ -1,9 +1,9 @@
-import { collection, doc, getDoc, setDoc } from "firebase/firestore";
+import { collection, doc, getDoc } from "firebase/firestore";
 import React from "react";
 import { LIUser } from "../types/LIUser";
-import { auth, db } from "./Firebase";
-import { updateProfile } from "firebase/auth";
-import { useAuthState } from "react-firebase-hooks/auth";
+import { db } from "./utils/Firebase";
+
+export const UserContext = React.createContext<LIUser | undefined>(undefined);
 
 export default function useUser() {
     return React.useContext(UserContext);
@@ -26,21 +26,4 @@ export function _useUser(uid?: string) {
     }, [uid]);
 
     return user;
-}
-
-export const UserContext = React.createContext<LIUser | undefined>(undefined);
-
-export function useUpdateUser() {
-    const [user] = useAuthState(auth);
-
-    const updateUser = React.useCallback((userData: LIUser) => {
-        if (!user)
-            return Promise.reject("User not logged in");
-        return updateProfile(user, {
-            displayName: userData.displayName,
-            photoURL: userData.photoURL
-        });
-    }, [user]);
-
-    return updateUser;
 }

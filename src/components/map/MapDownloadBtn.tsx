@@ -1,10 +1,14 @@
 import { getDownloadURL, ref } from "firebase/storage";
 import { Button } from "react-bootstrap";
 import { Download } from "react-bootstrap-icons";
-import { storage } from "../../hooks/Firebase";
-import { getDoc } from "firebase/firestore";
+import { storage } from "../../hooks/utils/Firebase";
 
-export default function MapDownloadBtn(props: { id: string, authorID: string }) {
+export interface MapDownloadBtnProps {
+    id: string;
+    authorID: string;
+}
+
+export default function MapDownloadBtn(props: MapDownloadBtnProps) {
 
     const onDownload = () => {
         const storageURL = `maps/${props.authorID}/${props.id}.lim`;
@@ -15,8 +19,7 @@ export default function MapDownloadBtn(props: { id: string, authorID: string }) 
         getDownloadURL(storeRef).then((url) => {
             window.location.href = url;
         }).catch((err) => {
-            if (err.code !== "storage/object-not-found")
-            {
+            if (err.code !== "storage/object-not-found") {
                 console.error(err);
                 alert(err);
                 return;

@@ -2,22 +2,22 @@ import React from "react";
 import { Button, Modal } from "react-bootstrap";
 import { ShieldFillX } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
-import useAdminTools from "../../hooks/useAdminTools";
 import useUser from "../../hooks/useUser";
+import useBanUser from "../../hooks/useBanUser";
 
 export default function UserBanBtn(props: { id: string }) {
     const [isDeleting, setIsDeleting] = React.useState(false);
     const [isModalOpen, setModalOpen] = React.useState(false);
     const userData = useUser();
     const navigate = useNavigate();
-    const adminTools = useAdminTools();
+    const banUser = useBanUser();
 
     const onDelete = React.useCallback(() => {
         if (!userData)
             return;
 
         setIsDeleting(true);
-        adminTools.banUser(props.id).then(() => {
+        banUser(props.id).then(() => {
             setIsDeleting(false);
             navigate("/maps");
             console.log(`Banned user ${props.id}`);
@@ -26,7 +26,7 @@ export default function UserBanBtn(props: { id: string }) {
             alert(err);
             setIsDeleting(false);
         });
-    }, [props.id, userData, adminTools, navigate]);
+    }, [props.id, userData, banUser, navigate]);
 
     if (!userData?.isAdmin)
         return null;
@@ -57,7 +57,8 @@ export default function UserBanBtn(props: { id: string }) {
                 </Modal.Header>
 
                 <Modal.Body>
-                    <p>Are you <i>100% sure</i> you want to <b>b-b-ban</b> this account? This will delete any uploaded maps and prevent the user from logging in.</p>
+                    <p>Are you <i>100% sure</i> you want to <b>b-b-ban</b> this account? This will delete any uploaded
+                        maps and prevent the user from logging in.</p>
                 </Modal.Body>
 
                 <Modal.Footer>

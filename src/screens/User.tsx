@@ -1,13 +1,12 @@
 import { Badge, Col, Container, ListGroup, Row } from 'react-bootstrap';
-import Spinner from 'react-bootstrap/Spinner';
 import { Navigate, useParams } from 'react-router-dom';
-import LIHelment from '../components/LIHelmet';
-import MainHeader from '../components/MainHeader';
-import MapBanner from '../components/map/MapBanner';
+import LIHelmet from '../components/common/LIHelmet';
+import MainHeader from '../components/common/MainHeader';
 import { useUserMaps } from '../hooks/useMaps';
 import useUser, { _useUser } from '../hooks/useUser';
 import UserDeleteBtn from '../components/map/UserDeleteBtn';
 import UserBanBtn from '../components/map/UserBanBtn';
+import MapThumbnails from "../components/map/MapThumbnails";
 
 export default function User() {
     const { id } = useParams();
@@ -23,7 +22,7 @@ export default function User() {
 
     return (
         <>
-            <LIHelment
+            <LIHelmet
                 title={`${author?.displayName || "LevelImposter"} - User`}
                 description={`View ${(author?.displayName + "'s") || "your"} profile and maps.`}
                 URL={`https://LevelImposter.net/#/User/${id}`}
@@ -48,14 +47,9 @@ export default function User() {
                     </Col>
                 </Row>
                 <Row>
-                    <Col lg={{ offset: 3, span: 6 }} style={{ textAlign: "center" }}>
+                    <Col lg={{ offset: 3, span: 6 }}>
+                        <MapThumbnails maps={authorMaps.maps} />
                         <ListGroup>
-                            {authorMaps.maps.map((map) => (
-                                <MapBanner
-                                    key={map.id}
-                                    map={map}
-                                />
-                            ))}
                             {authorMaps.maps.length === 0 && (
                                 <p>
                                     No maps by this author.

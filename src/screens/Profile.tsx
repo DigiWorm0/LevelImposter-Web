@@ -1,18 +1,17 @@
-import { sendEmailVerification, signOut, updateProfile } from 'firebase/auth';
+import { sendEmailVerification, signOut } from 'firebase/auth';
 import React from 'react';
-import { Alert, Badge, Button, Col, Container, ListGroup, Row } from 'react-bootstrap';
+import { Alert, Badge, Button, Col, Container, Row } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Navigate } from 'react-router-dom';
-import LIHelment from '../components/LIHelmet';
-import MainHeader from '../components/MainHeader';
-import MapBanner from '../components/map/MapBanner';
+import LIHelmet from '../components/common/LIHelmet';
+import MainHeader from '../components/common/MainHeader';
 import UserDeleteBtn from '../components/map/UserDeleteBtn';
-import { auth } from '../hooks/Firebase';
+import { auth } from '../hooks/utils/Firebase';
 import { useUserMaps } from '../hooks/useMaps';
-import useUser, { useUpdateUser } from '../hooks/useUser';
-import useUploadProfile from '../hooks/useUploadProfile';
-import { DoorOpenFill, PencilFill, SaveFill } from 'react-bootstrap-icons';
+import useUser from '../hooks/useUser';
+import MapThumbnails from "../components/map/MapThumbnails";
+import useUpdateUser from "../hooks/useUpdateUser";
 
 export default function Profile() {
     const [user] = useAuthState(auth);
@@ -20,10 +19,8 @@ export default function Profile() {
     const [isEditing, setIsEditing] = React.useState(false);
     const [error, setError] = React.useState<string | undefined>(undefined);
     const [displayName, setDisplayName] = React.useState('');
-    const [isHovering, setIsHovering] = React.useState(false);
     const userMaps = useUserMaps(user?.uid);
     const updateUserData = useUpdateUser();
-    const uploadProfile = useUploadProfile();
 
     React.useEffect(() => {
         setDisplayName(user?.displayName || '');
@@ -60,7 +57,7 @@ export default function Profile() {
 
     return (
         <>
-            <LIHelment
+            <LIHelmet
                 title={`${user?.displayName ? user.displayName : "LevelImposter"} - Profile`}
                 description="View your profile and maps."
                 URL={`https://LevelImposter.net/#/Profile`}
@@ -83,16 +80,13 @@ export default function Profile() {
                     <Col lg={12} style={{ textAlign: "center" }}>
                         <button
                             disabled
-                            /*onClick={() => uploadProfile(setError)}
-                            onMouseEnter={() => setIsHovering(true)}
-                            onMouseLeave={() => setIsHovering(false)}*/
                             style={{
                                 width: 200,
                                 height: 200,
                                 borderRadius: 20,
                                 marginTop: 30,
                                 transition: 'filter 0.2s',
-                                filter: isHovering ? 'brightness(0.2)' : 'brightness(1)',
+                                filter: 'brightness(1)',
                                 textDecoration: 'none',
                                 border: 'none',
                                 background: 'none',
@@ -184,18 +178,14 @@ export default function Profile() {
                             <b>Your Maps:</b>
                         </h3>
 
-                        <ListGroup>
-                            {userMaps.maps.map((map) => (
-                                <MapBanner
-                                    key={map.id}
-                                    map={map}
-                                />
-                            ))}
-                        </ListGroup>
+                        <MapThumbnails
+                            maps={userMaps.maps}
+                        />
 
                         {userMaps.maps.length === 0 && (
                             <p className="text-center text-muted">
-                                You haven't uploaded a map yet! You can make and upload maps using our <a href="https://editor.levelimposter.net/">editor</a>.
+                                You haven't uploaded a map yet! You can make and upload maps using our <a
+                                href="https://editor.levelimposter.net/">editor</a>.
                             </p>
                         )}
                     </Col>
