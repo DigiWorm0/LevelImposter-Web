@@ -163,7 +163,7 @@ export default function Profile() {
                     </Col>
                 </Row>
                 <Row>
-                    <Col xs={{ span: 6, offset: 3 }}>
+                    <Col>
                         <MapThumbnails
                             maps={userMaps.maps}
                         />

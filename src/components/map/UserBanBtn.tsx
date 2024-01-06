@@ -34,10 +34,11 @@ export default function UserBanBtn(props: { id: string }) {
     return (
         <>
             <Button
-                variant="warning"
+                size={"sm"}
+                variant="outline-warning"
                 onClick={() => setModalOpen(true)}
                 disabled={isDeleting}
-                style={{ marginTop: 8, flex: "1 1 auto", width: "100%", display: "flex", justifyContent: "center" }}
+                className={"m-2"}
             >
                 <ShieldFillX
                     size={20}

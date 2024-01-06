@@ -1,5 +1,5 @@
 import React from "react";
-import { Badge, Card } from "react-bootstrap";
+import { Badge, Card, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { Check, CloudDownloadFill, HeartFill, Shuffle } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
 import useMap from "../../hooks/useMap";
@@ -84,11 +84,19 @@ export default function MapThumbnail(props: { map: LIMetadata | undefined }) {
 
                 {/*  Verified Check  */}
                 {map.isVerified && (
-                    <Check
-                        size={20}
-                        color={"#bbb"}
-                        className={"float-end"}
-                    />
+                    <OverlayTrigger
+                        placement="top"
+                        delay={{ show: 250, hide: 400 }}
+                        overlay={(props) => (
+                            <Tooltip {...props}>Verified</Tooltip>
+                        )}
+                    >
+                        <Check
+                            size={20}
+                            color={"#bbb"}
+                            className={"float-end"}
+                        />
+                    </OverlayTrigger>
                 )}
 
                 {map.remixOf && (

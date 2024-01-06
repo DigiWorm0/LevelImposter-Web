@@ -39,7 +39,7 @@ export default function MapVerifyButton(props: { id: string, isVerified: boolean
     return (
         <>
             <Button
-                variant="warning"
+                variant="outline-warning"
                 onClick={() => setModalOpen(true)}
                 style={{ marginTop: 8, flex: "1 1 auto", width: "100%", display: "flex", justifyContent: "center" }}
             >

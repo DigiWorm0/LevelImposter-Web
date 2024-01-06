@@ -41,7 +41,7 @@ export default function MapPrivateButton(props: { id: string, isPublic: boolean 
     return (
         <>
             <Button
-                variant="secondary"
+                variant="outline-secondary"
                 onClick={() => setModalOpen(true)}
                 style={{ marginTop: 8, flex: "1 1 auto", width: "100%", display: "flex", justifyContent: "center" }}
             >

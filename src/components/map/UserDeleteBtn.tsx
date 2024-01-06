@@ -37,6 +37,7 @@ export default function UserDeleteBtn(props: { id: string }) {
                 onClick={() => setModalOpen(true)}
                 disabled={isDeleting}
                 size={"sm"}
+                className={"m-2"}
             >
                 Delete Account
             </Button>
