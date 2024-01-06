@@ -1,6 +1,6 @@
 import { Container, Nav, Navbar } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import KoFi from './home/KoFi';
+import KoFiButton from './KoFiButton';
 
 export default function MainFooter() {
     return (
@@ -19,14 +19,13 @@ export default function MainFooter() {
                             Made with ❤️ by DigiWorm
                         </p>
                         <div>
-                            <KoFi />
+                            <KoFiButton />
                         </div>
                     </div>
                     <Nav>
                         <Nav.Link href="https://github.com/DigiWorm0/LevelImposter/releases">Download</Nav.Link>
                         <Nav.Link href="https://editor.levelimposter.net/">Editor</Nav.Link>
                         <Link to="/maps" className='nav-link'>Maps</Link>
-                        <Nav.Link href="https://docs.levelimposter.net/">Docs</Nav.Link>
                         <Link to="/policy" className='nav-link'>Policy</Link>
                     </Nav>
                 </Container>
@@ -46,7 +45,9 @@ export default function MainFooter() {
                     }}
                 >
                     <p className="text-muted">
-                        LevelImposter is not affiliated with Among Us or Innersloth LLC, and the content contained therein is not endorsed or otherwise sponsored by Innersloth LLC. Portions of the materials contained herein are property of Innersloth LLC. © Innersloth LLC.
+                        LevelImposter is not affiliated with Among Us or Innersloth LLC, and the content contained
+                        therein is not endorsed or otherwise sponsored by Innersloth LLC. Portions of the materials
+                        contained herein are property of Innersloth LLC. © Innersloth LLC.
                     </p>
                 </Container>
             </Navbar>

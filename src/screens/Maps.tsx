@@ -1,43 +1,21 @@
 import React from "react";
 import { Button, Col, Container, Dropdown, Form, InputGroup, Row } from 'react-bootstrap';
-import LIHelment from "../components/LIHelmet";
-import MainHeader from '../components/MainHeader';
-import MapBanners from '../components/map/MapBanners';
-import { MapList, usePrivateMaps, useRecentMaps, useTopMaps, useVerifiedMaps } from '../hooks/useMaps';
+import LIHelmet from "../components/common/LIHelmet";
+import MainHeader from '../components/common/MainHeader';
+import MapThumbnails from '../components/map/MapThumbnails';
+import useMaps from '../hooks/useMaps';
+import MapFilter from "../types/MapFilter";
+import useUser from "../hooks/useUser";
 
 export default function Maps() {
-    const topMaps = useTopMaps();
-    const featuredMaps = useVerifiedMaps();
-    const recentMaps = useRecentMaps();
-    const privateMaps = usePrivateMaps();
-    const [activeList, setActiveList] = React.useState<MapList>(topMaps);
-    const [filteredMaps, setFilteredMaps] = React.useState(topMaps.maps);
-    const [filter, setFilter] = React.useState<undefined | string>(undefined);
-    const [search, setSearch] = React.useState('');
-
-    React.useEffect(() => {
-        const mapList = filter === 'top' ? topMaps :
-            filter === 'featured' ? featuredMaps :
-                filter === 'recent' ? recentMaps :
-                    filter === 'private' ? privateMaps :
-                        topMaps;
-        setActiveList(mapList);
-    }, [filter, topMaps, featuredMaps, recentMaps, privateMaps]);
-
-    React.useEffect(() => {
-        if (search === '') {
-            setFilteredMaps(activeList.maps);
-            return;
-        }
-        const filtered = activeList.maps.filter(map => {
-            return map.name.toLowerCase().includes(search.toLowerCase());
-        });
-        setFilteredMaps(filtered);
-    }, [search, activeList]);
+    const [searchQuery, setSearchQuery] = React.useState<string>("");
+    const [filter, setFilter] = React.useState<MapFilter>(MapFilter.Featured);
+    const mapList = useMaps(filter, searchQuery);
+    const user = useUser();
 
     return (
         <>
-            <LIHelment
+            <LIHelmet
                 title="LevelImposter - Maps"
                 URL="https://LevelImposter.net/#/Maps"
             />
@@ -67,22 +45,31 @@ export default function Maps() {
                                 size="lg"
                                 placeholder="Search maps..."
                                 className="bg-dark text-white border-0"
-                                onInput={(e) => setSearch(e.currentTarget.value)}
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
                             />
                             <Dropdown style={{ marginTop: 20, marginLeft: 20 }}>
                                 <Dropdown.Toggle variant="primary" id="dropdown-basic">
-                                    {filter === 'top' ? 'Top' :
-                                        filter === 'featured' ? 'Featured' :
-                                            filter === 'recent' ? 'Recent' :
-                                                filter === 'private' ? 'Private' :
-                                                    'Filter By'}
+                                    {filter}
                                 </Dropdown.Toggle>
 
                                 <Dropdown.Menu>
-                                    <Dropdown.Item onClick={() => setFilter('top')} active={filter === 'top'}>Top</Dropdown.Item>
-                                    <Dropdown.Item onClick={() => setFilter('featured')} active={filter === 'featured'}>Featured</Dropdown.Item>
-                                    <Dropdown.Item onClick={() => setFilter('recent')} active={filter === 'recent'}>Recent</Dropdown.Item>
-                                    {privateMaps.maps.length > 0 && <Dropdown.Item onClick={() => setFilter('private')} active={filter === 'private'}>Private</Dropdown.Item>}
+                                    {Object.keys(MapFilter).map((key) => {
+                                        const value = MapFilter[key as keyof typeof MapFilter];
+
+                                        if (value === MapFilter.Private && !user?.isAdmin)
+                                            return null;
+
+                                        return (
+                                            <Dropdown.Item
+                                                key={key}
+                                                onClick={() => setFilter(value)}
+                                                active={filter === value}
+                                            >
+                                                {value}
+                                            </Dropdown.Item>
+                                        );
+                                    })}
                                 </Dropdown.Menu>
                             </Dropdown>
                         </InputGroup>
@@ -91,7 +78,21 @@ export default function Maps() {
                 </Row>
                 <Row>
                     <Col>
-                        <MapBanners maps={filteredMaps} />
+                        <MapThumbnails maps={mapList.maps} />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col className={"text-center"}>
+                        {mapList.maps.length === 0 && (
+                            <p className={"text-muted"}>
+                                No maps found.
+                            </p>
+                        )}
+                        {mapList.error?.message && (
+                            <p className={"text-danger"}>
+                                {mapList.error.message}
+                            </p>
+                        )}
                     </Col>
                 </Row>
                 <Row>
@@ -102,10 +103,10 @@ export default function Maps() {
                             display: "flex",
                         }}
                     >
-                        {activeList.hasMore && (
+                        {mapList.hasMore && (
                             <Button
                                 variant="primary"
-                                onClick={() => activeList.loadMore()}
+                                onClick={() => mapList.loadMore()}
                                 style={{
                                     marginBottom: 20,
                                     minWidth: 200,

@@ -2,7 +2,7 @@ import { collection, doc, getDoc, setDoc } from "firebase/firestore";
 import React from "react";
 import { Button, Modal } from "react-bootstrap";
 import { StarFill } from "react-bootstrap-icons";
-import { db } from "../../hooks/Firebase";
+import { db } from "../../hooks/utils/Firebase";
 import useUser from "../../hooks/useUser";
 
 export default function MapVerifyButton(props: { id: string, isVerified: boolean, isPublic: boolean }) {
@@ -39,7 +39,7 @@ export default function MapVerifyButton(props: { id: string, isVerified: boolean
     return (
         <>
             <Button
-                variant="warning"
+                variant="outline-warning"
                 onClick={() => setModalOpen(true)}
                 style={{ marginTop: 8, flex: "1 1 auto", width: "100%", display: "flex", justifyContent: "center" }}
             >

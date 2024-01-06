@@ -3,8 +3,8 @@ import { Alert, Button, Card, Col, Container, Row, Spinner } from 'react-bootstr
 import { Shuffle } from 'react-bootstrap-icons';
 import Linkify from 'react-linkify';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import LIHelment from '../components/LIHelmet';
-import MainHeader from '../components/MainHeader';
+import LIHelmet from '../components/common/LIHelmet';
+import MainHeader from '../components/common/MainHeader';
 import MapDeleteBtn from '../components/map/MapDeleteBtn';
 import MapDownloadBtn from '../components/map/MapDownloadBtn';
 import MapEmbed from '../components/map/MapEmbed';
@@ -12,8 +12,8 @@ import MapLikeBtn from '../components/map/MapLikeBtn';
 import MapPrivateButton from '../components/map/MapPrivateButton';
 import MapTags from '../components/map/MapTags';
 import MapVerifyButton from '../components/map/MapVerifyButton';
-import getTimeAgoString from '../hooks/getTimeAgoString';
-import { useMap } from '../hooks/useMaps';
+import getTimeAgoString from '../hooks/utils/getTimeAgoString';
+import useMap from '../hooks/useMap';
 
 const MAX_LENGTH = 500;
 
@@ -34,7 +34,7 @@ export default function Map() {
 
     return (
         <>
-            <LIHelment
+            <LIHelmet
                 title={map?.name}
                 description={map?.description}
                 URL={`https://LevelImposter.net/#/Map/${map?.id}`}
@@ -66,13 +66,16 @@ export default function Map() {
                                         style={{ marginRight: 10 }}
                                     />
                                     <div>
-                                        This map is a remix of <Link to={`/Map/${map.remixOf}`}>{remixOf?.name}</Link> by <Link to={`/User/${remixOf?.authorID}`}>{remixOf?.authorName}</Link>
+                                        This map is a remix of <Link
+                                        to={`/Map/${map.remixOf}`}>{remixOf?.name}</Link> by <Link
+                                        to={`/User/${remixOf?.authorID}`}>{remixOf?.authorName}</Link>
                                     </div>
                                 </Alert>
                             )}
                             {map.removalReason && (
                                 <Alert variant="danger">
-                                    Map was made private due to a violation of the <Link to="/policy">Mapping Policy</Link>:
+                                    Map was made private due to a violation of the <Link to="/policy">Mapping
+                                    Policy</Link>:
                                     <br />
                                     {map.removalReason}
                                 </Alert>
@@ -118,7 +121,12 @@ export default function Map() {
                             <p style={{ fontSize: "0.8em", marginTop: 10 }}>
                                 Last updated {getTimeAgoString(map.createdAt)}
                             </p>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', paddingBottom: 8 }}>
+                            <div style={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                flexWrap: 'wrap',
+                                paddingBottom: 8
+                            }}>
                                 <MapDownloadBtn id={map.id} authorID={map.authorID} />
                                 <MapDeleteBtn id={map.id} authorID={map.authorID} />
                                 <MapVerifyButton id={map.id} isVerified={map.isVerified} isPublic={map.isPublic} />
@@ -132,19 +140,21 @@ export default function Map() {
                                 <Card.Body>
                                     <ol>
                                         <li>
-                                            Download and install the <a href="https://github.com/DigiWorm0/LevelImposter/releases">LevelImposter Mod</a> <i>(If you haven't already)</i>
+                                            Download and install the <a
+                                            href="https://github.com/DigiWorm0/LevelImposter/releases">LevelImposter
+                                            Mod</a> <i>(If you haven't already)</i>
                                         </li>
                                         <li>
-                                            Download the map LIM file above
+                                            Download the map file above
                                         </li>
                                         <li>
                                             Open Among Us
                                         </li>
                                         <li>
-                                            Go to <code>Maps {'>>>'} Open Folder</code>
+                                            Go to <code>Maps {'>>>'} Folder Icon</code>
                                         </li>
                                         <li>
-                                            Save the map LIM file in the folder
+                                            Save the map file in the folder. <i>(Don't rename it)</i>
                                         </li>
                                         <li>
                                             Go back to Among Us and re-open the Maps menu
@@ -175,15 +185,15 @@ export default function Map() {
                                             Start an Among Us lobby under any map
                                         </li>
                                         <li>
-                                            Open lobby settings
+                                            Open the blue box below the computer
                                         </li>
                                         <li>
-                                            Select the map from the selector
+                                            Select the map from the maps menu
                                         </li>
                                     </ol>
                                     <p>
                                         All players must have the LevelImposter mod installed to play the map.
-                                        The map will automatically sync to all lobby members.
+                                        The map will automatically download & sync to all lobby members.
                                     </p>
                                 </Card.Body>
                             </Card>

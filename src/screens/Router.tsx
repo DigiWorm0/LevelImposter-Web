@@ -1,7 +1,7 @@
 import { useAuthState } from "react-firebase-hooks/auth";
 import { HashRouter, Route, Routes } from "react-router-dom";
-import { auth } from "../hooks/Firebase";
-import { UserContext, _useUser } from "../hooks/useUser";
+import { auth } from "../hooks/utils/Firebase";
+import { _useUser, UserContext } from "../hooks/useUser";
 import Home from "./Home";
 import Login from "./Login";
 import Map from "./Map";
