@@ -2,8 +2,8 @@ import { collection, deleteDoc, doc } from "firebase/firestore";
 import { db, storage } from "./Firebase";
 import { deleteObject, ref } from "firebase/storage";
 
-export default function deleteMap(mapID: string, authorID: string, userID: string) {
-    const promises = []
+export default async function deleteMap(mapID: string, authorID: string, userID: string) {
+    const promises = [];
     const storeRef = collection(db, "maps");
     const docRef = doc(storeRef, mapID);
     promises.push(deleteDoc(docRef));
@@ -21,5 +21,13 @@ export default function deleteMap(mapID: string, authorID: string, userID: strin
         }
     }
 
-    return Promise.all(promises);
+    try {
+        return await Promise.all(promises);
+    } catch (error: any) {
+        // Do nothing if the object is not found
+        if (error.code === "storage/object-not-found")
+            console.log(error);
+        else
+            throw error;
+    }
 }

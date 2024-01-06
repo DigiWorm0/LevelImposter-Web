@@ -6,16 +6,16 @@ export default function MainFooter() {
     return (
         <>
             <Navbar
-                variant="dark"
-                expand="lg"
+                variant={"dark"}
+                expand={"lg"}
                 style={{
                     backgroundColor: "#111418",
                     flexWrap: "wrap",
                 }}
             >
-                <Container className="ps-5 pe-5">
-                    <div style={{ textAlign: "center" }}>
-                        <p style={{ margin: 5, color: "white" }}>
+                <Container className={"ps-5 pe-5"}>
+                    <div className={"text-center"}>
+                        <p className={"text-light m-1"}>
                             Made with ❤️ by DigiWorm
                         </p>
                         <div>
@@ -29,22 +29,9 @@ export default function MainFooter() {
                         <Link to="/policy" className='nav-link'>Policy</Link>
                     </Nav>
                 </Container>
-                <hr
-                    style={{
-                        border: "1px solid rgb(91, 91, 91)",
-                        marginLeft: 50,
-                        marginRight: 50,
-                        width: "100%",
-                    }}
-                />
-                <Container
-                    style={{
-                        textAlign: "center",
-                        color: "white",
-                        paddingBottom: 10,
-                    }}
-                >
-                    <p className="text-muted">
+                <hr className={"ms-5 me-5 w-100 border-1 border-secondary"} />
+                <Container className={"text-center pb-2 text-muted"}>
+                    <p>
                         LevelImposter is not affiliated with Among Us or Innersloth LLC, and the content contained
                         therein is not endorsed or otherwise sponsored by Innersloth LLC. Portions of the materials
                         contained herein are property of Innersloth LLC. © Innersloth LLC.

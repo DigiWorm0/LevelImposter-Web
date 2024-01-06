@@ -1,23 +1,19 @@
 import React from "react";
-import { Badge, Card, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { Card, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { Check, CloudDownloadFill, HeartFill, Shuffle } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
-import useMap from "../../hooks/useMap";
 import LIMetadata from "../../types/LIMetadata";
 import MapDownloadBtn from "./MapDownloadBtn";
 import MapThumbnailPlaceholder from "./MapThumbnailPlaceholder";
 import getTimeAgoString from "../../hooks/utils/getTimeAgoString";
+import MapLink from "./MapLink";
+import DisplayTag from "../common/DisplayTag";
+import TagType from "../../types/TagType";
 
 export default function MapThumbnail(props: { map: LIMetadata | undefined }) {
     const [isHovered, setIsHovered] = React.useState(false);
-    const remixOf = useMap(props.map?.remixOf);
     const map = props.map;
     const thumbnailURL = map?.thumbnailURL ? map.thumbnailURL : "/DefaultThumbnail.png";
-    const ellipseStyle: React.CSSProperties = {
-        overflow: "hidden",
-        textOverflow: "ellipsis",
-        whiteSpace: "nowrap"
-    };
 
     const isHidden = map?.remixOf || !map?.isPublic;
 
@@ -32,7 +28,7 @@ export default function MapThumbnail(props: { map: LIMetadata | undefined }) {
             onMouseLeave={() => setIsHovered(false)}
             style={{
                 minWidth: 350,
-                maxWidth: 360,
+                width: 350,
                 color: "inherit",
                 transition: "transform 0.2s ease-in-out",
                 transform: isHovered ? "translateY(-5px)" : "translateY(0px)",
@@ -40,19 +36,19 @@ export default function MapThumbnail(props: { map: LIMetadata | undefined }) {
             }}
         >
             {/*  Remix Header  */}
-            {remixOf && (
+            {props.map?.remixOf && (
                 <Card.Header className={"d-flex align-items-center justify-content-center"}>
                     <Shuffle
-                        style={{ marginRight: 5, minWidth: 14 }}
+                        className={"me-2"}
                         size={14}
                     />
-                    <div>
-                        Remix of <Link to={`/map/${remixOf.id}`}>{remixOf.name}</Link>
-                    </div>
+                    <span>
+                        Remix of <MapLink mapID={props.map.remixOf} />
+                    </span>
                 </Card.Header>
             )}
 
-            <Link to={`/map/${map.id}`}>
+            <Link to={`/map/${map.id}`} className={"position-relative"}>
 
                 {/*  Thumbnail  */}
                 <Card.Img
@@ -72,12 +68,8 @@ export default function MapThumbnail(props: { map: LIMetadata | undefined }) {
                         zIndex: 1
                     }}
                 >
-                    {!map.isPublic && (
-                        <Badge pill bg="danger">Private</Badge>
-                    )}
-                    {map.removalReason && (
-                        <Badge pill bg="danger" className="ms-1">Removed</Badge>
-                    )}
+                    {!map.isPublic && <DisplayTag type={TagType.Private} />}
+                    {map.removalReason && <DisplayTag type={TagType.Removed} />}
                 </div>
             </Link>
             <Card.Body>
@@ -86,7 +78,6 @@ export default function MapThumbnail(props: { map: LIMetadata | undefined }) {
                 {map.isVerified && (
                     <OverlayTrigger
                         placement="top"
-                        delay={{ show: 250, hide: 400 }}
                         overlay={(props) => (
                             <Tooltip {...props}>Verified</Tooltip>
                         )}
@@ -108,7 +99,13 @@ export default function MapThumbnail(props: { map: LIMetadata | undefined }) {
                 )}
 
                 {/*  Title  */}
-                <Card.Title style={ellipseStyle}>
+                <Card.Title
+                    style={{
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap"
+                    }}
+                >
                     {map.name}
                 </Card.Title>
 
@@ -121,24 +118,22 @@ export default function MapThumbnail(props: { map: LIMetadata | undefined }) {
 
                 {/*  Footer  */}
                 <div className="d-flex justify-content-around mt-2">
-                    <MapDownloadBtn id={map.id} authorID={map.authorID} />
-                    <div
-                        style={{
-                            display: "flex",
-                            width: "100%",
-                            justifyContent: "flex-end"
-                        }}
-                    >
+                    <MapDownloadBtn
+                        id={map.id}
+                        authorID={map.authorID}
+                        downloadCount={map.downloadCount}
+                    />
+                    <div className={"d-flex w-100 justify-content-end"}>
                         <small className="text-muted mt-3">
                             <HeartFill
-                                style={{ marginRight: 3 }}
+                                className={"me-1"}
                                 size={14}
                             />
                             {map.likeCount?.toLocaleString() ?? 0}
                         </small>
                         <small className="text-muted mt-3 ms-3">
                             <CloudDownloadFill
-                                style={{ marginRight: 3 }}
+                                className={"me-1"}
                                 size={14}
                             />
                             {map.downloadCount?.toLocaleString() ?? 0}

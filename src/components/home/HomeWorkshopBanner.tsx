@@ -8,19 +8,19 @@ export default function HomeWorkshopBanner() {
 
     return (
         <>
-            <Container>
-                <Row style={{ paddingTop: 70 }}>
-                    <Col lg={{ offset: 1, span: 5 }}>
-                        <h2>
-                            <b>Map Workshop</b>
-                        </h2>
-                        <p className="text-muted" style={{ paddingBottom: 0 }}>
-                            Browse and play maps created by the community.
-                        </p>
+            <Container fluid>
+                <Row className={"mt-5"}>
+                    <Col>
+                        <Container>
+                            <h2 className={"fw-bold ms-5 mt-4"}>
+                                Map Workshop
+                            </h2>
+                            <p className={"text-muted mb-0 ms-5 mb-3"}>
+                                Browse and play maps created by the community.
+                            </p>
+                        </Container>
                     </Col>
                 </Row>
-            </Container>
-            <Container fluid>
                 <Row>
                     <Col sm>
                         <MapThumbnails
@@ -29,18 +29,9 @@ export default function HomeWorkshopBanner() {
                         />
                     </Col>
                 </Row>
-            </Container>
-            <Container>
-                <Row>
-                    <Col
-                        style={{
-                            justifyContent: "center",
-                            alignItems: "center",
-                            display: "flex",
-                            flexDirection: "column"
-                        }}
-                    >
-                        <Link to="/maps" className="btn btn-danger" style={{ marginBottom: 40, marginTop: 20 }}>
+                <Row className={"text-center"}>
+                    <Col>
+                        <Link to="/maps" className="btn btn-danger m-4 mt-2">
                             View All Maps
                         </Link>
                     </Col>

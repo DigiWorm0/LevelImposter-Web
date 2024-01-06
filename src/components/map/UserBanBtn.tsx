@@ -6,28 +6,25 @@ import useUser from "../../hooks/useUser";
 import useBanUser from "../../hooks/useBanUser";
 
 export default function UserBanBtn(props: { id: string }) {
-    const [isDeleting, setIsDeleting] = React.useState(false);
     const [isModalOpen, setModalOpen] = React.useState(false);
     const userData = useUser();
     const navigate = useNavigate();
     const banUser = useBanUser();
 
-    const onDelete = React.useCallback(() => {
+    const onClick = React.useCallback(() => {
         if (!userData)
             return;
 
-        setIsDeleting(true);
         banUser(props.id).then(() => {
-            setIsDeleting(false);
-            navigate("/maps");
             console.log(`Banned user ${props.id}`);
+            navigate("/maps");
         }).catch((err: any) => {
             console.error(err);
             alert(err);
-            setIsDeleting(false);
         });
     }, [props.id, userData, banUser, navigate]);
 
+    // Admins-only
     if (!userData?.isAdmin)
         return null;
 
@@ -37,7 +34,6 @@ export default function UserBanBtn(props: { id: string }) {
                 size={"sm"}
                 variant="outline-warning"
                 onClick={() => setModalOpen(true)}
-                disabled={isDeleting}
                 className={"m-2"}
             >
                 <ShieldFillX
@@ -58,8 +54,10 @@ export default function UserBanBtn(props: { id: string }) {
                 </Modal.Header>
 
                 <Modal.Body>
-                    <p>Are you <i>100% sure</i> you want to <b>b-b-ban</b> this account? This will delete any uploaded
-                        maps and prevent the user from logging in.</p>
+                    <p>
+                        Are you <i>100% sure</i> you want to <b>b-b-ban</b> this account?
+                        This will delete any uploaded maps and prevent the user from logging in.
+                    </p>
                 </Modal.Body>
 
                 <Modal.Footer>
@@ -71,7 +69,7 @@ export default function UserBanBtn(props: { id: string }) {
                     </Button>
                     <Button
                         variant="danger"
-                        onClick={onDelete}
+                        onClick={onClick}
                     >
                         Ban
                     </Button>

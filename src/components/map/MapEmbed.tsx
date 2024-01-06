@@ -9,7 +9,8 @@ export default function MapEmbed(props: MapEmbedProps) {
     return (
         <iframe
             src={`https://editor.levelimposter.net/?id=${props.id}&embed`}
-            style={{ width: '100%', aspectRatio: "1", borderRadius: 10 }}
+            className={"w-100 rounded"}
+            style={{ aspectRatio: "1" }}
             title={"Editor Embed"}
         />
     );

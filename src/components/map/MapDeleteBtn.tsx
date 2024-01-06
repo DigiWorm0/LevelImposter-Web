@@ -11,25 +11,22 @@ export interface MapDeleteBtnProps {
 }
 
 export default function MapDeleteBtn(props: MapDeleteBtnProps) {
-    const [isDeleting, setIsDeleting] = React.useState(false);
     const [isModalOpen, setModalOpen] = React.useState(false);
     const userData = useUser();
     const navigate = useNavigate();
 
-    const onDelete = () => {
+    const onClick = React.useCallback(() => {
         if (!userData)
             return;
 
-        setIsDeleting(true);
         deleteMap(props.id, props.authorID, userData.uid).then(() => {
-            setIsDeleting(false);
+            console.log(`Deleted map ${props.id}`);
             navigate("/maps");
         }).catch((err: any) => {
             console.error(err);
             alert(err);
-            setIsDeleting(false);
         });
-    }
+    }, [props.id, props.authorID, userData, navigate]);
 
     if (userData?.uid !== props.authorID && !userData?.isAdmin)
         return null;
@@ -39,8 +36,7 @@ export default function MapDeleteBtn(props: MapDeleteBtnProps) {
             <Button
                 variant="outline-danger"
                 onClick={() => setModalOpen(true)}
-                disabled={isDeleting}
-                style={{ marginTop: 8, flex: "1 1 auto", width: "100%", display: "flex", justifyContent: "center" }}
+                className={"mt-2 w-100 d-flex align-items-center justify-content-center"}
             >
                 <TrashFill size={20} style={{ marginRight: 10 }} />
                 Delete
@@ -58,8 +54,9 @@ export default function MapDeleteBtn(props: MapDeleteBtnProps) {
 
                 <Modal.Body>
                     <p>
-                        Are you <i>100% sure</i> you want to <b>delete</b> this map? This action is permanent and
-                        irreversible.
+                        Are you <i>100% sure</i> you want to <b>delete</b> this map?
+                        {' '}
+                        This action is permanent and irreversible.
                     </p>
                 </Modal.Body>
 
@@ -72,7 +69,7 @@ export default function MapDeleteBtn(props: MapDeleteBtnProps) {
                     </Button>
                     <Button
                         variant="danger"
-                        onClick={onDelete}
+                        onClick={onClick}
                     >
                         Delete
                     </Button>

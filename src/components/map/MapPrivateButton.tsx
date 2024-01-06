@@ -10,29 +10,28 @@ export default function MapPrivateButton(props: { id: string, isPublic: boolean 
     const [removalReason, setRemovalReason] = React.useState("");
     const userData = useUser();
 
-    const onVerify = () => {
+    const onClick = React.useCallback(() => {
         if (!userData?.isAdmin)
             return;
 
         const storeRef = collection(db, "maps");
         const docRef = doc(storeRef, props.id);
         getDoc(docRef).then(doc => {
-            if (doc.exists()) {
-                const data = doc.data();
-                setDoc(docRef, {
-                    ...data,
-                    isPublic: !props.isPublic,
-                    removalReason: (removalReason.length > 0 && props.isPublic) ? removalReason : null
-                }).then(() => {
-                    setModalOpen(false);
-                    window.location.reload();
-                }).catch(err => {
-                    console.error(err);
-                    alert(err);
-                })
-            }
-        });
-    }
+            const data = doc.data();
+            return setDoc(docRef, {
+                ...data,
+                isPublic: !props.isPublic,
+                removalReason: removalReason.length > 0 ? removalReason : null
+            })
+        }).then(() => {
+            console.log(`Made map ${props.id} ${props.isPublic ? "private" : "public"}`);
+            setModalOpen(false);
+            window.location.reload();
+        }).catch(err => {
+            console.error(err);
+            alert(err);
+        })
+    }, [props.id, props.isPublic, userData, removalReason]);
     const privateText = props.isPublic ? "Private" : "Public";
 
     if (!userData?.isAdmin)
@@ -43,9 +42,9 @@ export default function MapPrivateButton(props: { id: string, isPublic: boolean 
             <Button
                 variant="outline-secondary"
                 onClick={() => setModalOpen(true)}
-                style={{ marginTop: 8, flex: "1 1 auto", width: "100%", display: "flex", justifyContent: "center" }}
+                className={"mt-2 w-100 d-flex align-items-center justify-content-center"}
             >
-                <EyeFill size={20} style={{ marginRight: 10 }} />
+                <EyeFill size={20} className={"me-2"} />
                 {privateText}
             </Button>
 
@@ -63,6 +62,7 @@ export default function MapPrivateButton(props: { id: string, isPublic: boolean 
                     <p>
                         Are you <i>100% sure</i> you want to make this map <b>{privateText.toLowerCase()}</b>?
                     </p>
+
                     {props.isPublic && (
                         <Form.Control
                             className="bg-dark text-light"
@@ -84,7 +84,7 @@ export default function MapPrivateButton(props: { id: string, isPublic: boolean 
                     </Button>
                     <Button
                         variant="warning"
-                        onClick={onVerify}
+                        onClick={onClick}
                     >
                         Make {privateText}
                     </Button>

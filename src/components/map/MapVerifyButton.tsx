@@ -9,30 +9,29 @@ export default function MapVerifyButton(props: { id: string, isVerified: boolean
     const [isModalOpen, setModalOpen] = React.useState(false);
     const userData = useUser();
 
-    const onVerify = () => {
-        if (!userData?.isAdmin)
-            return;
-
+    const onClick = React.useCallback(() => {
         const storeRef = collection(db, "maps");
         const docRef = doc(storeRef, props.id);
         getDoc(docRef).then(doc => {
-            if (doc.exists()) {
-                const data = doc.data();
-                setDoc(docRef, {
-                    ...data,
-                    isVerified: !props.isVerified
-                }).then(() => {
-                    setModalOpen(false);
-                    window.location.reload();
-                }).catch(err => {
-                    console.error(err);
-                    alert(err);
-                })
-            }
-        });
-    }
+            const data = doc.data();
+            return setDoc(docRef, {
+                ...data,
+                isVerified: !props.isVerified
+            });
+        }).then(() => {
+            console.log(`Verified map ${props.id}`);
+            setModalOpen(false);
+            window.location.reload();
+        }).catch(err => {
+            console.error(err);
+            alert(err);
+        })
+    }, [props.id, props.isVerified]);
+
+    // Use for both verify and unverify
     const verifyText = props.isVerified ? "Unfeature" : "Feature";
 
+    // Admins-only
     if (!userData?.isAdmin || !props.isPublic)
         return null;
 
@@ -41,9 +40,9 @@ export default function MapVerifyButton(props: { id: string, isVerified: boolean
             <Button
                 variant="outline-warning"
                 onClick={() => setModalOpen(true)}
-                style={{ marginTop: 8, flex: "1 1 auto", width: "100%", display: "flex", justifyContent: "center" }}
+                className={"mt-2 w-100 d-flex align-items-center justify-content-center"}
             >
-                <StarFill size={20} style={{ marginRight: 10 }} />
+                <StarFill size={20} className={"me-2"} />
                 {verifyText}
             </Button>
 
@@ -70,7 +69,7 @@ export default function MapVerifyButton(props: { id: string, isVerified: boolean
                     </Button>
                     <Button
                         variant="warning"
-                        onClick={onVerify}
+                        onClick={onClick}
                     >
                         {verifyText} Map
                     </Button>

@@ -22,24 +22,19 @@ export default function Maps() {
             <MainHeader />
 
             <Container>
-                <Row style={{ paddingTop: 50 }}>
-                    <Col lg={{ offset: 1, span: 5 }}>
-                        <h2>
-                            <b>Map Workshop</b>
-                        </h2>
-                        <p className="text-muted">
-                            Browse and play maps created by the community.
-                        </p>
+                <Row className={"mt-5"}>
+                    <Col lg={6}>
+                        <div className={"m-4 ms-lg-5"}>
+                            <h2 className={"fw-bold"}>
+                                Map Workshop
+                            </h2>
+                            <p className="text-muted">
+                                Browse and play maps created by the community.
+                            </p>
+                        </div>
                     </Col>
-                    <Col
-                        lg={5}
-                        style={{
-                            justifyContent: "center",
-                            alignItems: "center",
-                            display: "flex",
-                        }}
-                    >
-                        <InputGroup>
+                    <Col lg={6} className={"d-flex justify-content-end align-items-center"}>
+                        <InputGroup className={"m-4 mt-0 mt-lg-4 me-lg-5"}>
                             <Form.Control
                                 as="input"
                                 size="lg"
@@ -48,7 +43,7 @@ export default function Maps() {
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                             />
-                            <Dropdown style={{ marginTop: 20, marginLeft: 20 }}>
+                            <Dropdown className={"ms-2 me-2"}>
                                 <Dropdown.Toggle variant="primary" id="dropdown-basic">
                                     {filter}
                                 </Dropdown.Toggle>
@@ -57,6 +52,7 @@ export default function Maps() {
                                     {Object.keys(MapFilter).map((key) => {
                                         const value = MapFilter[key as keyof typeof MapFilter];
 
+                                        // Hide private filter from non-admins
                                         if (value === MapFilter.Private && !user?.isAdmin)
                                             return null;
 
@@ -73,7 +69,6 @@ export default function Maps() {
                                 </Dropdown.Menu>
                             </Dropdown>
                         </InputGroup>
-
                     </Col>
                 </Row>
                 <Row>
@@ -96,21 +91,12 @@ export default function Maps() {
                     </Col>
                 </Row>
                 <Row>
-                    <Col
-                        style={{
-                            justifyContent: "center",
-                            alignItems: "center",
-                            display: "flex",
-                        }}
-                    >
+                    <Col className={"d-flex justify-content-center align-items-center"}>
                         {mapList.hasMore && (
                             <Button
                                 variant="primary"
                                 onClick={() => mapList.loadMore()}
-                                style={{
-                                    marginBottom: 20,
-                                    minWidth: 200,
-                                }}
+                                className={"m-2"}
                             >
                                 Load More
                             </Button>

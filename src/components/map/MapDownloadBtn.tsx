@@ -1,16 +1,23 @@
 import { getDownloadURL, ref } from "firebase/storage";
 import { Button } from "react-bootstrap";
 import { storage } from "../../hooks/utils/Firebase";
-import { Download } from "react-bootstrap-icons";
+import React from "react";
+import { CloudDownloadFill } from "react-bootstrap-icons";
 
 export interface MapDownloadBtnProps {
     id: string;
     authorID: string;
+    downloadCount?: number;
 }
 
 export default function MapDownloadBtn(props: MapDownloadBtnProps) {
 
-    const onDownload = () => {
+    const onError = React.useCallback((err: any) => {
+        console.error(err);
+        alert(err);
+    }, []);
+
+    const onClick = React.useCallback(() => {
         const storageURL = `maps/${props.authorID}/${props.id}.lim`;
         const storageURL2 = `maps/${props.authorID}/${props.id}.lim2`;
         const storeRef = ref(storage, storageURL);
@@ -20,33 +27,27 @@ export default function MapDownloadBtn(props: MapDownloadBtnProps) {
             window.location.href = url;
         }).catch((err) => {
             if (err.code !== "storage/object-not-found") {
-                console.error(err);
-                alert(err);
+                onError(err);
                 return;
             }
 
             getDownloadURL(storeRef2).then((url) => {
                 window.location.href = url;
-            }).catch((err) => {
-                console.error(err);
-                alert(err);
-            });
+            }).catch(onError);
         });
-    }
+    }, [props.authorID, props.id]);
 
     return (
         <Button
             variant="primary"
             size={"sm"}
-            onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                onDownload();
-            }}
-            style={{ marginTop: 8, flex: "1 1 auto", width: "100%", display: "flex", justifyContent: "center" }}
+            onClick={onClick}
+            className={"d-flex align-items-center justify-content-center mt-2 w-100"}
         >
-            <Download size={20} style={{ marginRight: 10 }} />
-            Download
+            <CloudDownloadFill className={"me-2"} />
+            {props.downloadCount ?? 0}
+            {' '}
+            Downloads
         </Button>
     );
 }

@@ -17,40 +17,28 @@ export default function HomeDownloadHeader() {
             });
     }, []);
 
-    const isLoaded = releases.length > 0;
-    const downloadCount = isLoaded ? releases.reduce((acc, release) => {
-        return acc + release.assets.reduce((acc, asset) => {
-            return acc + asset.download_count;
-        }, 0);
-    }, 0) : 0;
-    const downloadLink = isLoaded ? releases[0].html_url : DOWNLOAD_LINK;
+    const downloadLink = releases.length > 0 ? releases[0].html_url : DOWNLOAD_LINK;
+    const downloadCount = React.useMemo(() => {
+        return releases.reduce((acc, release) => acc + release.assets.reduce((acc, asset) => acc + asset.download_count, 0), 0)
+    }, [releases]);
+
 
     return (
         <Container>
             <Row>
-                <Col
-                    style={{
-                        paddingTop: 80,
-                        textAlign: "center",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        display: "flex",
-                        flexDirection: "column"
-                    }}
-                >
+                <Col className={"pt-5 mt-5 text-center d-flex justify-content-center align-items-center flex-column"}>
                     <h1 className="fw-bold">
                         Custom Maps for Among Us
                     </h1>
                     <p className="text-muted">
                         Editor Tool &middot; Among Us Mod &middot; Community Workshop
                     </p>
-
-                    <div style={{ flexDirection: "row", display: "flex" }}>
+                    <div className={"d-flex flex-row"}>
                         <Button
                             variant="primary"
                             size="lg"
                             href={downloadLink}
-                            style={{ margin: 5 }}
+                            className={"m-1"}
                         >
                             Download Mod
                         </Button>
@@ -58,7 +46,7 @@ export default function HomeDownloadHeader() {
                             variant="danger"
                             size="lg"
                             href="https://editor.levelimposter.net/"
-                            style={{ margin: 5 }}
+                            className={"m-1"}
                         >
                             Map Editor
                         </Button>
@@ -71,23 +59,12 @@ export default function HomeDownloadHeader() {
             <Row>
                 <Col
                     sm={{ span: 8, offset: 2 }}
-                    style={{
-                        paddingTop: 30,
-                        textAlign: "center",
-                        justifyContent: "flex-start",
-                        alignItems: "center",
-                        display: "flex",
-                        flexDirection: "column"
-                    }}
+                    className={"text-center d-flex justify-content-center align-items-center flex-column mt-4"}
                 >
                     <img
                         alt=""
                         src="/editor-3.png"
-                        style={{
-                            width: "100%",
-                            borderTopLeftRadius: 10,
-                            borderTopRightRadius: 10,
-                        }}
+                        className={"w-100 rounded-top-3"}
                     />
                 </Col>
             </Row>

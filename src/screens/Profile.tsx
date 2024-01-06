@@ -1,18 +1,20 @@
 import { sendEmailVerification, signOut } from 'firebase/auth';
 import React from 'react';
-import { Alert, Badge, Button, Col, Container, Row } from 'react-bootstrap';
+import { Alert, Button, Col, Container, Row } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Navigate } from 'react-router-dom';
 import LIHelmet from '../components/common/LIHelmet';
 import MainHeader from '../components/common/MainHeader';
-import UserDeleteBtn from '../components/map/UserDeleteBtn';
 import { auth } from '../hooks/utils/Firebase';
 import { useUserMaps } from '../hooks/useMaps';
 import useUser from '../hooks/useUser';
 import MapThumbnails from "../components/map/MapThumbnails";
 import useUpdateUser from "../hooks/useUpdateUser";
 import { Check, PencilFill, X } from "react-bootstrap-icons";
+import ClickToShow from "../components/common/ClickToShow";
+import DisplayTag from "../components/common/DisplayTag";
+import TagType from "../types/TagType";
 
 export default function Profile() {
     const [user] = useAuthState(auth);
@@ -69,7 +71,7 @@ export default function Profile() {
                 <Row>
                     <Col xs={12}>
                         <Alert
-                            style={{ margin: 10 }}
+                            className={"m-3"}
                             variant="danger"
                             show={error !== undefined}
                             onClose={() => setError(undefined)}
@@ -79,19 +81,16 @@ export default function Profile() {
                     </Col>
                 </Row>
                 <Row>
-                    <Col xs={8} className={"ms-lg-5 mt-5"}>
+                    <Col xs={7} className={"ms-lg-5 mt-5"}>
                         <h3>
                             <img
                                 referrerPolicy="no-referrer"
                                 src={userData?.photoURL ?? '/logo512.png'}
                                 alt={user.displayName ?? 'New User'}
-                                style={{
-                                    width: 50,
-                                    height: 50,
-                                    marginRight: 14,
-                                    borderRadius: 10,
-                                    objectFit: 'cover',
-                                }}
+                                width={50}
+                                height={50}
+                                className={"rounded me-3"}
+                                style={{ objectFit: 'cover' }}
                             />
                             {isEditing && (
                                 <>
@@ -100,8 +99,8 @@ export default function Profile() {
                                         type="text"
                                         placeholder="Display Name"
                                         value={displayName}
-                                        className={"bg-dark text-white border-0"}
-                                        style={{ maxWidth: 200, display: "inline" }}
+                                        className={"bg-dark text-white border-0 d-inline"}
+                                        style={{ maxWidth: 200 }}
                                         autoFocus
                                         onFocus={(e) => e.target.select()}
                                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -112,9 +111,7 @@ export default function Profile() {
                                         color={"#999"}
                                         size={24}
                                         style={{ marginLeft: 10, cursor: 'pointer' }}
-                                        onClick={() => {
-                                            setIsEditing(false);
-                                        }}
+                                        onClick={() => setIsEditing(false)}
                                     />
                                     <Check
                                         color={"#999"}
@@ -131,9 +128,7 @@ export default function Profile() {
                                         color={"#999"}
                                         size={14}
                                         style={{ marginLeft: 10, cursor: 'pointer' }}
-                                        onClick={() => {
-                                            setIsEditing(true);
-                                        }}
+                                        onClick={() => setIsEditing(true)}
                                     />
                                 </>
                             )}
@@ -141,20 +136,16 @@ export default function Profile() {
                     </Col>
                     <Col className={"me-lg-5 mt-5"}>
                         <Button
-                            style={{ marginLeft: 5 }}
                             variant="danger"
-                            className={"float-end"}
-                            onClick={() => {
-                                signOut(auth);
-                            }}
+                            className={"float-end me-1 mt-1"}
+                            onClick={() => signOut(auth)}
                         >
                             Sign out
                         </Button>
                         {!user?.emailVerified && (
                             <Button
-                                style={{ margin: 5 }}
                                 variant="secondary"
-                                className={"float-end"}
+                                className={"float-end me-1 mt-1"}
                                 onClick={sendVerification}
                             >
                                 Re-send Verification Email
@@ -176,40 +167,17 @@ export default function Profile() {
                         )}
                     </Col>
                 </Row>
-                <Row style={{ margin: 20 }}>
-                    <Col xs={{ span: 6, offset: 3 }}>
-                        <div style={{ textAlign: "center" }}>
-                            <UserDeleteBtn id={user.uid} />
+                <Row>
+                    <Col>
+                        <div className={"text-center mt-1"}>
 
-                            <div style={{ marginTop: 10 }}>
-                                {userData?.isAdmin && (
-                                    <Badge
-                                        pill
-                                        bg="danger"
-                                        style={{ marginLeft: 5 }}>
-                                        Admin
-                                    </Badge>
-                                )}
-                                {userData?.isCreator && (
-                                    <Badge
-                                        pill
-                                        bg="primary"
-                                        style={{ marginLeft: 5 }}>
-                                        Creator
-                                    </Badge>
-                                )}
-                                {!user?.emailVerified && (
-                                    <Badge
-                                        pill
-                                        bg="secondary"
-                                        style={{ marginLeft: 5 }}>
-                                        Unverified
-                                    </Badge>
-                                )}
-                            </div>
-                            <p className="fs-6 text-muted">
-                                {user?.uid}
-                            </p>
+                            {userData?.isAdmin && <DisplayTag type={TagType.Admin} />}
+                            {userData?.isCreator && <DisplayTag type={TagType.Creator} />}
+                            {!user?.emailVerified && <DisplayTag type={TagType.Unverified} />}
+
+                            <ClickToShow buttonText={"Click to show your user ID"}>
+                                <p>{user.uid}</p>
+                            </ClickToShow>
                         </div>
                     </Col>
                 </Row>

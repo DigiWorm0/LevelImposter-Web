@@ -3,6 +3,11 @@ import LIMetadata from "../types/LIMetadata";
 import { collection, doc, getDoc } from "firebase/firestore";
 import { db } from "./utils/Firebase";
 
+/**
+ * React hook to get a map from the database
+ * @param mapID - The ID of the map to get
+ * @returns The map object. Undefined if the map is still loading. Null if the map does not exist.
+ */
 export default function useMap(mapID?: string) {
     const [map, setMap] = React.useState<LIMetadata | undefined | null>(undefined);
 
