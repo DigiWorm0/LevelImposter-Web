@@ -1,13 +1,13 @@
-import { Badge, Col, Container, ListGroup, Row } from 'react-bootstrap';
-import Spinner from 'react-bootstrap/Spinner';
+import { Badge, Col, Container, Row } from 'react-bootstrap';
 import { Navigate, useParams } from 'react-router-dom';
-import LIHelment from '../components/LIHelmet';
-import MainHeader from '../components/MainHeader';
-import MapBanner from '../components/map/MapBanner';
+import LIHelmet from '../components/common/LIHelmet';
+import MainHeader from '../components/common/MainHeader';
 import { useUserMaps } from '../hooks/useMaps';
 import useUser, { _useUser } from '../hooks/useUser';
 import UserDeleteBtn from '../components/map/UserDeleteBtn';
 import UserBanBtn from '../components/map/UserBanBtn';
+import MapThumbnails from "../components/map/MapThumbnails";
+import React from "react";
 
 export default function User() {
     const { id } = useParams();
@@ -23,7 +23,7 @@ export default function User() {
 
     return (
         <>
-            <LIHelment
+            <LIHelmet
                 title={`${author?.displayName || "LevelImposter"} - User`}
                 description={`View ${(author?.displayName + "'s") || "your"} profile and maps.`}
                 URL={`https://LevelImposter.net/#/User/${id}`}
@@ -31,37 +31,35 @@ export default function User() {
             <MainHeader />
             <Container className="Maps">
                 <Row>
-                    <Col lg={12} style={{ textAlign: "center" }}>
-                        <img
-                            referrerPolicy="no-referrer"
-                            src={author?.photoURL ? author.photoURL.replace("s96-c", "s200-c") : '/logo512.png'}
-                            alt={authorName}
-                            style={{
-                                width: 200,
-                                height: 200,
-                                borderRadius: 20,
-                                marginTop: 30,
-                            }}
-                        />
-                        <h5 style={{ textAlign: "center", marginTop: 20 }}>Maps by</h5>
-                        <h3 style={{ textAlign: "center", marginBottom: 10 }}>{authorName}</h3>
+                    <Col lg={12} className={"text-center mt-5"}>
+                        <h3>
+                            <img
+                                referrerPolicy="no-referrer"
+                                src={author?.photoURL ?? '/logo512.png'}
+                                style={{
+                                    width: 50,
+                                    height: 50,
+                                    marginRight: 14,
+                                    borderRadius: 10,
+                                    objectFit: 'cover',
+                                }}
+                            />
+                            {authorName}
+                        </h3>
                     </Col>
                 </Row>
                 <Row>
-                    <Col lg={{ offset: 3, span: 6 }} style={{ textAlign: "center" }}>
-                        <ListGroup>
-                            {authorMaps.maps.map((map) => (
-                                <MapBanner
-                                    key={map.id}
-                                    map={map}
-                                />
-                            ))}
-                            {authorMaps.maps.length === 0 && (
-                                <p>
-                                    No maps by this author.
-                                </p>
-                            )}
-                        </ListGroup>
+                    <Col>
+                        <MapThumbnails maps={authorMaps.maps} />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col className={"text-center"}>
+                        {authorMaps.maps.length === 0 && (
+                            <p className={"text-muted"}>
+                                No maps by this author.
+                            </p>
+                        )}
                     </Col>
                 </Row>
                 <Row style={{ marginBottom: 20 }}>

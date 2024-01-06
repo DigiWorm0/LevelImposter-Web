@@ -1,6 +1,6 @@
 import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
-import { useMap } from "../../hooks/useMaps";
 import GUID from "../../types/GUID";
+import useMap from "../../hooks/useMap";
 
 export default function OpenAUButton(props: { id: GUID }) {
     const map = useMap(props.id);

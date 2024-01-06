@@ -11,8 +11,11 @@ export default interface LIMetadata {
     createdAt: number;
 
     likeCount?: number;
+    downloadCount?: number;
     removalReason?: string;
     thumbnailURL?: string;
 
     remixOf?: GUID;
 }
+
+export type MaybeLIMetadata = LIMetadata | undefined;

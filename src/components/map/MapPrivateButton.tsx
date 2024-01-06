@@ -2,7 +2,7 @@ import { collection, doc, getDoc, setDoc } from "firebase/firestore";
 import React from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { EyeFill } from "react-bootstrap-icons";
-import { db } from "../../hooks/Firebase";
+import { db } from "../../hooks/utils/Firebase";
 import useUser from "../../hooks/useUser";
 
 export default function MapPrivateButton(props: { id: string, isPublic: boolean }) {
@@ -41,7 +41,7 @@ export default function MapPrivateButton(props: { id: string, isPublic: boolean 
     return (
         <>
             <Button
-                variant="secondary"
+                variant="outline-secondary"
                 onClick={() => setModalOpen(true)}
                 style={{ marginTop: 8, flex: "1 1 auto", width: "100%", display: "flex", justifyContent: "center" }}
             >

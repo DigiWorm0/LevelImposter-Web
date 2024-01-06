@@ -2,10 +2,15 @@ import React from "react";
 import { Button, Modal } from "react-bootstrap";
 import { TrashFill } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
-import { deleteMap } from "../../hooks/useMaps";
 import useUser from "../../hooks/useUser";
+import deleteMap from "../../hooks/utils/deleteMap";
 
-export default function MapDeleteBtn(props: { id: string, authorID: string }) {
+export interface MapDeleteBtnProps {
+    id: string;
+    authorID: string;
+}
+
+export default function MapDeleteBtn(props: MapDeleteBtnProps) {
     const [isDeleting, setIsDeleting] = React.useState(false);
     const [isModalOpen, setModalOpen] = React.useState(false);
     const userData = useUser();
@@ -19,7 +24,7 @@ export default function MapDeleteBtn(props: { id: string, authorID: string }) {
         deleteMap(props.id, props.authorID, userData.uid).then(() => {
             setIsDeleting(false);
             navigate("/maps");
-        }).catch(err => {
+        }).catch((err: any) => {
             console.error(err);
             alert(err);
             setIsDeleting(false);
@@ -32,7 +37,7 @@ export default function MapDeleteBtn(props: { id: string, authorID: string }) {
     return (
         <>
             <Button
-                variant="danger"
+                variant="outline-danger"
                 onClick={() => setModalOpen(true)}
                 disabled={isDeleting}
                 style={{ marginTop: 8, flex: "1 1 auto", width: "100%", display: "flex", justifyContent: "center" }}
@@ -53,7 +58,8 @@ export default function MapDeleteBtn(props: { id: string, authorID: string }) {
 
                 <Modal.Body>
                     <p>
-                        Are you <i>100% sure</i> you want to <b>delete</b> this map? This action is permanent and irreversible.
+                        Are you <i>100% sure</i> you want to <b>delete</b> this map? This action is permanent and
+                        irreversible.
                     </p>
                 </Modal.Body>
 

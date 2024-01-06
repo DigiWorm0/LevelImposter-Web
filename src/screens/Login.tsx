@@ -1,4 +1,11 @@
-import { createUserWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, UserCredential } from 'firebase/auth';
+import {
+    createUserWithEmailAndPassword,
+    sendEmailVerification,
+    sendPasswordResetEmail,
+    signInWithEmailAndPassword,
+    signInWithPopup,
+    UserCredential
+} from 'firebase/auth';
 import { collection, doc, getDoc, setDoc } from 'firebase/firestore';
 import React from 'react';
 import { Button, Col, Container, Row } from 'react-bootstrap';
@@ -7,10 +14,10 @@ import Alert from 'react-bootstrap/Alert';
 import Form from 'react-bootstrap/Form';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Navigate } from 'react-router-dom';
-import LIHelment from '../components/LIHelmet';
-import MainHeader from '../components/MainHeader';
-import { auth, db, githubProvider, googleProvider } from '../hooks/Firebase';
-import { useUpdateUser } from '../hooks/useUser';
+import LIHelmet from '../components/common/LIHelmet';
+import MainHeader from '../components/common/MainHeader';
+import { auth, db, githubProvider, googleProvider } from '../hooks/utils/Firebase';
+import useUpdateUser from '../hooks/useUpdateUser';
 import { LIUser } from '../types/LIUser';
 
 const MIN_PASSWORD_LENGTH = 6;
@@ -34,20 +41,15 @@ export default function Login() {
     const handleFirebaseError = (error: any) => {
         if (error.code === 'auth/email-already-in-use') {
             setError('Email already in use');
-        }
-        else if (error.code === 'auth/invalid-email') {
+        } else if (error.code === 'auth/invalid-email') {
             setError('Invalid email');
-        }
-        else if (error.code === 'auth/weak-password') {
+        } else if (error.code === 'auth/weak-password') {
             setError('Password is too weak');
-        }
-        else if (error.code === 'auth/user-not-found') {
+        } else if (error.code === 'auth/user-not-found') {
             setError('User not found');
-        }
-        else if (error.code === 'auth/wrong-password') {
+        } else if (error.code === 'auth/wrong-password') {
             setError('Wrong password');
-        }
-        else {
+        } else {
             setError(error.message);
         }
     }
@@ -138,7 +140,7 @@ export default function Login() {
     return (
         <>
 
-            <LIHelment
+            <LIHelmet
                 title="LevelImposter - Login"
                 description="Login to LevelImposter"
                 URL="https://LevelImposter.net/#/login"
@@ -186,7 +188,8 @@ export default function Login() {
                             <Button className="mb-3" variant="primary" type="submit">
                                 Sign In
                             </Button>
-                            <Button className="mb-3 ms-1" variant="danger" onClick={forgotPassword} disabled={sentResetEmail}>
+                            <Button className="mb-3 ms-1" variant="danger" onClick={forgotPassword}
+                                    disabled={sentResetEmail}>
                                 Forgot Password
                             </Button>
                         </Form>
