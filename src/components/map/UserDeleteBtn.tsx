@@ -5,7 +5,6 @@ import useUser from "../../hooks/useUser";
 import useDeleteUser from "../../hooks/useDeleteUser";
 
 export default function UserDeleteBtn(props: { id: string }) {
-    const [isDeleting, setIsDeleting] = React.useState(false);
     const [isModalOpen, setModalOpen] = React.useState(false);
     const userData = useUser();
     const navigate = useNavigate();
@@ -15,19 +14,16 @@ export default function UserDeleteBtn(props: { id: string }) {
         if (!userData)
             return;
 
-        setIsDeleting(true);
         deleteUser(props.id).then(() => {
-            setIsDeleting(false);
-            navigate("/maps");
             console.log(`Deleted user ${props.id}`);
+            navigate("/maps");
         }).catch((err: any) => {
             console.error(err);
             alert(err);
-            setIsDeleting(false);
         });
     }, [props.id, userData, deleteUser, navigate]);
 
-    if (!userData?.isAdmin && userData?.uid !== props.id)
+    if (!userData?.isAdmin)
         return null;
 
     return (
@@ -35,7 +31,6 @@ export default function UserDeleteBtn(props: { id: string }) {
             <Button
                 variant="outline-danger"
                 onClick={() => setModalOpen(true)}
-                disabled={isDeleting}
                 size={"sm"}
                 className={"m-2"}
             >

@@ -3,10 +3,8 @@ import {
     sendEmailVerification,
     sendPasswordResetEmail,
     signInWithEmailAndPassword,
-    signInWithPopup,
-    UserCredential
+    signInWithPopup
 } from 'firebase/auth';
-import { collection, doc, getDoc, setDoc } from 'firebase/firestore';
 import React from 'react';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import { Github, Google } from 'react-bootstrap-icons';
@@ -16,13 +14,21 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { Navigate } from 'react-router-dom';
 import LIHelmet from '../components/common/LIHelmet';
 import MainHeader from '../components/common/MainHeader';
-import { auth, db, githubProvider, googleProvider } from '../hooks/utils/Firebase';
-import useUpdateUser from '../hooks/useUpdateUser';
-import { LIUser } from '../types/LIUser';
+import { auth, githubProvider, googleProvider } from '../hooks/utils/Firebase';
 
 const MIN_PASSWORD_LENGTH = 6;
 const MIN_AGE = 13;
 const MAX_AGE = 122;
+const ERROR_MESSAGES: Record<string, string> = {
+    "auth/email-already-in-use": "Email already in use",
+    "auth/invalid-email": "Invalid email",
+    "auth/weak-password": "Password is too weak",
+    "auth/user-not-found": "An account with this email does not exist",
+    "auth/wrong-password": "Incorrect password",
+    "auth/cancelled-popup-request": "Cancelled popup request",
+    "auth/popup-closed-by-user": "Popup closed by user",
+    "auth/missing-email": "Please enter an email address below",
+}
 
 export default function Login() {
     const [user] = useAuthState(auth);
@@ -30,112 +36,64 @@ export default function Login() {
     const [password, setPassword] = React.useState('');
     const [confirmPassword, setConfirmPassword] = React.useState('');
     const [error, setError] = React.useState<string | undefined>(undefined);
-    const [sentResetEmail, setSentResetEmail] = React.useState(false);
     const [dob, setDob] = React.useState('');
-    const updateUserData = useUpdateUser();
 
-    if (user) {
-        return <Navigate to="/profile" />;
-    }
-
-    const handleFirebaseError = (error: any) => {
-        if (error.code === 'auth/email-already-in-use') {
-            setError('Email already in use');
-        } else if (error.code === 'auth/invalid-email') {
-            setError('Invalid email');
-        } else if (error.code === 'auth/weak-password') {
-            setError('Password is too weak');
-        } else if (error.code === 'auth/user-not-found') {
-            setError('User not found');
-        } else if (error.code === 'auth/wrong-password') {
-            setError('Wrong password');
-        } else {
+    // Error Handling
+    const handleFirebaseError = React.useCallback((error: any) => {
+        if (error.code in ERROR_MESSAGES)
+            setError(ERROR_MESSAGES[error.code]);
+        else
             setError(error.message);
-        }
-    }
+    }, []);
 
-    const onSignUp = (credentials: UserCredential) => {
-        const { displayName, photoURL, uid } = credentials.user;
-
-        const usersRef = collection(db, 'users');
-        const docRef = doc(usersRef, uid);
-        getDoc(docRef).then((doc) => {
-            if (!doc.exists()) {
-                setDoc(docRef, {
-                    displayName,
-                    photoURL,
-                    uid
-                });
-            } else {
-                const userData = doc.data() as LIUser;
-                updateUserData({
-                    ...userData,
-                    displayName: displayName ?? userData.displayName ?? undefined,
-                    photoURL: photoURL ?? userData.photoURL ?? undefined
-                });
-            }
-        });
-    }
-
-    const signInWithGithub = () => {
-        signInWithPopup(auth, githubProvider).then(onSignUp).catch((e) => {
-            handleFirebaseError(e);
-        });
-    }
-
-    const signInWithGoogle = () => {
-        signInWithPopup(auth, googleProvider).then(onSignUp).catch((e) => {
-            handleFirebaseError(e);
-        });
-    }
-
-    const signInWithEmail = (e: React.FormEvent<HTMLFormElement>) => {
+    // Sign In
+    const signInWithGithub = React.useCallback(() => {
+        signInWithPopup(auth, githubProvider).catch(handleFirebaseError);
+    }, [handleFirebaseError]);
+    const signInWithGoogle = React.useCallback(() => {
+        signInWithPopup(auth, googleProvider).catch(handleFirebaseError);
+    }, [handleFirebaseError]);
+    const signInWithEmail = React.useCallback((e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        signInWithEmailAndPassword(auth, username, password).catch((e) => {
-            handleFirebaseError(e);
-        });
-    }
+        signInWithEmailAndPassword(auth, username, password).catch(handleFirebaseError);
+    }, [handleFirebaseError, password, username]);
 
-    const signUpWithEmail = (e: React.FormEvent<HTMLFormElement>) => {
+    // Sign Up
+    const signUpWithEmail = React.useCallback((e: React.FormEvent<HTMLFormElement>) => {
+        const age = new Date().getFullYear() - new Date(dob ?? "").getFullYear();
         e.preventDefault();
-        if (password !== confirmPassword) {
+
+        // Password Requirements
+        if (password !== confirmPassword)
             setError('Passwords do not match');
-            return;
-        }
-        if (password.length < MIN_PASSWORD_LENGTH) {
+        else if (password.length < MIN_PASSWORD_LENGTH)
             setError(`Get a better password, this isn't your luggage combination. It must be at least ${MIN_PASSWORD_LENGTH} characters long.`);
-            return;
-        }
-        if (dob === undefined || dob === null || dob === '') {
+
+        // Age Requirements
+        else if (dob === undefined || dob === null || dob === '')
             setError('Unless you\'re an unborn child, please enter your date of birth.');
-            return;
-        }
-        const age = new Date().getFullYear() - new Date(dob).getFullYear();
-        if (age < MIN_AGE) {
+        else if (age < MIN_AGE)
             setError(`Sorry, Uncle Sam requires you must be at least ${MIN_AGE} years old to use LevelImposter.`);
-            return;
-        }
-        if (age > MAX_AGE) {
+        else if (age > MAX_AGE)
             setError(`Ha ha, nice try. The oldest person to ever live was ${MAX_AGE} years old. You're not ${age} years old.`);
-            return;
-        }
 
-        createUserWithEmailAndPassword(auth, username, password).then((cred) => {
-            sendEmailVerification(cred.user);
-            onSignUp(cred);
-        }).catch((e) => {
-            handleFirebaseError(e);
-        });
-    }
+        // Create Account
+        else
+            createUserWithEmailAndPassword(auth, username, password).then((cred) => {
+                return sendEmailVerification(cred.user);
+            }).catch(handleFirebaseError);
+    }, [confirmPassword, dob, handleFirebaseError, password, username]);
 
-    const forgotPassword = () => {
-        setSentResetEmail(true);
+    // Forgot Password
+    const forgotPassword = React.useCallback(() => {
         sendPasswordResetEmail(auth, username).then(() => {
             setError('Password reset email sent');
-        }).catch((e) => {
-            handleFirebaseError(e);
-        });
-    }
+        }).catch(handleFirebaseError);
+    }, [handleFirebaseError, username]);
+
+    // Redirect to profile if logged in
+    if (user)
+        return (<Navigate to="/profile" />);
 
     return (
         <>
@@ -188,8 +146,7 @@ export default function Login() {
                             <Button className="mb-3" variant="primary" type="submit">
                                 Sign In
                             </Button>
-                            <Button className="mb-3 ms-1" variant="danger" onClick={forgotPassword}
-                                    disabled={sentResetEmail}>
+                            <Button className="mb-3 ms-1" variant="danger" onClick={forgotPassword}>
                                 Forgot Password
                             </Button>
                         </Form>
@@ -265,6 +222,11 @@ export default function Login() {
                             </Button>
                         </Form>
                     </Col>
+                </Row>
+                <Row>
+                    <p className={"text-center text-muted"}>
+                        By signing up for an account, you agree to our <a href="/#/policy">site policies</a>.
+                    </p>
                 </Row>
             </Container>
         </>

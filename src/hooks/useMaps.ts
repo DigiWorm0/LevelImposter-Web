@@ -20,7 +20,7 @@ import LIMapList from "../types/LIMapList";
 
 const MAX_PER_PAGE = 3 * 30;
 
-export function _useMaps(contraints: QueryConstraint[]): LIMapList {
+export function _useMaps(constraints: QueryConstraint[]): LIMapList {
     const [error, setError] = React.useState<any>(undefined);
     const [mapList, setMapList] = React.useState<MaybeLIMetadata[]>([]);
     const [lastDoc, setLastDoc] = React.useState<DocumentSnapshot<DocumentData> | undefined>(undefined);
@@ -32,7 +32,7 @@ export function _useMaps(contraints: QueryConstraint[]): LIMapList {
 
         // Create query
         const storeRef = collection(db, "maps");
-        const mapsQuery = query(storeRef, ...contraints, limit(MAX_PER_PAGE));
+        const mapsQuery = query(storeRef, ...constraints, limit(MAX_PER_PAGE));
 
         // Get maps
         getDocs(mapsQuery).then(maps => {
@@ -47,7 +47,7 @@ export function _useMaps(contraints: QueryConstraint[]): LIMapList {
             setLastDoc(undefined);
             setHasMore(false);
         });
-    }, [contraints]);
+    }, [constraints]);
 
     const loadMore = React.useCallback(() => {
         if (!lastDoc) return;
@@ -58,7 +58,7 @@ export function _useMaps(contraints: QueryConstraint[]): LIMapList {
 
         // Create query
         const storeRef = collection(db, "maps");
-        const mapsQuery = query(storeRef, ...contraints, startAfter(lastDoc), limit(MAX_PER_PAGE));
+        const mapsQuery = query(storeRef, ...constraints, startAfter(lastDoc), limit(MAX_PER_PAGE));
 
         // Get maps
         getDocs(mapsQuery).then(maps => {
@@ -71,7 +71,7 @@ export function _useMaps(contraints: QueryConstraint[]): LIMapList {
             setError(err);
             setMapList(defaultMapList);
         });
-    }, [lastDoc, mapList, contraints]);
+    }, [lastDoc, mapList, constraints]);
 
     return {
         maps: mapList,
@@ -91,14 +91,18 @@ export default function useMaps(filter?: MapFilter, query?: string) {
 
 export function useUserMaps(userID?: string) {
     const user = useUser();
+
+    // Build constraints
     const constraints = React.useMemo(() => {
+        if (!user || !userID) return [];
+
         const mapQueries = [];
         if (!user?.isAdmin && userID !== user?.uid)
             mapQueries.push(where("isPublic", "==", true));
-        if (userID)
-            mapQueries.push(where("authorID", "==", userID));
+        mapQueries.push(where("authorID", "==", userID));
         mapQueries.push(orderBy("createdAt", "desc"));
         return mapQueries;
     }, [userID, user]);
+    
     return _useMaps(constraints);
 }

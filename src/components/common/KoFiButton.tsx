@@ -10,7 +10,7 @@ export default function KoFiButton() {
                 variant="danger"
                 size="sm"
             >
-                <CupHotFill style={{ marginRight: 6, marginBottom: 2 }} />
+                <CupHotFill className={"mb-1 me-2"} />
                 Sponsor me on Ko-fi
             </Button>
         </>

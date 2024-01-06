@@ -9,45 +9,43 @@ export default function MapLikeBtn(props: { id: string | undefined, likeCount: n
 
     const likeCount = props.likeCount + likeOffset;
 
-    const onClick = () => {
-        if (canLike) {
-            toggleLike();
+    const onClick = React.useCallback(() => {
+        if (!canLike)
+            return;
+
+        toggleLike().then(() => {
             setLikeOffset(likeOffset + (isLiked ? -1 : 1));
-        }
-    }
+        }).catch(err => {
+            console.error(err);
+            alert(err);
+        });
+    }, [toggleLike, canLike, isLiked, likeOffset]);
 
     return (
-        <>
-            <OverlayTrigger
-                placement="top"
-                overlay={
-                    <Tooltip>
-                        {!canLike ? "Must be logged in to like a map" : isLiked ? "Unlike" : "Like"}
-                    </Tooltip>
-                }
+        <OverlayTrigger
+            placement="top"
+            overlay={
+                <Tooltip>
+                    {!canLike ? "Must be logged in to like a map" : isLiked ? "Unlike" : "Like"}
+                </Tooltip>
+            }
+        >
+            <Button
+                size={"lg"}
+                variant={isLiked ? "danger" : "outline-danger"}
+                onClick={onClick}
+                disabled={!canLike}
+                className={"ms-2 mt-2 d-flex justify-content-center align-items-center"}
             >
-                <span className='d-inline-block'>
-                    <Button
-                        variant={isLiked ? "danger" : "outline-danger"}
-                        onClick={onClick}
-                        disabled={!canLike}
-                        style={{ marginLeft: 10, marginTop: 5, height: 40 }}
-                    >
-                        <div style={{ display: "flex", alignItems: "center" }}>
-                            <h5 style={{ margin: 0, marginRight: 6 }}>
-                                {likeCount}
-                            </h5>
-                            {isLiked ?
-                                <HeartFill size={16} />
-                                :
-                                <Heart size={16} />
-                            }
-                        </div>
-
-                    </Button>
-                    <br />
-                </span>
-            </OverlayTrigger>
-        </>
+                <h5 className={"mb-0 me-2"}>
+                    {likeCount}
+                </h5>
+                {isLiked ?
+                    <HeartFill size={16} />
+                    :
+                    <Heart size={16} />
+                }
+            </Button>
+        </OverlayTrigger>
     );
 }

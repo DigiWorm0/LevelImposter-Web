@@ -9,37 +9,36 @@ export default function useMapLikes(mapID?: string) {
 
     const canLike = !!mapID && !!user;
 
-    const getLikeRef = React.useCallback(() => {
+    // Get the Like Document
+    const getLikeDoc = React.useCallback(() => {
         if (!canLike)
             return null;
 
         const storeRef = collection(db, "maps");
         const docRef = doc(storeRef, mapID);
         const likesRef = collection(docRef, "likes");
-        const likeRef = doc(likesRef, user?.uid);
-        return likeRef;
+        return doc(likesRef, user?.uid);
     }, [canLike, mapID, user]);
 
+    // Set the current like state
     React.useEffect(() => {
-        const likeRef = getLikeRef();
-        if (likeRef) {
-            getDoc(likeRef).then(doc => {
-                setLiked(doc.exists());
-            });
-        }
-    }, [getLikeRef]);
+        const likeRef = getLikeDoc();
+        if (likeRef)
+            getDoc(likeRef).then(doc => setLiked(doc.exists()));
+    }, [getLikeDoc]);
 
+    // Toggle the like state
     const toggleLike = React.useCallback(async () => {
         setLiked(liked => !liked);
-        const likeRef = getLikeRef();
-        if (likeRef) {
-            if (isLiked) {
-                await deleteDoc(likeRef);
-            } else {
-                await setDoc(likeRef, {});
-            }
-        }
-    }, [getLikeRef, isLiked]);
+        const likeRef = getLikeDoc();
+        if (!likeRef)
+            return;
+
+        if (isLiked)
+            await deleteDoc(likeRef);
+        else
+            await setDoc(likeRef, {});
+    }, [getLikeDoc, isLiked]);
 
     return [isLiked, toggleLike, canLike] as const;
 }

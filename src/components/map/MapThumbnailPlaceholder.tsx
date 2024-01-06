@@ -3,13 +3,9 @@ import React from "react";
 
 export default function MapThumbnailPlaceholder() {
     return (
-        <Placeholder
-            style={{
-                borderRadius: 10,
-            }}
-        >
+        <Placeholder className={"rounded"}>
             <Card
-                style={{ minWidth: 350, maxWidth: 360 }}
+                style={{ minWidth: 350, width: 350 }}
                 className={"bg-dark text-light"}
             >
                 <Card.Img
