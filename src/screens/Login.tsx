@@ -7,14 +7,14 @@ import {
 } from 'firebase/auth';
 import React from 'react';
 import { Button, Col, Container, Row } from 'react-bootstrap';
-import { Github, Google } from 'react-bootstrap-icons';
+import { Github, Google, Microsoft } from 'react-bootstrap-icons';
 import Alert from 'react-bootstrap/Alert';
 import Form from 'react-bootstrap/Form';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Navigate } from 'react-router-dom';
 import LIHelmet from '../components/common/LIHelmet';
 import MainHeader from '../components/common/MainHeader';
-import { auth, githubProvider, googleProvider } from '../hooks/utils/Firebase';
+import { auth, githubProvider, googleProvider, microsoftProvider } from '../hooks/utils/Firebase';
 
 const MIN_PASSWORD_LENGTH = 6;
 const MIN_AGE = 13;
@@ -28,6 +28,9 @@ const ERROR_MESSAGES: Record<string, string> = {
     "auth/cancelled-popup-request": "Cancelled popup request",
     "auth/popup-closed-by-user": "Popup closed by user",
     "auth/missing-email": "Please enter an email address below",
+    "auth/internal-error": "Internal error, an extension may be blocking this request. Try disabling extensions or using a different browser.",
+    "auth/invalid-credential": "Invalid credential",
+    "auth/user-cancelled": "Cancelled popup request",
 }
 
 export default function Login() {
@@ -40,6 +43,7 @@ export default function Login() {
 
     // Error Handling
     const handleFirebaseError = React.useCallback((error: any) => {
+        console.error(error);
         if (error.code in ERROR_MESSAGES)
             setError(ERROR_MESSAGES[error.code]);
         else
@@ -52,6 +56,9 @@ export default function Login() {
     }, [handleFirebaseError]);
     const signInWithGoogle = React.useCallback(() => {
         signInWithPopup(auth, googleProvider).catch(handleFirebaseError);
+    }, [handleFirebaseError]);
+    const signInWithMicrosoft = React.useCallback(() => {
+        signInWithPopup(auth, microsoftProvider).catch(handleFirebaseError);
     }, [handleFirebaseError]);
     const signInWithEmail = React.useCallback((e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -154,7 +161,7 @@ export default function Login() {
                             - or -
                         </p>
                         <Button
-                            style={{ margin: 5 }}
+                            className={"m-1"}
                             variant="dark"
                             size="lg"
                             onClick={signInWithGoogle}
@@ -162,12 +169,20 @@ export default function Login() {
                             <Google size={24} />
                         </Button>
                         <Button
-                            style={{ margin: 5 }}
+                            className={"m-1"}
                             variant="dark"
                             size="lg"
                             onClick={signInWithGithub}
                         >
                             <Github size={24} />
+                        </Button>
+                        <Button
+                            className={"m-1"}
+                            variant="dark"
+                            size="lg"
+                            onClick={signInWithMicrosoft}
+                        >
+                            <Microsoft size={24} />
                         </Button>
                     </Col>
                     <Col lg={6}>

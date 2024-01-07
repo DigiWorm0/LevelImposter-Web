@@ -1,6 +1,5 @@
 import {
     collection,
-    DocumentData,
     DocumentSnapshot,
     getDocs,
     limit,
@@ -23,10 +22,16 @@ const MAX_PER_PAGE = 3 * 30;
 export function _useMaps(constraints: QueryConstraint[]): LIMapList {
     const [error, setError] = React.useState<any>(undefined);
     const [mapList, setMapList] = React.useState<MaybeLIMetadata[]>([]);
-    const [lastDoc, setLastDoc] = React.useState<DocumentSnapshot<DocumentData> | undefined>(undefined);
+    const [lastDoc, setLastDoc] = React.useState<DocumentSnapshot | undefined>(undefined);
     const [hasMore, setHasMore] = React.useState(true);
 
     React.useEffect(() => {
+
+        // Handle no constraints
+        setMapList([]);
+        if (constraints.length === 0)
+            return;
+
         // Add filler
         setMapList(Array(MAX_PER_PAGE).fill(undefined));
 
