@@ -20,8 +20,7 @@ let lastQuery = "";
 export default function useMapSearch(query?: string): LIMapList {
     const [error, setError] = React.useState<any>(undefined);
     const [maps, setMaps] = React.useState<MaybeLIMetadata[]>([]);
-
-
+    
     // Search Function
     const search = React.useCallback(async () => {
         if (!query)

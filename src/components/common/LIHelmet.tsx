@@ -1,6 +1,13 @@
 import { Helmet } from "react-helmet";
 
-export default function LIHelmet(props: { title?: string, description?: string, URL?: string, imageURL?: string }) {
+export interface LIHelmetProps {
+    title?: string;
+    description?: string;
+    URL?: string;
+    imageURL?: string;
+}
+
+export default function LIHelmet(props: LIHelmetProps) {
     return (
         <Helmet>
             <title>{props.title || 'LevelImposter'}</title>

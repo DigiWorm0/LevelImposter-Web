@@ -1,4 +1,4 @@
-export interface LIUser {
+export default interface LIUser {
     uid: string;
     displayName?: string;
     photoURL?: string;

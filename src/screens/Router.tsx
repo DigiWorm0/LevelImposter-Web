@@ -1,7 +1,7 @@
 import { useAuthState } from "react-firebase-hooks/auth";
 import { HashRouter, Route, Routes } from "react-router-dom";
 import { auth } from "../hooks/utils/Firebase";
-import { _useUser, UserContext } from "../hooks/useUser";
+import { UserContext, useUser } from "../hooks/useUser";
 import Home from "./Home";
 import Login from "./Login";
 import Map from "./Map";
@@ -13,7 +13,7 @@ import User from "./User";
 
 export default function Router() {
     const [user] = useAuthState(auth);
-    const userData = _useUser(user?.uid);
+    const userData = useUser(user?.uid);
 
     return (
         <UserContext.Provider value={userData}>

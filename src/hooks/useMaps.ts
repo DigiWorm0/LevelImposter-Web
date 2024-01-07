@@ -13,7 +13,7 @@ import {
 import React from "react";
 import LIMetadata, { MaybeLIMetadata } from "../types/LIMetadata";
 import { db } from "./utils/Firebase";
-import useUser from "./useUser";
+import useCurrentUser from "./useUser";
 import MapFilter, { MAP_FILTER_CONSTRAINTS } from "../types/MapFilter";
 import useMapSearch from "./useMapSearch";
 import LIMapList from "../types/LIMapList";
@@ -90,7 +90,7 @@ export default function useMaps(filter?: MapFilter, query?: string) {
 }
 
 export function useUserMaps(userID?: string) {
-    const user = useUser();
+    const user = useCurrentUser();
 
     // Build constraints
     const constraints = React.useMemo(() => {
@@ -103,6 +103,6 @@ export function useUserMaps(userID?: string) {
         mapQueries.push(orderBy("createdAt", "desc"));
         return mapQueries;
     }, [userID, user]);
-    
+
     return _useMaps(constraints);
 }

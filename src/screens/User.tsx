@@ -3,7 +3,7 @@ import { Navigate, useParams } from 'react-router-dom';
 import LIHelmet from '../components/common/LIHelmet';
 import MainHeader from '../components/common/MainHeader';
 import { useUserMaps } from '../hooks/useMaps';
-import useUser, { _useUser } from '../hooks/useUser';
+import useCurrentUser, { useUser } from '../hooks/useUser';
 import UserDeleteBtn from '../components/map/UserDeleteBtn';
 import UserBanBtn from '../components/map/UserBanBtn';
 import MapThumbnails from "../components/map/MapThumbnails";
@@ -13,8 +13,8 @@ import TagType from "../types/TagType";
 
 export default function User() {
     const { id } = useParams();
-    const user = useUser();
-    const author = _useUser(id);
+    const user = useCurrentUser();
+    const author = useUser(id);
     const authorMaps = useUserMaps(id);
 
     if (user?.uid === id) {
@@ -35,17 +35,14 @@ export default function User() {
                         <h3>
                             <img
                                 referrerPolicy="no-referrer"
-                                src={author?.photoURL ?? '/logo512.png'}
-                                alt={author?.displayName ?? ""}
-                                style={{
-                                    width: 50,
-                                    height: 50,
-                                    marginRight: 14,
-                                    borderRadius: 10,
-                                    objectFit: 'cover',
-                                }}
+                                src={author?.photoURL || "/editor.svg"}
+                                alt={author?.displayName || "Anonymous"}
+                                width={50}
+                                height={50}
+                                className={"rounded me-3"}
+                                style={{ objectFit: 'cover' }}
                             />
-                            {author?.displayName}
+                            {author?.displayName || "Anonymous"}
                         </h3>
                     </Col>
                 </Row>
