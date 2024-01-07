@@ -5,13 +5,13 @@ import MainHeader from '../components/common/MainHeader';
 import MapThumbnails from '../components/map/MapThumbnails';
 import useMaps from '../hooks/useMaps';
 import MapFilter from "../types/MapFilter";
-import useUser from "../hooks/useUser";
+import useCurrentUser from "../hooks/useUser";
 
 export default function Maps() {
     const [searchQuery, setSearchQuery] = React.useState<string>("");
     const [filter, setFilter] = React.useState<MapFilter>(MapFilter.Featured);
     const mapList = useMaps(filter, searchQuery);
-    const user = useUser();
+    const user = useCurrentUser();
 
     return (
         <>

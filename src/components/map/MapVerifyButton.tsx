@@ -3,11 +3,17 @@ import React from "react";
 import { Button, Modal } from "react-bootstrap";
 import { StarFill } from "react-bootstrap-icons";
 import { db } from "../../hooks/utils/Firebase";
-import useUser from "../../hooks/useUser";
+import useCurrentUser from "../../hooks/useUser";
 
-export default function MapVerifyButton(props: { id: string, isVerified: boolean, isPublic: boolean }) {
+export interface MapVerifyButtonProps {
+    id: string;
+    isVerified: boolean;
+    isPublic: boolean;
+}
+
+export default function MapVerifyButton(props: MapVerifyButtonProps) {
     const [isModalOpen, setModalOpen] = React.useState(false);
-    const userData = useUser();
+    const userData = useCurrentUser();
 
     const onClick = React.useCallback(() => {
         const storeRef = collection(db, "maps");

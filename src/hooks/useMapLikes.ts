@@ -1,11 +1,11 @@
 import React from "react";
-import useUser from "./useUser";
+import useCurrentUser from "./useUser";
 import { collection, deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "./utils/Firebase";
 
 export default function useMapLikes(mapID?: string) {
     const [isLiked, setLiked] = React.useState(false);
-    const user = useUser();
+    const user = useCurrentUser();
 
     const canLike = !!mapID && !!user;
 

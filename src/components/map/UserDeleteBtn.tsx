@@ -1,14 +1,19 @@
 import React from "react";
 import { Button, Modal } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import useUser from "../../hooks/useUser";
-import useDeleteUser from "../../hooks/useDeleteUser";
+import useCurrentUser from "../../hooks/useUser";
+import useAddRole from "../../hooks/useAddRole";
+import LIRoles from "../../types/LIRoles";
 
-export default function UserDeleteBtn(props: { id: string }) {
+export interface UserDeleteBtnProps {
+    id: string;
+}
+
+export default function UserDeleteBtn(props: UserDeleteBtnProps) {
     const [isModalOpen, setModalOpen] = React.useState(false);
-    const userData = useUser();
+    const userData = useCurrentUser();
     const navigate = useNavigate();
-    const deleteUser = useDeleteUser();
+    const deleteUser = useAddRole(LIRoles.Deleted);
 
     const onDelete = React.useCallback(() => {
         if (!userData)

@@ -3,12 +3,17 @@ import React from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { EyeFill } from "react-bootstrap-icons";
 import { db } from "../../hooks/utils/Firebase";
-import useUser from "../../hooks/useUser";
+import useCurrentUser from "../../hooks/useUser";
 
-export default function MapPrivateButton(props: { id: string, isPublic: boolean }) {
+export interface MapPrivateButtonProps {
+    id: string;
+    isPublic: boolean;
+}
+
+export default function MapPrivateButton(props: MapPrivateButtonProps) {
     const [isModalOpen, setModalOpen] = React.useState(false);
     const [removalReason, setRemovalReason] = React.useState("");
-    const userData = useUser();
+    const userData = useCurrentUser();
 
     const onClick = React.useCallback(() => {
         if (!userData?.isAdmin)

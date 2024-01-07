@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Modal } from "react-bootstrap";
 import { TrashFill } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
-import useUser from "../../hooks/useUser";
+import useCurrentUser from "../../hooks/useUser";
 import deleteMap from "../../hooks/utils/deleteMap";
 
 export interface MapDeleteBtnProps {
@@ -12,7 +12,7 @@ export interface MapDeleteBtnProps {
 
 export default function MapDeleteBtn(props: MapDeleteBtnProps) {
     const [isModalOpen, setModalOpen] = React.useState(false);
-    const userData = useUser();
+    const userData = useCurrentUser();
     const navigate = useNavigate();
 
     const onClick = React.useCallback(() => {

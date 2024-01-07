@@ -2,47 +2,48 @@ import { sendEmailVerification, signOut } from 'firebase/auth';
 import React from 'react';
 import { Alert, Button, Col, Container, Row } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
-import { useAuthState } from 'react-firebase-hooks/auth';
 import { Navigate } from 'react-router-dom';
 import LIHelmet from '../components/common/LIHelmet';
 import MainHeader from '../components/common/MainHeader';
 import { auth } from '../hooks/utils/Firebase';
 import { useUserMaps } from '../hooks/useMaps';
-import useUser from '../hooks/useUser';
+import useCurrentUser from '../hooks/useUser';
 import MapThumbnails from "../components/map/MapThumbnails";
-import useUpdateUser from "../hooks/useUpdateUser";
+import useSetUserData from "../hooks/useSetUserData";
 import { Check, PencilFill, X } from "react-bootstrap-icons";
 import ClickToShow from "../components/common/ClickToShow";
 import DisplayTag from "../components/common/DisplayTag";
 import TagType from "../types/TagType";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 export default function Profile() {
     const [user] = useAuthState(auth);
-    const userData = useUser();
+    const userData = useCurrentUser();
     const [isEditing, setIsEditing] = React.useState(false);
     const [error, setError] = React.useState<string | undefined>(undefined);
     const [displayName, setDisplayName] = React.useState('');
-    const userMaps = useUserMaps(user?.uid);
-    const updateUserData = useUpdateUser();
+    const userMaps = useUserMaps(userData?.uid);
+    const setUserData = useSetUserData();
 
     React.useEffect(() => {
-        setDisplayName(user?.displayName || '');
-    }, [user]);
+        setDisplayName(userData?.displayName || '');
+    }, [userData]);
 
     const onSaveProfile = React.useCallback(() => {
-        if (!user || !displayName || !userData)
+        if (!displayName || !userData)
             return;
-        updateUserData({
+        setUserData({
             ...userData,
-            photoURL: undefined,
             displayName: displayName,
         }).then(() => {
+            userData.displayName = displayName; // Update local copy
             setIsEditing(false);
             setError(undefined);
         }).catch(error => {
+            console.error(error);
             setError(error.message);
         });
-    }, [user, displayName]);
+    }, [userData, displayName]);
 
     const sendVerification = React.useCallback(() => {
         if (!user)
@@ -62,7 +63,7 @@ export default function Profile() {
     return (
         <>
             <LIHelmet
-                title={`${user?.displayName ? user.displayName : "LevelImposter"} - Profile`}
+                title={`${userData?.displayName ?? "Anonymous"} - Profile`}
                 description="View your profile and maps."
                 URL={`https://LevelImposter.net/#/Profile`}
             />
@@ -85,8 +86,8 @@ export default function Profile() {
                         <h3>
                             <img
                                 referrerPolicy="no-referrer"
-                                src={userData?.photoURL ?? '/logo512.png'}
-                                alt={user.displayName ?? 'New User'}
+                                src={userData?.photoURL || "/editor.svg"}
+                                alt={userData?.displayName || "Anonymous"}
                                 width={50}
                                 height={50}
                                 className={"rounded me-3"}
@@ -123,7 +124,7 @@ export default function Profile() {
                             )}
                             {!isEditing && (
                                 <>
-                                    {user.displayName ?? 'New User'}
+                                    {displayName || "Anonymous"}
                                     <PencilFill
                                         color={"#999"}
                                         size={14}
@@ -176,7 +177,7 @@ export default function Profile() {
                             {!user?.emailVerified && <DisplayTag type={TagType.Unverified} />}
 
                             <ClickToShow buttonText={"Click to show your user ID"}>
-                                <p>{user.uid}</p>
+                                <p>{userData?.uid}</p>
                             </ClickToShow>
                         </div>
                     </Col>

@@ -1,9 +1,9 @@
-import useUser from "../../hooks/useUser";
+import useCurrentUser from "../../hooks/useUser";
 import { Link } from "react-router-dom";
 import React from "react";
 
 export default function ProfileIcon() {
-    const user = useUser();
+    const user = useCurrentUser();
 
     // Sign In Button
     if (!user)

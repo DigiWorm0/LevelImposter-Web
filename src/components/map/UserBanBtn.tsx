@@ -2,14 +2,19 @@ import React from "react";
 import { Button, Modal } from "react-bootstrap";
 import { ShieldFillX } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
-import useUser from "../../hooks/useUser";
-import useBanUser from "../../hooks/useBanUser";
+import useCurrentUser from "../../hooks/useUser";
+import useAddRole from "../../hooks/useAddRole";
+import LIRoles from "../../types/LIRoles";
 
-export default function UserBanBtn(props: { id: string }) {
+export interface UserBanBtnProps {
+    id: string;
+}
+
+export default function UserBanBtn(props: UserBanBtnProps) {
     const [isModalOpen, setModalOpen] = React.useState(false);
-    const userData = useUser();
+    const userData = useCurrentUser();
     const navigate = useNavigate();
-    const banUser = useBanUser();
+    const banUser = useAddRole(LIRoles.Banned);
 
     const onClick = React.useCallback(() => {
         if (!userData)

@@ -10,7 +10,11 @@ import MapLink from "./MapLink";
 import DisplayTag from "../common/DisplayTag";
 import TagType from "../../types/TagType";
 
-export default function MapThumbnail(props: { map: LIMetadata | undefined }) {
+export interface MapThumbnailProps {
+    map: LIMetadata | undefined;
+}
+
+export default function MapThumbnail(props: MapThumbnailProps) {
     const [isHovered, setIsHovered] = React.useState(false);
     const map = props.map;
     const thumbnailURL = map?.thumbnailURL ? map.thumbnailURL : "/DefaultThumbnail.png";

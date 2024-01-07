@@ -2,7 +2,12 @@ import { MaybeLIMetadata } from "../../types/LIMetadata";
 import MapThumbnail from "./MapThumbnail";
 import React from "react";
 
-export default function MapThumbnails(props: { maps: MaybeLIMetadata[], scroll?: boolean }) {
+export interface MapThumbnailsProps {
+    maps: MaybeLIMetadata[];
+    scroll?: boolean;
+}
+
+export default function MapThumbnails(props: MapThumbnailsProps) {
     return (
         <div
             style={{
